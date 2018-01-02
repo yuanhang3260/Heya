@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Heya</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+<nav class="fixed-top navbar heya-navbar">
+  <div class="heya-navbar-container">
+    <a class="navbar-brand heya-navbar-brand" href="#">
+      <b>Heya</b> <i class="fa fa-leaf heya-logo"></i>
+    </a>
+
+    <form class="form-inline my-lg-0 heya-navbar-search">
+      <input class="form-control heya-search-box" type="search" placeholder="Search" aria-label="Search">
+      <button type="button" class="btn btn-success heya-navbar-btn">
+        <i class="fa fa-search"></i>
+      </button>
+    </form>
+
+    <button type="button" class="btn btn-success heya-navbar-btn">Sign up</button>
+  </div>
+</nav>
+
+<div class="index-main-container">
+  <div id="intro-container" class="main-container-sub">
+    <!-- <img src="img/mountain.jpg" class="intro-img"> -->
+  </div>
+  <div id="login-container" class="main-container-sub">
+    <h3 class="login-title">Welcome</h3>
+    <form action="login.action">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-user"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username">
+      </div>
+      <div class="input-group mb-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-unlock-alt"></i></span>
+        </div>
+        <input type="password" class="form-control" placeholder="Password">
+      </div>
+      <div class="form-check mb-3">
+        <label class="form-check-label login-check-label">
+          <input type="checkbox" class="form-check-input login-checkbox" id="remember-me" disabled="">Remember me
+        </label>
+      </div>
+      <button type="submit" class="btn btn-success login-btn mb-3" disabled="">Log In</button>
+    </form>
+    <form action="signup.action">
+      <button type="submit" class="btn btn-success login-btn mb-2">New User</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

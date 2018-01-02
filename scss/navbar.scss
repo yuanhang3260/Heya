@@ -1,0 +1,132 @@
+$navbar-height: 35px;
+$navbar-bgcolor: #227535;
+$main-width: 960px;
+
+.heya-navbar {
+  background-color: $navbar-bgcolor;
+  padding: 0;
+}
+
+.heya-navbar-brand {
+  display: inline-block;
+  vertical-align: middle;
+  height: $navbar-height;
+  line-height: $navbar-height;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 21px;
+  padding: 0 2px;
+  margin-top: -1px;
+
+  &:hover {
+    color: white;
+  }
+
+  &:hover .heya-logo {
+    color: white;
+  }  
+}
+
+.heya-logo {
+  color: #ddd;
+  font-size: 17px;
+}
+
+.heya-navbar-container {
+  margin: 0 auto;
+  width: $main-width;
+  padding: 7px;
+}
+
+.heya-navbar-btn {
+  float: right;
+  height: $navbar-height - 4px;
+  font-size: 14px;
+  padding: 4px 12px;
+  background-color: $navbar-bgcolor;
+  border-color: transparent;
+  color: #ddd;
+
+  &:hover {
+    background-color: #145a24;
+    border-color: transparent;
+  };
+}
+
+.heya-navbar-search {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.heya-search-box {
+  height: $navbar-height - 4px;
+  font-size: 14px;
+  padding: 6px;
+  border-radius: 2px;
+  margin-right: 3px;
+}
+
+.index-main-container {
+  display: flex;
+  margin: 55px auto 0;
+  width: $main-width;
+  height: auto;
+}
+
+.main-container-sub {
+  width: 580px;
+  height: 330px;
+  margin: 5px 3px;
+  padding: 5px;
+  /*border: 1px solid #555;*/
+}
+
+#login-container {
+  width: 350px;
+  padding: 15px;
+  background-color: #e2e2e2;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+
+.login-title {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.login-btn {
+  margin-top: 1px;
+  width: 318px;
+}
+
+.login-check-label {
+  color: #555;
+  font-size: 13px;
+}
+
+.login-checkbox {
+  width: 12px;
+  height: 12px;
+  margin-left: -17px;
+}
+
+#intro-container {
+  position: relative;
+  padding: 0;
+}
+
+#intro-container::after {
+  content : "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 570px;
+  height: 330px;
+  background: url("../img/mountain.jpg");
+  background-size: 570px 330px;
+  background-repeat: no-repeat;
+  opacity : 0.3;
+  z-index: -1;
+}

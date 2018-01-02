@@ -1,0 +1,372 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url("../fonts/icomoon.eot?ly4fdu");
+  src: url("../fonts/icomoon.eot?ly4fdu#iefix") format("embedded-opentype"), url("../fonts/icomoon.ttf?ly4fdu") format("truetype"), url("../fonts/icomoon.woff?ly4fdu") format("woff"), url("../fonts/icomoon.svg?ly4fdu#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 12, ../scss/font.scss */
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* line 27, ../scss/font.scss */
+.icon-phone_android:before {
+  content: "\e324";
+}
+
+/* line 30, ../scss/font.scss */
+.icon-vertical_align_top:before {
+  content: "\e25a";
+}
+
+/* line 33, ../scss/font.scss */
+.icon-chat-3:before {
+  content: "\e900";
+}
+
+/* line 36, ../scss/font.scss */
+.icon-wechat:before {
+  content: "\e901";
+}
+
+/* line 39, ../scss/font.scss */
+.icon-weixin:before {
+  content: "\e901";
+}
+
+/* line 34, ../scss/sidebar.scss */
+.sidebar {
+  position: fixed;
+  width: 45px;
+  height: 100%;
+  min-height: 100%;
+  background-color: #ddd;
+  border-bottom: solid 2px #ccc;
+}
+/* line 42, ../scss/sidebar.scss */
+.sidebar .sidebar-menu {
+  margin-top: 200px;
+  list-style-type: none;
+}
+/* line 46, ../scss/sidebar.scss */
+.sidebar .sidebar-menu .sidebar-item {
+  text-align: center;
+  margin-top: 2px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 7px 0;
+  /* Or use $.fadeIn() instead */
+}
+/* line 53, ../scss/sidebar.scss */
+.sidebar .sidebar-menu .sidebar-item:hover {
+  background-color: #bbb;
+}
+/* line 57, ../scss/sidebar.scss */
+.sidebar .sidebar-menu .sidebar-item .sidebar-panel {
+  /*opacity: 0;*/
+  /*visibility: hidden;*/
+  display: none;
+  transform-origin: left;
+  -webkit-transform-origin: left;
+  /*@include transform-scaleX(0);*/
+  position: absolute;
+  /* relative to .sidebar */
+  width: 180px;
+  min-height: 100%;
+  height: 100%;
+  left: 45px;
+  top: 0px;
+  background-color: #ccc;
+  overflow: hidden;
+  /*transition: all 0.2s;*/
+  border: 2px solid #bbb;
+  border-radius: 2px;
+  cursor: auto;
+}
+/* line 77, ../scss/sidebar.scss */
+.sidebar .sidebar-menu .sidebar-item .sidebar-panel .sidebar-panel-container {
+  padding: 10px;
+  text-align: left;
+}
+/* line 84, ../scss/sidebar.scss */
+.sidebar .sidebar-menu .sidebar-item:hover .sidebar-panel-show {
+  opacity: 1;
+  visibility: visible;
+  /*@include transform-scaleX(1);*/
+}
+/* line 91, ../scss/sidebar.scss */
+.sidebar .sidebar-menu .sidebar-item-clicked {
+  background-color: #bbb;
+}
+/* line 96, ../scss/sidebar.scss */
+.sidebar .switch-btn {
+  position: absolute;
+  bottom: 15px;
+  width: 33px;
+  height: 35px;
+  padding-right: 2px;
+  margin: 0 5px;
+  border-radius: 5px;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 20px;
+}
+/* line 109, ../scss/sidebar.scss */
+.sidebar .switch-btn:hover {
+  background-color: #bbb;
+}
+/* line 114, ../scss/sidebar.scss */
+.sidebar .close-btn {
+  animation-name: to-close-button;
+  -webkit-animation-name: to-close-button;
+  animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+/* line 125, ../scss/sidebar.scss */
+.sidebar .open-btn {
+  /*left: $sidebar-width;
+  font-size: 22px;*/
+  animation-name: to-open-button;
+  -webkit-animation-name: to-open-button;
+  animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes to-close-button {
+  /* line 140, ../scss/sidebar.scss */
+  from {
+    transform: translateX(45px) rotate(180deg) scale(1.05);
+  }
+}
+
+@keyframes to-close-button {
+  /* line 148, ../scss/sidebar.scss */
+  from {
+    transform: translateX(45px) rotate(180deg) scale(1.05);
+  }
+}
+
+@-webkit-keyframes to-open-button {
+  /* line 158, ../scss/sidebar.scss */
+  to {
+    transform: translateX(45px) rotate(180deg) scale(1.05);
+  }
+}
+
+@keyframes to-open-button {
+  /* line 166, ../scss/sidebar.scss */
+  to {
+    transform: translateX(45px) rotate(180deg) scale(1.05);
+  }
+}
+
+/* line 171, ../scss/sidebar.scss */
+.sidebar-hidden {
+  /*left: -$sidebar-width;*/
+  animation-name: hide-sidebar;
+  -webkit-animation-name: hide-sidebar;
+  animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes hide-sidebar {
+  /* line 186, ../scss/sidebar.scss */
+  to {
+    transform: translateX(-45px);
+  }
+}
+
+@keyframes hide-sidebar {
+  /* line 194, ../scss/sidebar.scss */
+  to {
+    transform: translateX(-45px);
+  }
+}
+
+/* line 199, ../scss/sidebar.scss */
+.sidebar-show {
+  /*left: -$sidebar-width;*/
+  animation-name: show-sidebar;
+  -webkit-animation-name: show-sidebar;
+  animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes show-sidebar {
+  /* line 212, ../scss/sidebar.scss */
+  from {
+    transform: translateX(-45px);
+  }
+}
+
+@keyframes show-sidebar {
+  /* line 220, ../scss/sidebar.scss */
+  from {
+    transform: translateX(-45px);
+  }
+}
+
+/* toolbar */
+/* line 231, ../scss/sidebar.scss */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 236, ../scss/sidebar.scss */
+.line {
+  padding: 10px 5px;
+}
+
+/* line 240, ../scss/sidebar.scss */
+.toolbar {
+  position: fixed;
+  /*left: 50%;*/
+  right: 20px;
+  bottom: 20px;
+  /*margin-left: -$toolbar-size / 2;*/
+}
+
+/* line 248, ../scss/sidebar.scss */
+.toolbar-item {
+  position: relative;
+  display: block;
+  width: 52px;
+  height: 52px;
+  margin-top: 1px;
+}
+/* line 256, ../scss/sidebar.scss */
+.toolbar-item:hover .toolbar-icon-fixed {
+  background-color: #b8c1c6;
+}
+/* line 260, ../scss/sidebar.scss */
+.toolbar-item:hover .toolbar-icon-slide {
+  top: -52px;
+}
+/* line 264, ../scss/sidebar.scss */
+.toolbar-item:hover .toolbar-text {
+  top: 0;
+}
+/* line 268, ../scss/sidebar.scss */
+.toolbar-item:hover .toolbar-layer {
+  opacity: 1;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+}
+
+/* line 275, ../scss/sidebar.scss */
+.toolbar-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+}
+
+/* line 284, ../scss/sidebar.scss */
+.toolbar-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 52px;
+  background-color: #d0d6d9;
+  font-size: 25px;
+  color: #555;
+  text-align: center;
+  line-height: 52px;
+}
+
+/* line 297, ../scss/sidebar.scss */
+.toolbar-icon-slide {
+  transition: top 0.5s;
+  -webkit-transition: top 0.5s;
+}
+
+/* line 304, ../scss/sidebar.scss */
+.toolbar-text {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  width: 52px;
+  height: 40px;
+  /* adjust paddiing-top 12 px */
+  background-color: #b8c1c6;
+  font-size: 12px;
+  color: #222;
+  text-align: center;
+  padding-top: 12px;
+  line-height: 1.2;
+  transition: top 0.5s;
+  -webkit-transition: top 0.5s;
+}
+
+/* toolbar hidden QRcode */
+/* line 320, ../scss/sidebar.scss */
+.toolbar-layer {
+  position: absolute;
+  right: 50px;
+  bottom: -10px;
+  width: 196px;
+  background-image: url(../img/toolbar_img.png);
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform-origin: 95% 95%;
+  -webkit-transform-origin: 95% 95%;
+  transform: scale(0);
+  -webkit-transform: scale(0);
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+/* line 333, ../scss/sidebar.scss */
+.toolbar-layer-wechat {
+  height: 196px;
+  background-position: 0 0;
+}
+
+/* line 338, ../scss/sidebar.scss */
+.toolbar-layer-app {
+  height: 196px;
+  background-position: 0 0;
+}
+
+/* line 343, ../scss/sidebar.scss */
+.main {
+  position: relative;
+  margin: 0 auto;
+  padding: 10px;
+  width: 750px;
+  border: solid 2px #777;
+  background-color: #eee;
+}
