@@ -4,27 +4,9 @@ requirejs.config({
   }
 });
 
-requirejs(["jquery", "backtop", "sidebar"], function($, backtop, sidebar) {
+requirejs(["jquery", "login"], function($, login) {
   console.log("# Module jquery loaded");
-  console.log("# Module backtop loaded");
-  console.log("# Module sidebar loaded");
+  console.log("# Module login loaded");
 
-  var scroll = new backtop.backTop($("#backTop"), {
-    mode : "move",
-  });
-
-  var sidebar = new sidebar.Sidebar("#sidebar");
-
-  $(document).click(function(e) {
-    e.preventDefault();
-
-    // Click outside sidebar, close all panels.
-    if ($(e.target).closest("#sidebar .sidebar-menu").length == 0) {
-      sidebar.closePanels();
-    }
-  });
-
-  // $("#backTop").backtop({
-  //   mode : "move",
-  // });
+  var login = new login.Login("#login-form");
 });

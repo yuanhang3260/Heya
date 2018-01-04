@@ -11,7 +11,7 @@
 <body>
 <nav class="fixed-top navbar heya-navbar">
   <div class="heya-navbar-container">
-    <a class="navbar-brand heya-navbar-brand" href="#">
+    <a class="navbar-brand heya-navbar-brand" href="#" tips="hei">
       <b>Heya</b> <i class="fa fa-leaf heya-logo"></i>
     </a>
 
@@ -28,26 +28,25 @@
 
 <div class="index-main-container">
   <div id="intro-container" class="main-container-sub">
-    <!-- <img src="img/mountain.jpg" class="intro-img"> -->
   </div>
   <div id="login-container" class="main-container-sub">
     <h3 class="login-title">Welcome</h3>
-    <form action="login.action">
+    <form id="login-form" method="post" action="login">
       <div class="input-group mb-2">
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="fa fa-user"></i></span>
         </div>
-        <input type="text" class="form-control" placeholder="Username">
+        <input type="text" class="form-control" name="username" placeholder="Username">
       </div>
       <div class="input-group mb-1">
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="fa fa-unlock-alt"></i></span>
         </div>
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" name="password" placeholder="Password">
       </div>
       <div class="form-check mb-3">
         <label class="form-check-label login-check-label">
-          <input type="checkbox" class="form-check-input login-checkbox" id="remember-me" disabled="">Remember me
+          <input type="checkbox" class="form-check-input login-checkbox" name="rememberme" disabled="">Remember me
         </label>
       </div>
       <button type="submit" class="btn btn-success login-btn mb-3" disabled="">Log In</button>
@@ -58,5 +57,26 @@
   </div>
 </div>
 
+<div id="bottom-bar" class="bottom-bar">
+  <div class="bottom-container">
+    <div class="bottom-logo-container">
+      <b>Heya</b></br><i class="fa fa-leaf"></i>
+    </div>
+    <ul class="bottom-ul">
+      <li style="font-size: 15px; color: #444"><b>Share</b></li>
+      <li>Facebook</li>
+      <li>Weibo</a></li>
+    </ul>
+    <ul class="bottom-ul">
+      <li style="font-size: 15px; color: #444"><b>Contact</b></li>
+      <li>Author</li>
+      <li><a href="https://github.com/yuanhang3260/Heya" target="_blank">Github</a></li>
+    </ul>
+    <ul class="bottom-horizontal-placer-holder"></ul>
+  </div>
+</div>
+
 </body>
+
+<script src="js/require.js" data-main="js/main"></script>
 </html>
