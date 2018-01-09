@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Heya</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/index.css">
 </head>
@@ -15,11 +15,15 @@
       <b>Heya</b> <i class="fa fa-leaf heya-logo"></i>
     </a>
 
-    <form class="form-inline my-lg-0 heya-navbar-search">
-      <input class="form-control heya-search-box" type="search" placeholder="Search" aria-label="Search">
-      <button type="button" class="btn btn-success heya-navbar-btn">
-        <i class="fa fa-search"></i>
-      </button>
+    <form method="get" class="form-inline my-lg-0 heya-navbar-search" action="search">
+      <div class="input-group">
+        <input type="text" class="form-control heya-search-box" name="value" placeholder="Search">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary heya-search-btn" type="submit">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
     </form>
 
     <button type="button" class="btn btn-success heya-navbar-btn">Sign up</button>
