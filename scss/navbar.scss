@@ -39,7 +39,6 @@ $main-width: 960px;
 }
 
 .heya-navbar-btn {
-  float: right;
   height: $navbar-height - 4px;
   font-size: 14px;
   padding: 4px 12px;
@@ -84,4 +83,8 @@ $main-width: 960px;
     border: 1px solid #ced4da;
     border-left: none;
   };
+}
+
+.signup-form {
+  float: right;
 }

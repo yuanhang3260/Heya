@@ -40,7 +40,6 @@
 
 /* line 41, ../scss/navbar.scss */
 .heya-navbar-btn {
-  float: right;
   height: 31px;
   font-size: 14px;
   padding: 4px 12px;
@@ -48,20 +47,20 @@
   border-color: transparent;
   color: #ddd;
 }
-/* line 50, ../scss/navbar.scss */
+/* line 49, ../scss/navbar.scss */
 .heya-navbar-btn:hover {
   background-color: #145a24;
   border-color: transparent;
 }
 
-/* line 56, ../scss/navbar.scss */
+/* line 55, ../scss/navbar.scss */
 .heya-navbar-search {
   display: inline-block;
   vertical-align: middle;
   margin-left: 10px;
 }
 
-/* line 62, ../scss/navbar.scss */
+/* line 61, ../scss/navbar.scss */
 .heya-search-box {
   height: 31px;
   font-size: 14px;
@@ -70,12 +69,12 @@
   border-right: 0px;
 }
 
-/* line 70, ../scss/navbar.scss */
+/* line 69, ../scss/navbar.scss */
 .heya-search-box:focus {
   border-color: #ced4da;
 }
 
-/* line 74, ../scss/navbar.scss */
+/* line 73, ../scss/navbar.scss */
 .heya-search-btn {
   height: 31px;
   background-color: white;
@@ -83,12 +82,17 @@
   border-left: none;
   padding: 0 12px;
 }
-/* line 81, ../scss/navbar.scss */
+/* line 80, ../scss/navbar.scss */
 .heya-search-btn:hover {
   color: #777777;
   background-color: #f3f3f3;
   border: 1px solid #ced4da;
   border-left: none;
+}
+
+/* line 88, ../scss/navbar.scss */
+.signup-form {
+  float: right;
 }
 
 /* line 3, ../scss/index.scss */

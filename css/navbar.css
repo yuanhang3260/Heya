@@ -40,7 +40,6 @@
 
 /* line 41, ../scss/navbar.scss */
 .heya-navbar-btn {
-  float: right;
   height: 31px;
   font-size: 14px;
   padding: 4px 12px;
@@ -48,98 +47,50 @@
   border-color: transparent;
   color: #ddd;
 }
-/* line 50, ../scss/navbar.scss */
+/* line 49, ../scss/navbar.scss */
 .heya-navbar-btn:hover {
   background-color: #145a24;
   border-color: transparent;
 }
 
-/* line 56, ../scss/navbar.scss */
+/* line 55, ../scss/navbar.scss */
 .heya-navbar-search {
   display: inline-block;
   vertical-align: middle;
   margin-left: 10px;
 }
 
-/* line 62, ../scss/navbar.scss */
+/* line 61, ../scss/navbar.scss */
 .heya-search-box {
   height: 31px;
   font-size: 14px;
   padding: 6px;
   border-radius: 2px;
-  margin-right: 3px;
+  border-right: 0px;
 }
 
-/* line 70, ../scss/navbar.scss */
-.index-main-container {
-  display: flex;
-  margin: 55px auto 0;
-  width: 960px;
-  height: auto;
+/* line 69, ../scss/navbar.scss */
+.heya-search-box:focus {
+  border-color: #ced4da;
 }
 
-/* line 77, ../scss/navbar.scss */
-.main-container-sub {
-  width: 580px;
-  height: 330px;
-  margin: 5px 3px;
-  padding: 5px;
-  /*border: 1px solid #555;*/
+/* line 73, ../scss/navbar.scss */
+.heya-search-btn {
+  height: 31px;
+  background-color: white;
+  border: 1px solid #ced4da;
+  border-left: none;
+  padding: 0 12px;
+}
+/* line 80, ../scss/navbar.scss */
+.heya-search-btn:hover {
+  color: #777777;
+  background-color: #f3f3f3;
+  border: 1px solid #ced4da;
+  border-left: none;
 }
 
-/* line 85, ../scss/navbar.scss */
-#login-container {
-  width: 350px;
-  padding: 15px;
-  background-color: #e2e2e2;
-  border-radius: 5px;
-  border: 1px solid transparent;
-}
-
-/* line 93, ../scss/navbar.scss */
-.login-title {
-  margin-bottom: 15px;
-  color: #065a19;
-}
-
-/* line 98, ../scss/navbar.scss */
-.login-btn {
-  margin-top: 1px;
-  width: 318px;
-}
-
-/* line 103, ../scss/navbar.scss */
-.login-check-label {
-  color: #555;
-  font-size: 13px;
-}
-
-/* line 108, ../scss/navbar.scss */
-.login-checkbox {
-  width: 12px;
-  height: 12px;
-  margin-left: -17px;
-}
-
-/* line 114, ../scss/navbar.scss */
-#intro-container {
-  position: relative;
-  padding: 0;
-}
-
-/* line 119, ../scss/navbar.scss */
-#intro-container::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 570px;
-  height: 330px;
-  background: url("../img/mountain.jpg");
-  background-size: 570px 330px;
-  background-repeat: no-repeat;
-  border-radius: 2px;
-  opacity: 0.3;
-  z-index: -1;
+/* line 88, ../scss/navbar.scss */
+.signup-form {
+  float: right;
 }
