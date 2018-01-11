@@ -1,0 +1,60 @@
+@import "navbar";
+
+body {
+  background-color: #ececec;
+}
+
+input:focus, button:focus {
+  box-shadow: none !important; 
+  outline: 0 !important;
+}
+
+.signup-page-main-container {
+  display: flex;
+  margin: 65px auto 0;
+  width: $main-width;
+  height: auto;
+}
+
+.signup-container {
+  width: 550px;
+  padding: 15px;
+  background-color: #e2e2e2;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+
+.heya-signup-input {
+  display: inline-block;
+  width: 450px;
+  background-color: #fdfdfd;
+}
+
+.signup-input-check {
+  display: none;
+  margin-left: 2px;
+  color: green;
+}
+
+.signup-input-check-error {
+  display: none;
+  margin-left: 2px;
+  color: #d00;
+}
+
+.heya-signup-tip {
+  text-indent: 3px;
+  color: #777;
+}
+
+.heya-signup-tip-error {
+  color: red;
+}
+
+.heya-signup-tip-hidden {
+  opacity: 0;
+}
+
+.inputbox-error {
+  box-shadow: 0 0 1px 1px red;
+}

@@ -4,9 +4,9 @@ requirejs.config({
   }
 });
 
-requirejs(["jquery", "login"], function($, login) {
+requirejs(["jquery", "signup"], function($, signup) {
   console.log("# Module jquery loaded");
-  console.log("# Module login loaded");
+  console.log("# Module signup loaded");
 
-  var login = new login.Login("#login-form");
+  var signup_ = new signup.SignUp("#signup-form");
 });
