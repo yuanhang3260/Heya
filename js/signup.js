@@ -38,9 +38,14 @@ define(["jquery"], function($) {
 
     // Submit button.
     this.el.find("button[type=submit]").click($.proxy(this.CheckSubmitValid, this));
+    this.el.submit($.proxy(this.Submit, this));
+
+    // this.el.find(".form-container").css("display", "none");
+    // this.el.find(".success-info-container").css("display", "block");
+    // this.StartRedirecting();
   }
 
-  SignUp.prototype.EMAIL_TIP = "We'll never share your email with anyone else";
+  SignUp.prototype.EMAIL_TIP = "We\"ll never share your email with anyone else";
   SignUp.prototype.EMAIL_ERROR_TIP = "Invalid Email address format";
   SignUp.prototype.PASSWORD_CONFIRM_MISMATCH = "Different with password";
 
@@ -191,7 +196,7 @@ define(["jquery"], function($) {
       this.password_valid = true;
       this.InputCorrect(this.password_container, this.password_input);
 
-      // Check with password confirm is it's not empty.
+      // Check with password confirm is it"s not empty.
       var password_confirm = this.password_confirm_input.val();
       if (password_confirm) {
         return this.checkPasswordMatch(password, password_confirm);
@@ -225,6 +230,67 @@ define(["jquery"], function($) {
     } else {
       return false;
     }
+  };
+
+  // Submit with AJAX.
+  SignUp.prototype.Submit = function(event) {
+    // Stop the form from submitting the normal way and refreshing the page.
+    event.preventDefault();
+
+    var formData = {
+        "username" : this.username_input.val(),
+        "email" : this.email_input.val(),
+        "password" : this.password_input.val(),
+    };
+
+    // Disable the submit button.
+    this.el.find("button[type=submit]").attr("disabled", "");
+
+    // Process the form.
+    var form = this.el;
+    var me = this;
+    $.ajax({
+        type : "POST",
+        url : "signup",
+        data : formData,
+        dataType : "json",
+        encode : true,
+    }).done(function(data) {
+      // log data to the console so we can see.
+      console.log(data);
+
+      form.find("button[type=submit]").removeAttr("disabled");
+      if (data.success) {
+        form.find(".form-container").css("display", "none");
+        form.find(".success-info-container").css("display", "block");
+        me.StartRedirecting();
+      } else {
+        // Show error message.
+        form.find(".submit-error-msg-container").css("display", "inline-block");
+        form.find(".submit-error-msg-container").html(
+            "<i class=\"fa fa-times-circle\"></i> " + data.error);
+      }
+    });
+  };
+
+  SignUp.prototype.StartRedirecting = function() {
+    var count_sec = 5;
+    var container = this.el.find(".success-info-container");
+    var remain_time_el = container.find(".remain-time");
+
+    var startTime = (new Date()).getTime();
+    var remain_time_reader = window.setInterval(function() {
+      var remain =
+          count_sec - Math.floor(((new Date()).getTime() - startTime) / 1000);
+      if (remain >= 0) {
+        remain_time_el.html(" " + remain + " ");
+      }
+    }, 200);
+
+    var timer = window.setTimeout(function() {
+      window.clearInterval(remain_time_reader);
+      window.location.assign("home.jsp");
+    }, count_sec * 1000);
   };
 
   return {

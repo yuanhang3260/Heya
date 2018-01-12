@@ -1,5 +1,10 @@
 @import "navbar";
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #ececec;
 }
@@ -10,7 +15,6 @@ input:focus, button:focus {
 }
 
 .signup-page-main-container {
-  display: flex;
   margin: 65px auto 0;
   width: $main-width;
   height: auto;
@@ -57,4 +61,38 @@ input:focus, button:focus {
 
 .inputbox-error {
   box-shadow: 0 0 1px 1px red;
+}
+
+.signup-btn {
+  display: inline-block;
+}
+
+.success-info-container {
+  display: none;
+  font-size: 18px;
+}
+
+.new-user-smile {
+  color: green;
+  font-size: 22px;
+}
+
+.remain-time {
+  color: green;
+}
+
+.home-link {
+  text-decoration: underline;
+  color: green;
+}
+
+.submit-error-msg-container {
+  display: none;
+  vertical-align: top;
+  padding: 6px;
+  margin-left: 15px;
+  height: 38px;
+  line-height: 24px;
+  color: red;
+  font-size: 14px;
 }

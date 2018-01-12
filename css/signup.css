@@ -96,25 +96,30 @@
 }
 
 /* line 3, ../scss/signup.scss */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 8, ../scss/signup.scss */
 body {
   background-color: #ececec;
 }
 
-/* line 7, ../scss/signup.scss */
+/* line 12, ../scss/signup.scss */
 input:focus, button:focus {
   box-shadow: none !important;
   outline: 0 !important;
 }
 
-/* line 12, ../scss/signup.scss */
+/* line 17, ../scss/signup.scss */
 .signup-page-main-container {
-  display: flex;
   margin: 65px auto 0;
   width: 960px;
   height: auto;
 }
 
-/* line 19, ../scss/signup.scss */
+/* line 23, ../scss/signup.scss */
 .signup-container {
   width: 550px;
   padding: 15px;
@@ -123,44 +128,84 @@ input:focus, button:focus {
   border: 1px solid transparent;
 }
 
-/* line 27, ../scss/signup.scss */
+/* line 31, ../scss/signup.scss */
 .heya-signup-input {
   display: inline-block;
   width: 450px;
   background-color: #fdfdfd;
 }
 
-/* line 33, ../scss/signup.scss */
+/* line 37, ../scss/signup.scss */
 .signup-input-check {
   display: none;
   margin-left: 2px;
   color: green;
 }
 
-/* line 39, ../scss/signup.scss */
+/* line 43, ../scss/signup.scss */
 .signup-input-check-error {
   display: none;
   margin-left: 2px;
   color: #d00;
 }
 
-/* line 45, ../scss/signup.scss */
+/* line 49, ../scss/signup.scss */
 .heya-signup-tip {
   text-indent: 3px;
   color: #777;
 }
 
-/* line 50, ../scss/signup.scss */
+/* line 54, ../scss/signup.scss */
 .heya-signup-tip-error {
   color: red;
 }
 
-/* line 54, ../scss/signup.scss */
+/* line 58, ../scss/signup.scss */
 .heya-signup-tip-hidden {
   opacity: 0;
 }
 
-/* line 58, ../scss/signup.scss */
+/* line 62, ../scss/signup.scss */
 .inputbox-error {
   box-shadow: 0 0 1px 1px red;
+}
+
+/* line 66, ../scss/signup.scss */
+.signup-btn {
+  display: inline-block;
+}
+
+/* line 70, ../scss/signup.scss */
+.success-info-container {
+  display: none;
+  font-size: 18px;
+}
+
+/* line 75, ../scss/signup.scss */
+.new-user-smile {
+  color: green;
+  font-size: 22px;
+}
+
+/* line 80, ../scss/signup.scss */
+.remain-time {
+  color: green;
+}
+
+/* line 84, ../scss/signup.scss */
+.home-link {
+  text-decoration: underline;
+  color: green;
+}
+
+/* line 89, ../scss/signup.scss */
+.submit-error-msg-container {
+  display: none;
+  vertical-align: top;
+  padding: 6px;
+  margin-left: 15px;
+  height: 38px;
+  line-height: 24px;
+  color: red;
+  font-size: 14px;
 }
