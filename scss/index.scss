@@ -1,12 +1,8 @@
+@import "common";
 @import "navbar";
 
 body {
   background-color: #ececec;
-}
-
-input:focus, button:focus {
-  box-shadow: none !important; 
-  outline: 0 !important;
 }
 
 .index-main-container {
@@ -25,6 +21,7 @@ input:focus, button:focus {
 }
 
 #login-container {
+  position: relative;
   width: 350px;
   padding: 15px;
   background-color: #e2e2e2;
@@ -140,4 +137,16 @@ input:focus, button:focus {
 
 .inputbox-error {
   box-shadow: 0 0 1px 1px red;
+}
+
+.login-error-msg {
+  /*display: none;*/
+  position: absolute;
+  left: 150px;
+  top: 15px;
+  white-space: nowrap;
+  margin: 0;
+  padding: 5px 9px;
+  font-size: 14px;
+  border: none;
 }

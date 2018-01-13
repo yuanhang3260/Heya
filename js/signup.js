@@ -12,7 +12,8 @@ define(["jquery"], function($) {
     this.password_input = this.password_container.find("input[name=password]");
 
     this.password_confirm_container = this.el.find("#signup-password-confirm");
-    this.password_confirm_input = this.password_confirm_container.find("input[name=password-confirm]");
+    this.password_confirm_input =
+        this.password_confirm_container.find("input[name=password-confirm]");
 
     this.username_valid = false;
     this.email_valid = false;
@@ -34,14 +35,16 @@ define(["jquery"], function($) {
 
     // Password confirm input box events.
     this.password_confirm_input.keyup($.proxy(this.PasswordConfirmKeyUp, this));
-    this.password_confirm_input.focusout($.proxy(this.checkPasswordConfirm, this));
+    this.password_confirm_input.
+        focusout($.proxy(this.checkPasswordConfirm, this));
 
     // Submit button.
-    this.el.find("button[type=submit]").click($.proxy(this.CheckSubmitValid, this));
+    this.el.find("button[type=submit]").
+        click($.proxy(this.CheckSubmitValid, this));
     this.el.submit($.proxy(this.Submit, this));
 
-    // this.el.find(".form-container").css("display", "none");
-    // this.el.find(".success-info-container").css("display", "block");
+    // this.el.find(".form-container").hide();
+    // this.el.find(".success-info-container").show();
     // this.StartRedirecting();
   }
 
@@ -52,29 +55,39 @@ define(["jquery"], function($) {
   // When typing, reset all tips and check message.
   SignUp.prototype.RestoreInput = function(container, input) {
     container.find(".heya-signup-tip").removeClass("heya-signup-tip-error");
-    container.find(".signup-input-check").css("display", "none");
-    container.find(".signup-input-check-error").css("display", "none");
+    container.find(".signup-input-check").hide();
+    container.find(".signup-input-check-error").hide();
     input.removeClass("inputbox-error");
-  };
 
-  SignUp.prototype.restoreInput = function(input) {
-    input.removeClass("inputbox-error");
+    this.el.find(".submit-error-msg-container").hide();
   };
 
   SignUp.prototype.InputError = function(container, input) {
     input.addClass("inputbox-error");
-    container.find(".signup-input-check").css("display", "none");
-    container.find(".signup-input-check-error").css("display", "inline-block");
+    container.find(".signup-input-check").hide();
+    container.find(".signup-input-check-error").show();
   };
 
   SignUp.prototype.InputCorrect = function(container, input) {
     input.removeClass("inputbox-error");
-    container.find(".signup-input-check").css("display", "inline-block");
-    container.find(".signup-input-check-error").css("display", "none");
+    container.find(".signup-input-check").show();
+    container.find(".signup-input-check-error").hide();
   };
 
-  SignUp.prototype.UserNameKeyup = function(container, input) {
-    this.RestoreInput(this.username_container, this.username_input);
+  SignUp.prototype.ValidKeyUp = function(event) {
+    var x = event.keyCode || event.which;
+    if (x == 13) {
+      // Don't respond to Enter key.
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  SignUp.prototype.UserNameKeyup = function(event) {
+    if (this.ValidKeyUp(event)) {
+      this.RestoreInput(this.username_container, this.username_input);
+    }
   };
 
   SignUp.prototype.CheckSubmitValid = function() {
@@ -83,13 +96,14 @@ define(["jquery"], function($) {
     if (this.submit_enable) {
       return true;
     } else {
-      return (this.checkUserName() && this.checkEmail() &&
-              this.checkPassword() && this.checkPasswordConfirm());
+      // return this.checkPasswordConfirm();
+      return (this.checkUserName(false) && this.checkEmail(false) &&
+              this.checkPassword(false) && this.checkPasswordConfirm(false));
     }
   }
 
   // Check username is valid.
-  SignUp.prototype.checkUserName = function() {
+  SignUp.prototype.checkUserName = function(allowEmpty) {
     var username = this.username_input.val();
     var length = username.length;
     if (username) {
@@ -107,26 +121,32 @@ define(["jquery"], function($) {
       if (!valid) {
         this.username_valid = false;
         this.InputError(this.username_container, this.username_input);
-        this.username_container.find(".heya-signup-tip").addClass("heya-signup-tip-error");
+        this.username_container.find(".heya-signup-tip").
+            addClass("heya-signup-tip-error");
         return false;
       } else {
         this.username_valid = true;
         this.InputCorrect(this.username_container, this.username_input);
         return true;
       }
-    } else {
+    } else if (allowEmpty) {
       this.RestoreInput(this.username_container, this.username_input);
+      return false;
+    } else {
+      this.InputError(this.username_container, this.username_input);
       return false;
     }
   };
 
-  SignUp.prototype.EmailKeyUp = function(container, input) {
-    this.email_container.find(".heya-signup-tip").html(this.EMAIL_TIP);
-    this.RestoreInput(this.email_container, this.email_input);
+  SignUp.prototype.EmailKeyUp = function(event) {
+    if (this.ValidKeyUp(event)) {
+      this.email_container.find(".heya-signup-tip").html(this.EMAIL_TIP);
+      this.RestoreInput(this.email_container, this.email_input);
+    }
   };
 
   // Check email is valid.
-  SignUp.prototype.checkEmail = function() {
+  SignUp.prototype.checkEmail = function(allowEmpty) {
     var email = this.email_input.val();
     var length = email.length;
     if (email) {
@@ -153,43 +173,53 @@ define(["jquery"], function($) {
       if (!valid) {
         this.email_valid = false;
         this.InputError(this.email_container, this.email_input);
-        this.email_container.find(".heya-signup-tip").html(this.EMAIL_ERROR_TIP);
-        this.email_container.find(".heya-signup-tip").addClass("heya-signup-tip-error");
+        this.email_container.find(".heya-signup-tip").
+            html(this.EMAIL_ERROR_TIP);
+        this.email_container.find(".heya-signup-tip").
+            addClass("heya-signup-tip-error");
         return false;
       } else {
         this.email_valid = true;
         this.InputCorrect(this.email_container, this.email_input);
         return true;
       }
-    } else {
+    } else if (allowEmpty) {
       this.RestoreInput(this.email_container, this.email_input);
+      return false;
+    } else {
+      this.InputError(this.email_container, this.email_input);
       return false;
     }
   };
 
   SignUp.prototype.checkPasswordMatch = function(password, password_confirm) {
+    var tip = this.password_confirm_container.find(".heya-signup-tip");
     if (password_confirm == password) {
       this.password_confirm_valid = true;
-      this.InputCorrect(this.password_confirm_container, this.password_confirm_input);
-      this.password_confirm_container.find(".heya-signup-tip").html("*");
-      this.password_confirm_container.find(".heya-signup-tip").addClass("heya-signup-tip-hidden");
+      this.InputCorrect(this.password_confirm_container,
+                        this.password_confirm_input);
+      tip.html("*");
+      tip.addClass("heya-signup-tip-hidden");
       return true;
     } else {
       this.password_confirm_valid = false;
-      this.InputError(this.password_confirm_container, this.password_confirm_input);
-      this.password_confirm_container.find(".heya-signup-tip").html(this.PASSWORD_CONFIRM_MISMATCH);
-      this.password_confirm_container.find(".heya-signup-tip").addClass("heya-signup-tip-error");
-      this.password_confirm_container.find(".heya-signup-tip").removeClass("heya-signup-tip-hidden");
+      this.InputError(this.password_confirm_container,
+                      this.password_confirm_input);
+      tip.html(this.PASSWORD_CONFIRM_MISMATCH);
+      tip.addClass("heya-signup-tip-error");
+      tip.removeClass("heya-signup-tip-hidden");
       return false;
     }
   };
 
-  SignUp.prototype.PasswordKeyUp = function(container, input) {
-    this.RestoreInput(this.password_container, this.password_input);
+  SignUp.prototype.PasswordKeyUp = function(event) {
+    if (this.ValidKeyUp(event)) {
+      this.RestoreInput(this.password_container, this.password_input);
+    }
   };
 
   // Check password is valid.
-  SignUp.prototype.checkPassword = function() {
+  SignUp.prototype.checkPassword = function(allowEmpty) {
     var password = this.password_input.val();
     var length = password.length;
     if (password) {
@@ -200,35 +230,50 @@ define(["jquery"], function($) {
       var password_confirm = this.password_confirm_input.val();
       if (password_confirm) {
         return this.checkPasswordMatch(password, password_confirm);
+      } else {
+        // Note we return true when password is given but password_confirm is
+        // empty. Non-empty check for password confirm is in
+        // checkPasswordConfirm.
+        return true;
       }
-    } else {
+    } else if (allowEmpty) {
       this.RestoreInput(this.password_container, this.password_input);
+      return false;
+    } else {
+      this.InputError(this.password_container, this.password_input);
       return false;
     }
   };
 
-  SignUp.prototype.PasswordConfirmKeyUp = function(container, input) {
-    this.RestoreInput(this.password_confirm_container, this.password_confirm_input);
-    this.password_confirm_container.find(".heya-signup-tip").html("*");
-    this.password_confirm_container.find(".heya-signup-tip").addClass("heya-signup-tip-hidden");
+  SignUp.prototype.PasswordConfirmKeyUp = function(event) {
+    if (this.ValidKeyUp(event)) {
+      this.RestoreInput(this.password_confirm_container,
+                        this.password_confirm_input);
+      this.password_confirm_container.find(".heya-signup-tip").html("*");
+      this.password_confirm_container.find(".heya-signup-tip").
+          addClass("heya-signup-tip-hidden");
 
-    if (this.password_input.val() &&
-        this.password_confirm_input.val() == this.password_input.val()) {
-      this.password_confirm_valid = true;
-      this.InputCorrect(this.password_confirm_container, this.password_confirm_input);
-    } else {
-      this.password_confirm_valid = false;
+      if (this.password_input.val() &&
+          this.password_confirm_input.val() == this.password_input.val()) {
+        this.password_confirm_valid = true;
+        this.InputCorrect(this.password_confirm_container,
+                          this.password_confirm_input);
+      } else {
+        this.password_confirm_valid = false;
+      }
     }
   };
 
   // Check password confirm matches password.
-  SignUp.prototype.checkPasswordConfirm = function() {
+  SignUp.prototype.checkPasswordConfirm = function(allowEmpty) {
     var password = this.password_input.val();
     var password_confirm = this.password_confirm_input.val();
     if (password && password_confirm) {
       return this.checkPasswordMatch(password, password_confirm);
-    } else {
+    } else if (allowEmpty) {
       return false;
+    } else {
+      return this.checkPasswordMatch(password, password_confirm);
     }
   };
 
@@ -261,14 +306,14 @@ define(["jquery"], function($) {
 
       form.find("button[type=submit]").removeAttr("disabled");
       if (data.success) {
-        form.find(".form-container").css("display", "none");
-        form.find(".success-info-container").css("display", "block");
+        form.find(".form-container").hide();
+        form.find(".success-info-container").show();
         me.StartRedirecting();
       } else {
         // Show error message.
-        form.find(".submit-error-msg-container").css("display", "inline-block");
         form.find(".submit-error-msg-container").html(
             "<i class=\"fa fa-times-circle\"></i> " + data.error);
+        form.find(".submit-error-msg-container").show();
       }
     });
   };

@@ -8,7 +8,7 @@ import java.util.Properties;
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
  
-public class SignupServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
   @Override
   @SuppressWarnings("unchecked")
   public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -24,48 +24,30 @@ public class SignupServlet extends HttpServlet {
         e.printStackTrace();
       }
 
-      // Connect to databse
+      // Connect to databse.
       Properties p = new Properties();
       p.put("user", "hy");
       p.put("password", "123456");
       conn = DriverManager.getConnection("jdbc:mysql://localhost/Heya", p);
       stmt = conn.createStatement();
 
-      // Database query
-      String sqlStr = "SELECT * from Users where userName = \"" +
+      // Database query.
+      String sqlStr = "SELECT * from Users where username = \"" +
                       request.getParameter("username") + "\"";
       ResultSet rset = stmt.executeQuery(sqlStr);
-      if (rset.next()) {
-        // User already exists, return error.
+      if (!rset.next()) {
         json_obj.put("success", false);
-        json_obj.put("error", "Username already used");
+        json_obj.put("error", "user cannot be found");
         WriteResponse(response, json_obj);
         return;
       } else {
-        sqlStr = "SELECT MAX(uid) as max_uid FROM Users";
-        rset = stmt.executeQuery(sqlStr);
-        int uid = 0;
-        if (rset.next()) {
-          uid = rset.getInt("max_uid") + 1;
-          if (rset.wasNull()) {
-            uid = 0;
-          }
-        }
-
-        // TODO: Encrypt password!
-        sqlStr = "INSERT INTO Users (uid, username, email, password) VALUES (" +
-                 Integer.toString(uid) + ", " +
-                 buildSqlStringValue(request.getParameter("username")) + ", " +
-                 buildSqlStringValue(request.getParameter("email")) + ", " +
-                 buildSqlStringValue(request.getParameter("password")) + ")";
-        int new_records = stmt.executeUpdate(sqlStr);
-        if (new_records != 1) {
+        if (!rset.getString("password").equals(
+               request.getParameter("password"))) {
           json_obj.put("success", false);
-          json_obj.put("error", "Server error, failed to create new user");
+          json_obj.put("error", "username/password doesn't match");
           WriteResponse(response, json_obj);
           return;
         }
-
         // Create new user successfully. Create session and return.
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -81,7 +63,7 @@ public class SignupServlet extends HttpServlet {
     } catch (SQLException e) {
       e.printStackTrace();
       json_obj.put("success", false);
-      json_obj.put("error", "Database error, failed to create new user");    
+      json_obj.put("error", "Server error, failed to log in");    
       WriteResponse(response, json_obj);
     } finally {
       try {
@@ -98,10 +80,6 @@ public class SignupServlet extends HttpServlet {
       }
     }
     return;
-  }
-
-  private String buildSqlStringValue(String str) {
-    return "\"" + str + "\"";
   }
 
   private void WriteResponse(HttpServletResponse response,

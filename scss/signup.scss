@@ -1,17 +1,7 @@
 @import "navbar";
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   background-color: #ececec;
-}
-
-input:focus, button:focus {
-  box-shadow: none !important; 
-  outline: 0 !important;
 }
 
 .signup-page-main-container {
@@ -87,7 +77,7 @@ input:focus, button:focus {
 }
 
 .submit-error-msg-container {
-  display: none;
+  display: inline-block;
   vertical-align: top;
   padding: 6px;
   margin-left: 15px;
