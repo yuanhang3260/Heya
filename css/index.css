@@ -275,7 +275,7 @@ body {
 
 /* line 142, ../scss/index.scss */
 .login-error-msg {
-  /*display: none;*/
+  display: none;
   position: absolute;
   left: 150px;
   top: 15px;
