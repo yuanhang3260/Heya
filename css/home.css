@@ -1,0 +1,238 @@
+/* line 1, ../scss/common.scss */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 6, ../scss/common.scss */
+input:focus, button:focus {
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+/* line 1, ../scss/common.scss */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 6, ../scss/common.scss */
+input:focus, button:focus {
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+/* line 7, ../scss/navbar.scss */
+.heya-navbar {
+  background-color: #227535;
+  padding: 0;
+}
+
+/* line 12, ../scss/navbar.scss */
+.heya-navbar-brand {
+  display: inline-block;
+  vertical-align: middle;
+  height: 35px;
+  line-height: 35px;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 21px;
+  padding: 0 2px;
+  margin-top: -1px;
+}
+/* line 23, ../scss/navbar.scss */
+.heya-navbar-brand:hover {
+  color: white;
+}
+/* line 27, ../scss/navbar.scss */
+.heya-navbar-brand:hover .heya-logo {
+  color: white;
+}
+
+/* line 32, ../scss/navbar.scss */
+.heya-logo {
+  color: #ddd;
+  font-size: 17px;
+}
+
+/* line 37, ../scss/navbar.scss */
+.heya-navbar-container {
+  margin: 0 auto;
+  width: 960px;
+  padding: 7px;
+}
+
+/* line 43, ../scss/navbar.scss */
+.heya-navbar-btn {
+  height: 31px;
+  font-size: 14px;
+  padding: 4px 12px;
+  background-color: #227535;
+  border-color: transparent;
+  color: #ddd;
+}
+/* line 51, ../scss/navbar.scss */
+.heya-navbar-btn:hover {
+  background-color: #145a24;
+  border-color: transparent;
+}
+
+/* line 57, ../scss/navbar.scss */
+.heya-navbar-search {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+/* line 63, ../scss/navbar.scss */
+.input-group .heya-search-box {
+  width: 280px;
+  height: 31px;
+  font-size: 14px;
+  padding: 6px;
+  border-radius: 2px;
+  border-right: 0px;
+  background-color: #f5f5f5;
+}
+
+/* line 73, ../scss/navbar.scss */
+.input-group .heya-search-box:focus {
+  border-color: #ced4da;
+  background-color: #white;
+}
+
+/* line 78, ../scss/navbar.scss */
+.input-group .heya-search-btn {
+  height: 31px;
+  background-color: #f5f5f5;
+  border: 1px solid #ced4da;
+  border-left: none;
+  padding: 0 12px;
+}
+/* line 85, ../scss/navbar.scss */
+.input-group .heya-search-btn:hover {
+  color: #777777;
+  background-color: #e5e5e5;
+  border: 1px solid #ced4da;
+  border-left: none;
+}
+
+/* line 93, ../scss/navbar.scss */
+.signup-form {
+  float: right;
+}
+
+/* line 12, ../scss/home.scss */
+body {
+  background-color: #f3f3f3;
+}
+
+/* line 16, ../scss/home.scss */
+.heya-navbar-container {
+  width: 1250px;
+}
+
+/* line 20, ../scss/home.scss */
+.home-main-container {
+  position: relative;
+  width: 1250px;
+  top: 55px;
+  height: 600px;
+  margin: 0 auto;
+  /*background-color: #ccc;*/
+}
+
+/* line 29, ../scss/home.scss */
+.home-left-bar {
+  position: fixed;
+  top: 55px;
+}
+
+/* line 34, ../scss/home.scss */
+.home-profile-container {
+  width: 230px;
+  height: 250px;
+  margin: 5px;
+  background-color: #f7f7f7;
+}
+
+/* line 41, ../scss/home.scss */
+.cover-img {
+  height: 100px;
+}
+
+/* line 45, ../scss/home.scss */
+.profile-img-container {
+  position: absolute;
+  left: 65px;
+  top: 50px;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: solid 3px white;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: white;
+  background-image: url("../img/snoopy.jpg");
+}
+
+/* line 63, ../scss/home.scss */
+.username-container {
+  position: absolute;
+  top: 150px;
+  width: 230px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-weight: 550;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* line 76, ../scss/home.scss */
+.follower-container {
+  position: absolute;
+  top: 185px;
+  width: 230px;
+  height: 60px;
+  color: #555;
+  padding: 0 40px;
+}
+
+/* line 85, ../scss/home.scss */
+.follower {
+  display: inline-block;
+  vertical-align: middle;
+  width: 70px;
+  margin-top: 2px;
+  font-size: 13px;
+  padding-left: 2px;
+}
+
+/* line 94, ../scss/home.scss */
+.follower .follower-title {
+  text-align: center;
+  color: #666;
+}
+
+/* line 99, ../scss/home.scss */
+.follower .follower-num {
+  text-align: center;
+  color: #222;
+  font-weight: 520;
+}
+
+/* line 105, ../scss/home.scss */
+.follower-split-line {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1px;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+  background-color: #ccc;
+}

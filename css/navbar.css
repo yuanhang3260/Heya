@@ -10,11 +10,6 @@ input:focus, button:focus {
   outline: 0 !important;
 }
 
-/* line 11, ../scss/common.scss */
-.heya-hidden {
-  display: none;
-}
-
 /* line 7, ../scss/navbar.scss */
 .heya-navbar {
   background-color: #227535;
@@ -78,7 +73,8 @@ input:focus, button:focus {
 }
 
 /* line 63, ../scss/navbar.scss */
-.heya-search-box {
+.input-group .heya-search-box {
+  width: 300px;
   height: 31px;
   font-size: 14px;
   padding: 6px;
@@ -86,12 +82,12 @@ input:focus, button:focus {
   border-right: 0px;
 }
 
-/* line 71, ../scss/navbar.scss */
+/* line 72, ../scss/navbar.scss */
 .heya-search-box:focus {
   border-color: #ced4da;
 }
 
-/* line 75, ../scss/navbar.scss */
+/* line 76, ../scss/navbar.scss */
 .heya-search-btn {
   height: 31px;
   background-color: white;
@@ -99,7 +95,7 @@ input:focus, button:focus {
   border-left: none;
   padding: 0 12px;
 }
-/* line 82, ../scss/navbar.scss */
+/* line 83, ../scss/navbar.scss */
 .heya-search-btn:hover {
   color: #777777;
   background-color: #f3f3f3;
@@ -107,7 +103,7 @@ input:focus, button:focus {
   border-left: none;
 }
 
-/* line 90, ../scss/navbar.scss */
+/* line 91, ../scss/navbar.scss */
 .signup-form {
   float: right;
 }

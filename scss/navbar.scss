@@ -60,28 +60,31 @@ $main-width: 960px;
   margin-left: 10px;
 }
 
-.heya-search-box {
+.input-group .heya-search-box {
+  width: 280px;
   height: $navbar-height - 4px;
   font-size: 14px;
   padding: 6px;
   border-radius: 2px;
   border-right: 0px;
+  background-color: #f5f5f5;
 }
 
-.heya-search-box:focus {
+.input-group .heya-search-box:focus {
   border-color: #ced4da;
+  background-color: #white;
 }
 
-.heya-search-btn {
+.input-group .heya-search-btn {
   height: $navbar-height - 4px;
-  background-color: white;
+  background-color: #f5f5f5;
   border: 1px solid #ced4da;
   border-left: none;
   padding: 0 12px;
 
   &:hover {
     color: #777777;
-    background-color: #f3f3f3;
+    background-color: #e5e5e5;
     border: 1px solid #ced4da;
     border-left: none;
   };

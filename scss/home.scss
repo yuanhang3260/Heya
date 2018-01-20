@@ -1,0 +1,114 @@
+@import "common";
+@import "navbar";
+
+$main-width: 1250px;
+$top-reserve-height: 55px;
+$home-profile-container-width: 230px;
+$home-profile-container-height: 250px;
+$cover-img-height: 100px;
+$profile-img-size: 100px;
+$profile-img-border-size: 3px;
+
+body {
+  background-color: #f3f3f3;
+}
+
+.heya-navbar-container {
+  width: $main-width;
+}
+
+.home-main-container {
+  position: relative;
+  width: $main-width;
+  top: 55px;
+  height: 600px;
+  margin: 0 auto;
+  /*background-color: #ccc;*/
+}
+
+.home-left-bar {
+  position: fixed;
+  top: 55px;
+}
+
+.home-profile-container {
+  width: $home-profile-container-width;
+  height: $home-profile-container-height;
+  margin: 5px;
+  background-color: #f7f7f7;
+}
+
+.cover-img {
+  height: $cover-img-height;
+}
+
+.profile-img-container {
+  position: absolute;
+  left: ($home-profile-container-width - $profile-img-size) / 2;
+  top: $cover-img-height - $profile-img-size / 2 ;
+  display: inline-block;
+  width: $profile-img-size;
+  height: $profile-img-size;
+  border-radius: 50%;
+  border: solid $profile-img-border-size white;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  background-color: white;
+  background-image: url("../img/snoopy.jpg");
+}
+
+.username-container {
+  position: absolute;
+  top: $cover-img-height + $profile-img-size / 2;
+  width: $home-profile-container-width;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-weight: 550;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.follower-container {
+  position: absolute;
+  top: $cover-img-height + $profile-img-size / 2 + 35px;
+  width: $home-profile-container-width;
+  height: 60px;
+  color: #555;
+  padding: 0 40px;
+}
+
+.follower {
+  display: inline-block;
+  vertical-align: middle;
+  width: $home-profile-container-width / 2 - 45px;
+  margin-top: 2px;
+  font-size: 13px;
+  padding-left: 2px;
+}
+
+.follower .follower-title {
+  text-align: center;
+  color: #666;
+}
+
+.follower .follower-num {
+  text-align: center;
+  color: #222;
+  font-weight: 520;
+}
+
+.follower-split-line {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1px;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+  background-color: #ccc;
+}

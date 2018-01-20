@@ -9,8 +9,3 @@ input:focus, button:focus {
   box-shadow: none !important;
   outline: 0 !important;
 }
-
-/* line 11, ../scss/common.scss */
-.heya-hidden {
-  display: none;
-}
