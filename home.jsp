@@ -31,7 +31,7 @@
 <div class="home-main-container">
   <div class="home-left-bar">
     <div class="card home-profile-container">
-      <img class="card-img-top cover-img" src="img/snoopy-house.jpg" style="opacity: 0.7">
+      <img class="card-img-top cover-img" src="img/default-cover.jpg" style="opacity: 0.7">
       <div class="profile-img-container"></div>
       <div class="card-body username-container">Snoopy</div>
       <div class="card-body follower-container">
@@ -42,8 +42,32 @@
         <div class="follower-split-line"></div>
         <div class="follower">
           <div class="follower-title">Following</div>
-          <div class="follower-num">3</div>
+          <div class="follower-num">235</div>
         </div>
+      </div>
+    </div>
+
+    <div class="card home-profile-detail-container">
+      <h6 class="profile-card-title">About <small>-</small> <a href="#" class="profile-edit-button" >Edit</a></h6>
+      <div class="user-profile-item">
+        <i class="user-profile-icon fa fa-building-o"></i>
+        <p class="user-profile-detail">Software Engineer at Google</p>
+      </div>
+      <div class="user-profile-item">
+        <i class="user-profile-icon user-education-icon fa fa-graduation-cap"></i>
+        <p class="user-profile-detail">Carnegie Mellon University</p>
+      </div>
+      <div class="user-profile-item">
+        <i class="user-profile-icon fa fa-home"></i>
+        <p class="user-profile-detail">
+          <a href="https://www.google.com/maps/search/Santa Clara, California" target="_blank">Santa Clara, California</a>
+        </p>
+      </div>
+      <div class="user-profile-item">
+        <i class="user-profile-icon user-hometown-icon fa fa-map-marker"></i>
+        <p class="user-profile-detail">
+          <a href="https://www.google.com/maps/search/Jiangsu,China" target="_blank" class="user-profile-location">Jiangsu, China</a>
+        </p>
       </div>
     </div>
   </div>
@@ -51,5 +75,5 @@
 
 </body>
 
-<script src="js/require.js" data-main="js/login_main"></script>
+<script src="js/require.js" data-main="js/home_main"></script>
 </html>
