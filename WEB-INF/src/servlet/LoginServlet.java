@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
         session.invalidate();
       }
       session = request.getSession();
-      session.setAttribute("username", request.getParameter("username"));
+      session.setAttribute("user", user);
 
       json_obj.put("success", true);
       WriteResponse(response, json_obj);

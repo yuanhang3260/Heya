@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page import = "bean.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<%
+  User user = (User)session.getAttribute("user");
+%>
+
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -31,11 +40,11 @@
 <div class="home-main-container">
   <div class="home-left-bar">
     <div class="card home-profile-container">
-      <img class="card-img-top cover-img" src="img/default-cover.jpg" style="opacity: 0.7">
-      <div class="profile-img-container" style="background-image: url(img/default-profile2.jpg)">
+      <img class="card-img-top cover-img" src="<%= user.getProfileCoverImg(request)%>" style="opacity: 0.7">
+      <div class="profile-img-container" style="background-image: url(<%= user.getProfileImg(request)%>)">
         <!-- <img class="profile-img" src="img/default-profile2.jpg"> -->
       </div>
-      <div class="card-body username-container">Snoopy</div>
+      <div class="card-body username-container"><%= user.getUsername()%></div>
       <div class="card-body follower-container">
         <div class="follower">
           <div class="follower-title">Followers</div>

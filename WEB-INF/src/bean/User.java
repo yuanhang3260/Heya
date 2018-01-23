@@ -27,8 +27,6 @@ public class User {
   private String work;
   private String live;
 
-  public User() {}
-
   public static User GetUserByUsername(String username) {
     String sqlStr = "SELECT * from Users where username = \"" + username + "\"";
 
@@ -114,22 +112,28 @@ public class User {
                                    String username,
                                    String email,
                                    String password) {
-    String sqlStr = "INSERT INTO Users (uid, username, email, password) " +
-                    "VALUES (" +
-                    Integer.toString(uid) + ", " +
-                    DBManager.buildSqlStringValue(username) + ", " +
-                    DBManager.buildSqlStringValue(email) + ", " +
-                    DBManager.buildSqlStringValue(password) + ")";
+    String addUser = "INSERT INTO Users (uid, username, email, password) " +
+                    "VALUES (?, ?, ?, ?)";
+    String addUserDetail = "INSERT INTO UserDetail (uid) VALUES (?)";
 
     Connection conn = null;
     PreparedStatement stmt = null;
     try {
       conn = DBManager.getDBConnection();
-      stmt = conn.prepareStatement(sqlStr);
-      int re = stmt.executeUpdate();
-      if (re != 1) {
-        return false;
-      }
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(addUser);
+      stmt.setInt(1, uid);
+      stmt.setString(2, username);
+      stmt.setString(3, email);
+      stmt.setString(4, password);
+      stmt.executeUpdate();
+
+      stmt = conn.prepareStatement(addUserDetail);
+      stmt.setInt(1, uid);
+      stmt.executeUpdate();
+
+      conn.commit();
       return true;
     } catch (SQLException e) {
       e.printStackTrace();
@@ -144,6 +148,39 @@ public class User {
         ex.printStackTrace();
       }
     }
+  }
+
+  public String getProfileImg(HttpServletRequest request) {
+    ServletContext context = request.getServletContext();
+    String baseDir = context.getInitParameter("data");
+    String path = baseDir + "user/" + Integer.toString(uid) + "/profile.jpg";
+    File file = new File(path);
+    if (file.exists()) {
+      return profileImageURL(uid);
+    } else {
+      return "img/default-profile2.jpg";
+    }
+  }
+
+  public String getProfileCoverImg(HttpServletRequest request) {
+    ServletContext context = request.getServletContext();
+    String baseDir = context.getInitParameter("data");
+    String path = baseDir + "user/" + Integer.toString(uid) +
+                  "/profile-cover.jpg";
+    File file = new File(path);
+    if (file.exists()) {
+      return profileCoverImageURL(uid);
+    } else {
+      return "img/default-cover.jpg";
+    }
+  }
+
+  private String profileImageURL(int uid) {
+    return "data/user/" + Integer.toString(uid) + "/profile.jpg";
+  }
+
+  private String profileCoverImageURL(int uid) {
+    return "data/user/" + Integer.toString(uid) + "/profile-cover.jpg";
   }
 
   public int getUid() {

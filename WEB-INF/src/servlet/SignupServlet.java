@@ -32,6 +32,23 @@ public class SignupServlet extends HttpServlet {
         WriteResponse(response, json_obj);
       }
 
+      // Create user data directory.
+      ServletContext context = request.getServletContext();
+      String baseDir = context.getInitParameter("data");
+      File theDir = new File(baseDir + "user/" + Integer.toString(uid));
+      if (!theDir.exists()) {
+        try{
+          if (!theDir.mkdirs()) {
+            json_obj.put("success", false);
+            json_obj.put("error", "Server error, failed to create new user");
+            WriteResponse(response, json_obj);
+          }
+        } 
+        catch(SecurityException e){
+          e.printStackTrace();
+        }
+      }
+
       // TODO: Encrypt password!
       if (!User.addNewUser(uid,
                            request.getParameter("username"),
@@ -50,7 +67,12 @@ public class SignupServlet extends HttpServlet {
         session.invalidate();
       }
       session = request.getSession();
-      session.setAttribute("username", request.getParameter("username"));
+
+      user = new User();
+      user.setUsername(request.getParameter("username"));
+      user.setEmail(request.getParameter("email"));
+      user.setPassword(request.getParameter("password"));
+      session.setAttribute("user", user);
 
       json_obj.put("success", true);
       WriteResponse(response, json_obj);

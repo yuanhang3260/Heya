@@ -334,7 +334,7 @@ define(["jquery"], function($) {
 
     var timer = window.setTimeout(function() {
       window.clearInterval(remain_time_reader);
-      window.location.assign("home.jsp");
+      window.location.assign("home");
     }, count_sec * 1000);
   };
 

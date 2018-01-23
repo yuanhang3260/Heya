@@ -23,7 +23,7 @@
         
     <init-param>
       <param-name>dataDirectory</param-name>
-      <param-value>/home/hy/tomcat/webapps/PostBook/data/</param-value>
+      <param-value>/home/hy/WebStorage/Heya/</param-value>
     </init-param>
 
     <init-param>
@@ -79,8 +79,8 @@
   </login-config>
 
   <context-param> 
-    <description>Location to store uploaded file</description> 
-    <param-name>file-upload</param-name> 
-    <param-value>/home/hy/tomcat/webapps/Heya/data/</param-value> 
+    <description>Location to store files</description> 
+    <param-name>data</param-name> 
+    <param-value>/home/hy/WebStorage/Heya/</param-value> 
   </context-param>
 </web-app>
