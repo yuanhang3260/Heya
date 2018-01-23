@@ -56,7 +56,12 @@ body {
   background-size: cover;
 
   background-color: white;
-  background-image: url("../img/default-profile2.jpg");
+}
+
+.profile-img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
 }
 
 .username-container {
@@ -114,13 +119,13 @@ body {
 
 .home-profile-detail-container {
   width: $home-profile-container-width;
-  height: $home-profile-container-height;
   margin: 20px 5px 5px 5px;
+  padding: 10px 0;
   background-color: #f9f9f9;
 }
 
 .profile-card-title {
-  margin: 13px 10px 10px 15px;
+  margin: 3px 10px 10px 15px;
   font-size: 14px;
   font-weight: 550;
 }
@@ -156,7 +161,7 @@ body {
 .user-profile-detail {
   display: inline-block;
   vertical-align: middle;
-  width: 170px;
+  width: 175px;
   margin: 0;
   padding: 0;
   padding-top: 3px;
@@ -165,9 +170,6 @@ body {
   font-family: arial;
 }
 
-.user-profile-location {
-  &:hover {
-    text-decoration: none;  
-  }
+.user-profile-link {
   color: #2a84e4;
 }

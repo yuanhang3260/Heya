@@ -56,7 +56,7 @@ define(["jquery"], function($) {
       form.find("button[type=submit]").removeAttr("disabled");
       if (data.success) {
         form.find(".login-error-msg").hide();
-        window.location.assign("home.jsp");
+        window.location.assign("home");
       } else {
         // Show error message.
         form.find(".login-error-msg").html(data.error);
