@@ -46,6 +46,16 @@
     <servlet-name>Login</servlet-name>
     <servlet-class>servlet.LoginServlet</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>Image</servlet-name>
+    <servlet-class>servlet.ImageServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>StaticFile</servlet-name>
+    <servlet-class>servlet.FileServlet</servlet-class>
+  </servlet>
     
 
   <!-- SERVLETS MAPPINGS -->
@@ -69,6 +79,16 @@
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>Image</servlet-name>
+    <url-pattern>/image</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>StaticFile</servlet-name>
+    <url-pattern>/data/*</url-pattern>
+  </servlet-mapping>
+
   <!-- CONFIG -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -80,7 +100,7 @@
 
   <context-param> 
     <description>Location to store files</description> 
-    <param-name>data</param-name> 
+    <param-name>data-storage</param-name> 
     <param-value>/home/hy/WebStorage/Heya/</param-value> 
   </context-param>
 </web-app>

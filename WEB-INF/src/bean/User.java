@@ -1,6 +1,7 @@
 package bean;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -8,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 import db.DBManager;
+
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.client.methods.HttpUriRequest;
 
 import bean.*;
 
@@ -152,35 +156,52 @@ public class User {
 
   public String getProfileImg(HttpServletRequest request) {
     ServletContext context = request.getServletContext();
-    String baseDir = context.getInitParameter("data");
-    String path = baseDir + "user/" + Integer.toString(uid) + "/profile.jpg";
+    String baseDir = context.getInitParameter("data-storage");
+    String path = Paths.get(
+        baseDir, "user/", Integer.toString(uid), "/profile.jpg").toString();
     File file = new File(path);
     if (file.exists()) {
-      return profileImageURL(uid);
+      return profileImageURL(Integer.toString(uid));
     } else {
-      return "img/default-profile2.jpg";
+      return profileImageURL("default");
     }
   }
 
   public String getProfileCoverImg(HttpServletRequest request) {
     ServletContext context = request.getServletContext();
-    String baseDir = context.getInitParameter("data");
-    String path = baseDir + "user/" + Integer.toString(uid) +
-                  "/profile-cover.jpg";
+    String baseDir = context.getInitParameter("data-storage");
+    String path = Paths.get(
+      baseDir, "user/", Integer.toString(uid), "/profile-cover.jpg").toString();
     File file = new File(path);
     if (file.exists()) {
-      return profileCoverImageURL(uid);
+      return profileCoverImageURL(Integer.toString(uid));
     } else {
-      return "img/default-cover.jpg";
+      return profileCoverImageURL("default");
     }
   }
 
-  private String profileImageURL(int uid) {
-    return "data/user/" + Integer.toString(uid) + "/profile.jpg";
+  private String profileImageURL(String user) {
+    final HttpUriRequest request = RequestBuilder.get()
+        .setUri("image")
+        .addParameter("type", "userinfo")
+        .addParameter("uid", user)
+        .addParameter("username", username)
+        .addParameter("q", "profile")
+        .build();
+
+    return request.getURI().toString();
   }
 
-  private String profileCoverImageURL(int uid) {
-    return "data/user/" + Integer.toString(uid) + "/profile-cover.jpg";
+  private String profileCoverImageURL(String user) {
+    final HttpUriRequest request = RequestBuilder.get()
+        .setUri("image")
+        .addParameter("type", "userinfo")
+        .addParameter("uid", user)
+        .addParameter("username", username)
+        .addParameter("q", "profile-cover")
+        .build();
+
+    return request.getURI().toString();
   }
 
   public int getUid() {

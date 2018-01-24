@@ -34,7 +34,7 @@ public class SignupServlet extends HttpServlet {
 
       // Create user data directory.
       ServletContext context = request.getServletContext();
-      String baseDir = context.getInitParameter("data");
+      String baseDir = context.getInitParameter("data-storage");
       File theDir = new File(baseDir + "user/" + Integer.toString(uid));
       if (!theDir.exists()) {
         try{
