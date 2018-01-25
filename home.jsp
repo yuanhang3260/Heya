@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="css/home.css">
 </head>
 
-<body>
+<body uid="<%= user.getUid() %>" username="<%= user.getUsername() %>">
 <nav class="fixed-top navbar heya-navbar">
   <div class="heya-navbar-container">
     <a class="navbar-brand heya-navbar-brand" href="#" tips="hei">
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <div class="card home-profile-detail-container">
+    <div id="user-info" class="card home-profile-detail-container">
       <h6 class="profile-card-title">About <small>-</small> <a href="#" class="profile-edit-button" >Edit</a></h6>
       <div class="user-profile-item">
         <i class="user-profile-icon fa fa-building-o"></i>
@@ -82,8 +82,8 @@
         <i class="user-profile-icon fa fa-home"></i>
         <p class="user-profile-detail">
           Lives in
-          <a href="https://www.google.com/maps/search/Santa Clara, California" target="_blank" class="user-profile-link">
-            Santa Clara
+          <a href="https://www.google.com/maps/search/Santa Clara, CA" target="_blank" class="user-profile-link">
+            Santa Clara, CA
           </a>
         </p>
       </div>

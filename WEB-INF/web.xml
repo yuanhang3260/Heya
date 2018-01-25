@@ -56,6 +56,11 @@
     <servlet-name>StaticFile</servlet-name>
     <servlet-class>servlet.FileServlet</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>UserInfo</servlet-name>
+    <servlet-class>servlet.UserInfoServlet</servlet-class>
+  </servlet>
     
 
   <!-- SERVLETS MAPPINGS -->
@@ -87,6 +92,11 @@
   <servlet-mapping>
     <servlet-name>StaticFile</servlet-name>
     <url-pattern>/data/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserInfo</servlet-name>
+    <url-pattern>/getuserinfo</url-pattern>
   </servlet-mapping>
 
   <!-- CONFIG -->

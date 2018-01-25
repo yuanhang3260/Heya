@@ -8,12 +8,14 @@ import javax.servlet.http.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
-import db.DBManager;
 
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import bean.*;
+import db.DBManager;
 
 public class User {
   public enum Sex {
@@ -31,15 +33,23 @@ public class User {
   private String work;
   private String live;
 
-  public static User GetUserByUsername(String username) {
-    String sqlStr = "SELECT * from Users where username = \"" + username + "\"";
+  private String education;
+  private String places;
+  private String relatioship;
+  private String phone;
+  private String links;
 
+  public static User GetUserByUsername(String username) {
     Connection conn = null;
     PreparedStatement stmt = null;
     ResultSet rset = null;
     try {
       conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      String sqlStr = "SELECT * from Users where username = ?";
       stmt = conn.prepareStatement(sqlStr);
+      stmt.setString(1, username);
   
       rset = stmt.executeQuery();
       if (rset.next()) {
@@ -61,6 +71,47 @@ public class User {
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
+    } finally {
+      try {
+        if (rset != null) {
+          rset.close();
+        }
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public boolean getUserDetailInfo() {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rset = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      String sqlStr = "SELECT * from UserDetail where uid = ?";
+      stmt = conn.prepareStatement(sqlStr);
+      stmt.setInt(1, uid);
+
+      rset = stmt.executeQuery();
+      if (rset.next()) {
+        education = rset.getString("education");
+        places = rset.getString("places");
+        relatioship = rset.getString("relatioship");
+        phone = rset.getString("phone");
+        links = rset.getString("links");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
     } finally {
       try {
         if (rset != null) {
@@ -204,6 +255,53 @@ public class User {
     return request.getURI().toString();
   }
 
+  public JSONObject toJSONObject() {
+    JSONObject json_obj = new JSONObject();
+    try {
+      json_obj.put("uid", uid);
+      if (username != null) {
+        json_obj.put("username", username);
+      }
+      if (email != null) {
+        json_obj.put("email", email);
+      }
+      if (name != null) {
+        json_obj.put("name", name);
+      }
+      if (birth != null) {
+        json_obj.put("birth", birth);
+      }
+      if (sex != null) {
+        json_obj.put("sex", sex.toString());
+      }
+      if (work != null) {
+        json_obj.put("work", work);
+      }
+      if (live != null) {
+        json_obj.put("live", live);
+      }
+      if (education != null) {
+        json_obj.put("education", education);
+      }
+      if (places != null) {
+        json_obj.put("places", places);
+      }
+      if (relatioship != null) {
+        json_obj.put("relatioship", relatioship);
+      }
+      if (phone != null) {
+        json_obj.put("phone", phone);
+      }
+      if (links != null) {
+        json_obj.put("links", links);
+      }
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    return json_obj;
+  }
+
+  // Getters and setters.
   public int getUid() {
     return this.uid;
   }
@@ -274,5 +372,45 @@ public class User {
 
   public void setLive(String live) {
     this.live = live;
+  }
+
+  public String getEducation() {
+    return this.education;
+  }
+
+  public void setEducation(String education) {
+    this.education = education;
+  }
+
+  public String getPlaces() {
+    return this.places;
+  }
+
+  public void setPlaces(String places) {
+    this.places = places;
+  }
+
+  public String getRelationship() {
+    return this.relatioship;
+  }
+
+  public void setRelationship(String relatioship) {
+    this.relatioship = relatioship;
+  }
+
+  public String getPhone() {
+    return this.phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getLinks() {
+    return this.links;
+  }
+
+  public void setLinks(String Links) {
+    this.links = links;
   }
 }

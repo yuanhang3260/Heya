@@ -25,6 +25,7 @@ public class ImageServlet extends HttpServlet {
           }
           String imgLocation =
               Paths.get("/data", "user", uid, query + ".jpg").toString();
+          // Forward to FileSevlet for /data/* requests. 
           request.getRequestDispatcher(imgLocation).forward(request, response);
           return;
         }

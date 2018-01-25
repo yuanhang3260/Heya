@@ -17,7 +17,7 @@ public class HomeServlet extends HttpServlet {
       response.sendRedirect("index.html");
       return;
     }
-    
+
     User user = (User)session.getAttribute("user");
     if (user == null) {
       // Is it not possible?

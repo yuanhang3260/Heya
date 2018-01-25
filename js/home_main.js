@@ -4,7 +4,9 @@ requirejs.config({
   }
 });
 
-requirejs(["jquery", "login"], function($, login) {
+requirejs(["jquery", "home"], function($, home) {
   console.log("# Module jquery loaded");
-  console.log("# Module login loaded");
+  console.log("# Module home loaded");
+
+  var userinfo = new home.UserInfo("#user-info");
 });

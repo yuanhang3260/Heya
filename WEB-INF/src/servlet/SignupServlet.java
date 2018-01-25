@@ -15,6 +15,7 @@ public class SignupServlet extends HttpServlet {
   @SuppressWarnings("unchecked")
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
+    response.setContentType("application/json");
     JSONObject json_obj = new JSONObject();
 
     User user = User.GetUserByUsername(request.getParameter("username"));

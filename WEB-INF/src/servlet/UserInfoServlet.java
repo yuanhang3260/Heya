@@ -6,42 +6,41 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.Properties;
 import java.util.ArrayList;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import bean.User;
-
-public class LoginServlet extends HttpServlet {
+ 
+public class UserInfoServlet extends HttpServlet {
   @Override
   @SuppressWarnings("unchecked")
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     response.setContentType("application/json");
     JSONObject json_obj = new JSONObject();
 
-    User user = User.GetUserByUsername(request.getParameter("username"));
-    if (user == null) {
-      json_obj.put("success", false);
-      json_obj.put("error", "user cannot be found");
-      WriteResponse(response, json_obj);
-      return;
-    } else {
-      if (!user.getPassword().equals(request.getParameter("password"))) {
+    HttpSession session = request.getSession(false);
+    try {
+      if (session == null) {
+        // No session found.
         json_obj.put("success", false);
-        json_obj.put("error", "user/password mismatch");
         WriteResponse(response, json_obj);
         return;
       }
 
-      // Login successfully, create session and return.
-      HttpSession session = request.getSession(false);
-      if (session != null) {
-        // Remove current session.
-        session.invalidate();
+      User user = (User)session.getAttribute("user");
+      if (user == null) {
+        json_obj.put("success", false);
+        json_obj.put("error", "user cannot be found");
+        WriteResponse(response, json_obj);
+        return;
+      } else {
+        json_obj = user.toJSONObject();
+        json_obj.put("success", true);
       }
-      session = request.getSession();
-      session.setAttribute("user", user);
-
-      json_obj.put("success", true);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    } finally {
       WriteResponse(response, json_obj);
     }
     return;
