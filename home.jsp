@@ -6,6 +6,7 @@
 
 <%
   User user = (User)session.getAttribute("user");
+  user.getUserDetailInfo();
 %>
 
 <html lang="en">
@@ -60,42 +61,6 @@
 
     <div id="user-info" class="card home-profile-detail-container">
       <h6 class="profile-card-title">About <small>-</small> <a href="#" class="profile-edit-button" >Edit</a></h6>
-      <div class="user-profile-item">
-        <i class="user-profile-icon fa fa-building-o"></i>
-        <p class="user-profile-detail">
-          Works at
-          <a href="https://www.google.com/search?q=Google" target="_blank" class="user-profile-link">
-            Google
-          </a>
-        </p>
-      </div>
-      <div class="user-profile-item">
-        <i class="user-profile-icon user-education-icon fa fa-graduation-cap"></i>
-        <p class="user-profile-detail">
-          Graduated from
-          <a href="https://www.google.com/search?q=Carnegie Mellon University" target="_blank" class="user-profile-link">
-            Carnegie Mellon University
-          </a>
-        </p>
-      </div>
-      <div class="user-profile-item">
-        <i class="user-profile-icon fa fa-home"></i>
-        <p class="user-profile-detail">
-          Lives in
-          <a href="https://www.google.com/maps/search/Santa Clara, CA" target="_blank" class="user-profile-link">
-            Santa Clara, CA
-          </a>
-        </p>
-      </div>
-      <div class="user-profile-item">
-        <i class="user-profile-icon user-hometown-icon fa fa-map-marker"></i>
-        <p class="user-profile-detail">
-          From
-          <a href="https://www.google.com/maps/search/Jiangsu,China" target="_blank" class="user-profile-link">
-            Jiangsu, China
-          </a>
-        </p>
-      </div>
     </div>
   </div>
 </div>

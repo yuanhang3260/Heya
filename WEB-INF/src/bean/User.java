@@ -12,6 +12,7 @@ import java.util.Properties;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import bean.*;
@@ -281,10 +282,10 @@ public class User {
         json_obj.put("live", live);
       }
       if (education != null) {
-        json_obj.put("education", education);
+        json_obj.put("education", new JSONArray(education));
       }
       if (places != null) {
-        json_obj.put("places", places);
+        json_obj.put("places", new JSONArray(places));
       }
       if (relatioship != null) {
         json_obj.put("relatioship", relatioship);
