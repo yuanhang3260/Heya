@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import bean.*;
+import bean.Education;
 import db.DBManager;
 
 public class User {
