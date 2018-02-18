@@ -43,24 +43,32 @@ body {
 .profile-menu {
   width: 170px;
   border-right: 1px solid #ccc;
-}
 
-.profile-menu > ul {
-  margin: 10px 0 10px 0;
-  list-style: none
-}
+  ul {
+    margin: 10px 0 10px 0;
+    list-style: none;
 
-.profile-menu > ul > li {
-  height: 40px;
-  padding-left: 10px;
-  line-height: 40px;
-  color: gray;
-  font-size: 15px;
+    li {
+      height: 40px;
+      padding-left: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      line-height: 40px;
+      color: gray;
+      font-size: 15px;
 
-  &:hover {
-    background-color: #ddd;
-    cursor: pointer;
-    color: #333;
+      &:hover {
+        background-color: #ddd;
+        cursor: pointer;
+        color: #333;
+      }
+    }
+
+    li.item-selected {
+      background-color: #ddd;
+      cursor: pointer;
+      color: #333;
+    }
   }
 }
 
@@ -80,6 +88,10 @@ body {
     padding: 0;
     font-size: 13px;
     border-color: #bbb;
+  }
+
+  .subpanel {
+    display: none;
   }
 }
 
@@ -101,7 +113,8 @@ body {
       }
 
       .icon-phone {
-        margin-right: 16px;
+        margin-left: 2px;
+        margin-right: 14px;
       }
 
       .icon-birth {
@@ -115,6 +128,7 @@ body {
     }
 
     .edit-button {
+      width: 150px;
       margin: 15px 0;
       color: #5e5590;
       font-size: 13px;
@@ -127,8 +141,8 @@ body {
     }
   }
 
-  .basic-info-edit {
-    display: block;
+  div.basic-info-edit {
+    display: none;
     font-size: 14px;
 
     .profile-edit-label {
@@ -143,6 +157,20 @@ body {
       padding: 0 7px;
       background-color: #f7f7f7;
       font-size: 13px;
+
+      &:focus {
+        background-color: #fcfcfc;
+      };
+    }
+
+    .birth-select {
+      display: inline-block;
+      width: 70px;
+      height: 30px;
+      padding-left: 7px;
+      background-color: #f7f7f7;
+      font-size: 13px;
+      box-shadow: none;
 
       &:focus {
         background-color: #fcfcfc;

@@ -65,10 +65,10 @@
     <div class="overall-title">
       <i class="fas fa-user profile-icon"></i><span> About</span>
     </div>
-    <div class="profile-view-container">
+    <div id="profile-container" class="profile-view-container">
       <div class="profile-menu">
         <ul>
-          <li class="profile-basic-item">Basic Infomation</li>
+          <li class="profile-basic-item item-selected">Basic Infomation</li>
           <li class="profile-education-item">Education</li>
           <li class="profile-work-item">Work</li>
           <li class="profile-places-item">Places Lived</li>
@@ -76,7 +76,7 @@
         </ul>
       </div>
       <div class="profile-panel">
-        <div class="profile-basic-panel">
+        <div class="subpanel profile-basic-panel">
           <ul class="basic-info-display">
             <li class="name-info">
               <i class="basic-info-icon far fa-user"></i>
@@ -100,29 +100,42 @@
           </ul>
           <div class="basic-info-edit">
             <form method="post" action="signup">
-              <div class="form-group">
+              <div class="form-group edit-name">
                 <label class="profile-edit-label">Name</label>
                 <input type="text" name="name" class="form-control profile-edit-input">
               </div>
-              <div class="form-group">
+              <div class="form-group edit-birth">
+                <label class="profile-edit-label">Birth</label>
+                <select class="form-control birth-select" name="year">
+                </select>
+                <select class="form-control birth-select" name="month">
+                </select>
+                <select class="form-control birth-select" name="date">
+                </select>
+              </div>
+              <div class="form-group edit-email">
                 <label class="profile-edit-label">Email</label>
                 <input type="text" name="email" class="form-control profile-edit-input">
               </div>
-              <div class="form-group">
+              <div class="form-group edit-phone">
                 <label class="profile-edit-label">Phone</label>
                 <input type="text" name="phone" class="form-control profile-edit-input">
-              </div>
-              <div class="form-group">
-                <label class="profile-edit-label">Birth</label>
-                <input type="text" name="birth" class="form-control profile-edit-input">
               </div>
               <div class="button-box">
                 <button type="button" class="btn btn-success save-btn mb-3">Save Changes</button>
                 <button type="button" class="btn btn-light cancel-btn mb-3">Cancel</button>
-              <div>
+              </div>
             </form>
           </div>
         </div>
+
+        <div class="subpanel profile-education-panel">education</div>
+
+        <div class="subpanel profile-work-panel">work</div>
+        
+        <div class="subpanel profile-places-panel">places</div>
+        
+        <div class="subpanel profile-other-panel">other</div>
       </div>
     </div>
   </div>
