@@ -5,8 +5,29 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%
-  User user = (User)session.getAttribute("user");
-  user.getUserDetailInfo();
+  // Get Viewer from session (current active user).
+  User viewer = (User)session.getAttribute("user");
+  int viewer = user.getUsername();
+  int viewer_uid = user.getUid();
+
+  // Find user of this page (true owner). If not specified, then user is viewer.
+  User user;
+  String username = request.getParameter("username");
+  String uid;
+  if (username == null) {
+    user = viewer;
+    username = viewer;
+    uid = viewer_uid;
+  } else {
+    User user = User.GetUserByUsername(username);
+    if (user != null) {
+      uid = user.getUid();
+    } else {
+      user = viewer;
+      username = viewer;
+      uid = viewer_uid;
+    }
+  }
 %>
 
 <html lang="en">
@@ -18,7 +39,7 @@
   <link rel="stylesheet" href="css/home.css">
 </head>
 
-<body uid="<%= user.getUid() %>" username="<%= user.getUsername() %>">
+<body uid="<%= uid %>" username="<%= username %>" viewer="<%= viewer %>" viewer="<%= viewer_uid %>" >
 <nav class="fixed-top navbar heya-navbar">
   <div class="heya-navbar-container">
     <a class="navbar-brand heya-navbar-brand" href="#" tips="hei">

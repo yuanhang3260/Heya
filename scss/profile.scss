@@ -1,0 +1,156 @@
+@import "common";
+@import "navbar";
+
+body {
+  background-color: #ececec;
+}
+
+.profile-main-container {
+  margin: 65px auto 0;
+  width: $main-width;
+  height: auto;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 750px;
+  border: 1px solid #ccc;
+}
+
+.overall-title {
+  height: 44px;
+  background-color: #ddd;
+  padding: 12px 0 10px 12px;
+
+  line-height: 20px;
+  font-size: 18px;
+}
+
+.overall-title > .profile-icon {
+  color: #666;
+  margin-right: 5px
+}
+
+.profile-view-container {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-menu {
+  width: 170px;
+  border-right: 1px solid #ccc;
+}
+
+.profile-menu > ul {
+  margin: 10px 0 10px 0;
+  list-style: none
+}
+
+.profile-menu > ul > li {
+  height: 40px;
+  padding-left: 10px;
+  line-height: 40px;
+  color: gray;
+  font-size: 15px;
+
+  &:hover {
+    background-color: #ddd;
+    cursor: pointer;
+    color: #333;
+  }
+}
+
+.profile-panel {
+  flex-grow: 1;
+
+  .save-btn {
+    width: 105px;
+    height: 25px;
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .cancel-btn {
+    width: 58px;
+    height: 26px;
+    padding: 0;
+    font-size: 13px;
+    border-color: #bbb;
+  }
+}
+
+.profile-basic-panel {
+  padding: 15px 0 0 25px;
+
+  ul.basic-info-display {
+    display: block;
+    margin: 0;
+    list-style: none;
+
+    li {
+      height: 35px;
+      line-height: 35px;
+
+      .basic-info-icon {
+        color : #aaa;
+        margin-right: 10px;
+      }
+
+      .icon-phone {
+        margin-right: 16px;
+      }
+
+      .icon-birth {
+        margin-right: 12px;
+      }
+
+      span {
+        font-size: 14px;
+        color: #333;
+      }
+    }
+
+    .edit-button {
+      margin: 15px 0;
+      color: #5e5590;
+      font-size: 13px;
+
+      &:hover {
+        cursor: pointer;
+        color: #291b79;
+        text-decoration: underline;
+      };
+    }
+  }
+
+  .basic-info-edit {
+    display: block;
+    font-size: 14px;
+
+    .profile-edit-label {
+      margin-right: 10px;
+      width: 40px;
+    }
+
+    .profile-edit-input {
+      display: inline-block;
+      width: 300px;
+      height: 30px;
+      padding: 0 7px;
+      background-color: #f7f7f7;
+      font-size: 13px;
+
+      &:focus {
+        background-color: #fcfcfc;
+      };
+    }
+
+    .button-box {
+      margin-left: 185px;
+    }
+  }
+}

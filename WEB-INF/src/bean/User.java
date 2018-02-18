@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.http.client.methods.RequestBuilder;
@@ -28,13 +29,12 @@ public class User {
   private String username;
   private String email;
   private String password;
+
   private String name;
   private Date birth;
   private Sex sex;
+  private ArrayList<Education> education;
   private String work;
-  private String live;
-
-  private String education;
   private String places;
   private String relatioship;
   private String phone;
@@ -59,12 +59,6 @@ public class User {
         user.setUsername(rset.getString("username"));
         user.setEmail(rset.getString("email"));
         user.setPassword(rset.getString("password"));
-        user.setBirth(rset.getDate("birth"));
-        if (rset.getString("sex") != null) {
-          user.setSex(Sex.valueOf(rset.getString("sex")));
-        }
-        user.setWork(rset.getString("work"));
-        user.setLive(rset.getString("live"));
         return user;
       } else {
         return null;
@@ -101,16 +95,26 @@ public class User {
 
       rset = stmt.executeQuery();
       if (rset.next()) {
-        education = rset.getString("education");
-        places = rset.getString("places");
-        relatioship = rset.getString("relatioship");
-        phone = rset.getString("phone");
-        links = rset.getString("links");
+        this.name = rset.getString("name");
+        this.birth = rset.getDate("birth");
+        if (rset.getString("sex") != null) {
+          this.sex = Sex.valueOf(rset.getString("sex"));
+        }
+        this.education = Education.parseFromJSONArray(
+            new JSONArray(rset.getString("education")));
+        this.work = rset.getString("work");
+        this.places = rset.getString("places");
+        this.relatioship = rset.getString("relatioship");
+        this.phone = rset.getString("phone");
+        this.links = rset.getString("links");
         return true;
       } else {
         return false;
       }
     } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    } catch (JSONException e) {
       e.printStackTrace();
       return false;
     } finally {
@@ -169,7 +173,7 @@ public class User {
                                    String email,
                                    String password) {
     String addUser = "INSERT INTO Users (uid, username, email, password) " +
-                    "VALUES (?, ?, ?, ?)";
+                     "VALUES (?, ?, ?, ?)";
     String addUserDetail = "INSERT INTO UserDetail (uid) VALUES (?)";
 
     Connection conn = null;
@@ -269,20 +273,18 @@ public class User {
       if (name != null) {
         json_obj.put("name", name);
       }
+
       if (birth != null) {
         json_obj.put("birth", birth);
       }
       if (sex != null) {
         json_obj.put("sex", sex.toString());
       }
+      if (education != null) {
+        json_obj.put("education", Education.toJSONArray(education));
+      }
       if (work != null) {
         json_obj.put("work", work);
-      }
-      if (live != null) {
-        json_obj.put("live", live);
-      }
-      if (education != null) {
-        json_obj.put("education", new JSONArray(education));
       }
       if (places != null) {
         json_obj.put("places", new JSONArray(places));
@@ -367,20 +369,28 @@ public class User {
     this.work = work;
   }
 
-  public String getLive() {
-    return this.live;
-  }
-
-  public void setLive(String live) {
-    this.live = live;
-  }
-
-  public String getEducation() {
+  public List<Education> getEducation() {
     return this.education;
   }
 
-  public void setEducation(String education) {
-    this.education = education;
+  public void addEducation(Education education) {
+    this.education.add(education);
+  }
+
+  public void updateEducation(Education education) {
+    for (int i = 0; i < this.education.size(); i++) {
+      if (this.education.get(i).getId() == education.getId()) {
+        this.education.set(i, education);
+      }
+    }
+  }
+
+  public void deleteEducation(int id) {
+    for (int i = 0; i < this.education.size(); i++) {
+      if (this.education.get(i).getId() == id) {
+        this.education.remove(i);
+      }
+    }
   }
 
   public String getPlaces() {

@@ -1,5 +1,6 @@
 package bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -7,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class Education {
+  private int id;  // internal ID just for this user.
   private String school;
   private String major;
   private int startYear;
@@ -27,6 +29,10 @@ public class Education {
       return this.obj;
     }
 
+    public Builder setId(int id) {
+      obj().setId(id);
+      return this;
+    }
     public Builder setSchool(String school) {
       obj().setSchool(school);
       return this;
@@ -47,6 +53,9 @@ public class Education {
     public Education buildFromJSON(JSONObject json_obj) {
       this.obj = new Education();
       try {
+        if (!json_obj.isNull("id")) {
+          this.obj.setId(json_obj.getInt("id"));
+        }
         if (!json_obj.isNull("school")) {
           this.obj.setSchool(json_obj.getString("school"));
         }
@@ -83,7 +92,8 @@ public class Education {
   public JSONObject toJSONObject() {
     JSONObject json_obj = new JSONObject();
     try {
-      json_obj.put("school", this.school)
+      json_obj.put("id", this.id)
+              .put("school", this.school)
               .put("major", this.major)
               .put("startYear", startYear)
               .put("endYear", endYear);
@@ -93,6 +103,10 @@ public class Education {
     return json_obj;
   }
 
+  static public Education parseFromJSON(JSONObject json_obj) {
+    return Education.getBuilder().buildFromJSON(json_obj);
+  }
+
   // Given a list of Education object, convert to JSON array.
   static public JSONArray toJSONArray(List<Education> educations) {
     JSONArray array = new JSONArray();
@@ -100,6 +114,28 @@ public class Education {
       array.put(education.toJSONObject());
     }
     return array;
+  }
+
+  // Convert a JSON education array to List<Education>.
+  static public ArrayList<Education> parseFromJSONArray(JSONArray array) {
+    ArrayList<Education> educations = new ArrayList<Education>();
+    try {
+      for (int i = 0; i < array.length(); i++) {
+        educations.add(
+            Education.getBuilder().buildFromJSON((JSONObject)array.get(i)));
+      }
+    } catch (JSONException e) {
+      e.printStackTrace();
+      return null;
+    }
+    return educations;
+  }
+
+  public int getId() {
+    return this.id;
+  }
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getSchool() {

@@ -35,6 +35,9 @@ public class UserInfoServlet extends HttpServlet {
         WriteResponse(response, json_obj);
         return;
       } else {
+        // Get user detailed info.
+        user.getUserDetailInfo();
+
         json_obj = user.toJSONObject();
         json_obj.put("success", true);
       }
