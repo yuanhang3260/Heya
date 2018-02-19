@@ -7,24 +7,24 @@
 <%
   // Get Viewer from session (current active user).
   User viewer = (User)session.getAttribute("user");
-  int viewer = user.getUsername();
-  int viewer_uid = user.getUid();
+  String viewer_username = viewer.getUsername();
+  int viewer_uid = viewer.getUid();
 
   // Find user of this page (true owner). If not specified, then user is viewer.
   User user;
   String username = request.getParameter("username");
-  String uid;
+  int uid;
   if (username == null) {
     user = viewer;
-    username = viewer;
+    username = viewer_username;
     uid = viewer_uid;
   } else {
-    User user = User.GetUserByUsername(username);
+    user = User.GetUserByUsername(username);
     if (user != null) {
       uid = user.getUid();
     } else {
       user = viewer;
-      username = viewer;
+      username = viewer_username;
       uid = viewer_uid;
     }
   }
@@ -39,7 +39,7 @@
   <link rel="stylesheet" href="css/home.css">
 </head>
 
-<body uid="<%= uid %>" username="<%= username %>" viewer="<%= viewer %>" viewer="<%= viewer_uid %>" >
+<body uid="<%= uid %>" user="<%= username %>" viewer_id="<%= viewer_uid %>" viewer="<%= viewer_username %>" >
 <nav class="fixed-top navbar heya-navbar">
   <div class="heya-navbar-container">
     <a class="navbar-brand heya-navbar-brand" href="#" tips="hei">
@@ -63,7 +63,7 @@
   <div class="home-left-bar">
     <div class="card home-profile-container">
       <img class="card-img-top cover-img" src="<%= user.getProfileCoverImg(request)%>" style="opacity: 0.7">
-      <div class="profile-img-container" style="background-image: url(<%= user.getProfileImg(request)%>)">
+      <div class="profile-img-container" style="background-image: url(<%= user.getProfileImg(request) %>)">
         <!-- <img class="profile-img" src="img/default-profile2.jpg"> -->
       </div>
       <div class="card-body username-container"><%= user.getUsername()%></div>
@@ -81,7 +81,8 @@
     </div>
 
     <div id="user-info" class="card home-profile-detail-container">
-      <h6 class="profile-card-title">About <small>-</small> <a href="#" class="profile-edit-button" >Edit</a></h6>
+      <h6 class="profile-card-title">About<small>-</small> 
+      <a href="profile?username=<%= username %>" class="profile-edit-button" >Edit</a></h6>
     </div>
   </div>
 </div>

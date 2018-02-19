@@ -6,7 +6,7 @@ require.config({
 
 require(["jquery", "profile"], function($, profile) {
   console.log("# Module jquery loaded");
-  console.log("# Module profile-basic loaded");
+  console.log("# Module profile loaded");
 
   var obj = new profile.Profile("#profile-container");
 });

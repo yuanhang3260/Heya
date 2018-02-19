@@ -36,7 +36,7 @@ public class User {
   private ArrayList<Education> education;
   private String work;
   private String places;
-  private String relatioship;
+  private String relationship;
   private String phone;
   private String links;
 
@@ -100,11 +100,13 @@ public class User {
         if (rset.getString("sex") != null) {
           this.sex = Sex.valueOf(rset.getString("sex"));
         }
-        this.education = Education.parseFromJSONArray(
-            new JSONArray(rset.getString("education")));
+        if (rset.getString("education") != null) {
+          this.education = Education.parseFromJSONArray(
+              new JSONArray(rset.getString("education")));
+        }
         this.work = rset.getString("work");
         this.places = rset.getString("places");
-        this.relatioship = rset.getString("relatioship");
+        this.relationship = rset.getString("relationship");
         this.phone = rset.getString("phone");
         this.links = rset.getString("links");
         return true;
@@ -260,6 +262,62 @@ public class User {
     return request.getURI().toString();
   }
 
+  static public boolean updateUserBaiscInfo(
+      int uid, String name, String email, String phone, Date birth) {
+    String updateUser = "UPDATE Users " +
+                        "SET email = ? " +
+                        "WHERE uid = ?";
+    String updateDetail = "UPDATE UserDetail " +
+                          "SET name = ?, phone = ?, birth = ? " +
+                          "WHERE uid = ?";
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(updateUser);
+      stmt.setString(1, email);
+      stmt.setInt(2, uid);
+      stmt.executeUpdate();
+
+      stmt = conn.prepareStatement(updateDetail);
+      if (name != null && !name.isEmpty()) {
+        stmt.setString(1, name);
+      } else {
+        stmt.setNull(1, Types.NCHAR);
+      }
+      if (phone != null && !phone.isEmpty()) {
+        stmt.setString(2, phone);
+      } else {
+        stmt.setNull(2, Types.NCHAR);
+      }
+      if (birth != null) {
+        stmt.setDate(3, new java.sql.Date(birth.getTime()));
+      } else {
+        stmt.setNull(3, Types.DATE);
+      }
+      stmt.setInt(4, uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
   public JSONObject toJSONObject() {
     JSONObject json_obj = new JSONObject();
     try {
@@ -270,10 +328,10 @@ public class User {
       if (email != null) {
         json_obj.put("email", email);
       }
+
       if (name != null) {
         json_obj.put("name", name);
       }
-
       if (birth != null) {
         json_obj.put("birth", birth);
       }
@@ -289,8 +347,8 @@ public class User {
       if (places != null) {
         json_obj.put("places", new JSONArray(places));
       }
-      if (relatioship != null) {
-        json_obj.put("relatioship", relatioship);
+      if (relationship != null) {
+        json_obj.put("relationship", relationship);
       }
       if (phone != null) {
         json_obj.put("phone", phone);
@@ -402,11 +460,11 @@ public class User {
   }
 
   public String getRelationship() {
-    return this.relatioship;
+    return this.relationship;
   }
 
-  public void setRelationship(String relatioship) {
-    this.relatioship = relatioship;
+  public void setRelationship(String relationship) {
+    this.relationship = relationship;
   }
 
   public String getPhone() {

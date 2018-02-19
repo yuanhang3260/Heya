@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ page import = "bean.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -7,28 +7,28 @@
 <%
   // Get Viewer from session (current active user).
   User viewer = (User)session.getAttribute("user");
-  int viewer = user.getUsername();
-  int viewer_uid = user.getUid();
+  String viewer_username = viewer.getUsername();
+  int viewer_uid = viewer.getUid();
 
   // Find user of this page (true owner). If not specified, then user is viewer.
   User user;
   String username = request.getParameter("username");
-  String uid;
+  int uid;
   if (username == null) {
     user = viewer;
-    username = viewer;
+    username = viewer_username;
     uid = viewer_uid;
   } else {
-    User user = User.GetUserByUsername(username);
+    user = User.GetUserByUsername(username);
     if (user != null) {
       uid = user.getUid();
     } else {
       user = viewer;
-      username = viewer;
+      username = viewer_username;
       uid = viewer_uid;
     }
   }
-%> -->
+%>
 
 <html lang="en">
 <head>
@@ -37,10 +37,10 @@
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/profile.css">
   <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
-  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <script src="js/font-awesome.5.0.6.min.js"></script>
 </head>
 
-<body uid="<%= uid %>" username="<%= username %>" viewer="<%= viewer %>" viewer="<%= viewer_uid %>" >
+<body uid="<%= uid %>" user="<%= username %>" viewer_id="<%= viewer_uid %>" viewer="<%= viewer_username %>" >
 <nav class="fixed-top navbar heya-navbar">
   <div class="heya-navbar-container">
     <a class="navbar-brand heya-navbar-brand" href="#" tips="hei">
@@ -78,22 +78,6 @@
       <div class="profile-panel">
         <div class="subpanel profile-basic-panel">
           <ul class="basic-info-display">
-            <li class="name-info">
-              <i class="basic-info-icon far fa-user"></i>
-              <span>Snoopy</span>
-            </li>
-            <li class="email-info">
-              <i class="basic-info-icon fa fa-envelope"></i>
-              <span>snoopy@qq.com</span>
-            </li>
-            <li class="phone-info">
-              <i class="basic-info-icon icon-phone fas fa-mobile-alt"></i>
-              <span>4123203825</span>
-            </li>
-            <li class="birth-info">
-              <i class="basic-info-icon icon-birth fas fa-birthday-cake"></i>
-              <span>03/26/1991</span>
-            </li>
             <div class="edit-button">
               <i class="fa fa-edit"></i><span> Edit profile basic info</span>
             </div>
@@ -125,6 +109,7 @@
                 <button type="button" class="btn btn-success save-btn mb-3">Save Changes</button>
                 <button type="button" class="btn btn-light cancel-btn mb-3">Cancel</button>
               </div>
+              <div class="alert alert-danger update-error-msg" role="alert"></div>
             </form>
           </div>
         </div>

@@ -2,6 +2,8 @@ define(["jquery", "profile-basic"], function($, basic) {
   function Profile(el) {
     this.el = $(el);
 
+    this.loadUserInfo();
+
     this.menu = new Menu(this.el.find(".profile-menu"));
     this.panel = new Panel(this.el.find(".profile-panel"));
 
@@ -10,6 +12,30 @@ define(["jquery", "profile-basic"], function($, basic) {
 
   Profile.prototype.categories =
       ["basic", "education", "work", "places", "other"];
+
+  Profile.prototype.loadUserInfo = function() {
+    var formData = {
+      "uid" : +$("body").attr("uid"),
+      "username" : $("body").attr("user")
+    };
+
+    // Process the form.
+    var me = this;
+    $.ajax({
+        type : "GET",
+        url : "getuserinfo",
+        data : formData,
+        dataType : "json",
+        encode : true,
+    }).done(function(data) {
+      // log data to the console so we can see.
+      console.log(data);
+      if (data.success) {
+        // TODO: Use me.panel.initUserInfo(data)
+        me.panel["basic"].initUserInfo(data);
+      }
+    });
+  };
 
   Profile.prototype.clickHandler = function(event) {
     let target = $(event.target);

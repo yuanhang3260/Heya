@@ -43,6 +43,11 @@
   </servlet>
 
   <servlet>
+    <servlet-name>Profile</servlet-name>
+    <servlet-class>servlet.ProfileServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>servlet.LoginServlet</servlet-class>
   </servlet>
@@ -85,6 +90,11 @@
   </servlet-mapping>
 
   <servlet-mapping>
+    <servlet-name>Profile</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
     <servlet-name>Image</servlet-name>
     <url-pattern>/image</url-pattern>
   </servlet-mapping>
@@ -97,6 +107,11 @@
   <servlet-mapping>
     <servlet-name>UserInfo</servlet-name>
     <url-pattern>/getuserinfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserInfo</servlet-name>
+    <url-pattern>/updateuserinfo</url-pattern>
   </servlet-mapping>
 
   <!-- CONFIG -->

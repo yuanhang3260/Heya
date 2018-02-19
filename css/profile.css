@@ -309,3 +309,14 @@ body {
 .profile-basic-panel div.basic-info-edit .button-box {
   margin-left: 185px;
 }
+/* line 184, ../scss/profile.scss */
+.profile-basic-panel div.basic-info-edit .update-error-msg {
+  display: inline-block;
+  position: relative;
+  left: 185px;
+  width: auto;
+  margin: 0;
+  margin-bottom: 16px;
+  padding: 5px 9px;
+  font-size: 14px;
+}
