@@ -13,6 +13,23 @@ define(["jquery"], function($) {
     this.el.show();
   }
 
+  // Component - Add new shcool.
+  function AddNew(el) {
+    this.el = $(el);
+
+    this.button = this.el.find(".add-item-button");
+    this.button.click($.proxy(this.clickAddNew, this));
+
+    this.edit = new Edit(this.el.find(".profile-info-edit"));
+
+    this.edit.display = this.button;
+  }
+
+  AddNew.prototype.clickAddNew = function() {
+    this.button.hide();
+    this.edit.show();
+  }
+
   // Component - Edit school.
   function Edit(el) {
     this.el = $(el);
@@ -54,23 +71,6 @@ define(["jquery"], function($) {
 
   Edit.prototype.show = function() {
     this.el.show();
-  }
-
-  // Component - Add new shcool.
-  function AddNew(el) {
-    this.el = $(el);
-
-    this.button = this.el.find(".add-item-button");
-    this.button.click($.proxy(this.clickAddNew, this));
-
-    this.edit = new Edit(this.el.find(".profile-info-edit"));
-
-    this.edit.display = this.button;
-  }
-
-  AddNew.prototype.clickAddNew = function() {
-    this.button.hide();
-    this.edit.show();
   }
 
   return {

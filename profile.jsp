@@ -82,7 +82,7 @@
               <i class="fa fa-edit"></i><span> Edit profile basic info</span>
             </div>
           </ul>
-          <div class="basic-info-edit">
+          <div class="profile-info-edit basic-info-edit">
             <form method="post">
               <div class="form-group edit-name">
                 <label class="profile-edit-label">Name</label>
@@ -127,7 +127,7 @@
                 </p>
               </div>
               <i class="fas fa-graduation-cap profile-icon"></i>
-              <div class="edit-button-box">
+              <div class="corner-buttons">
                 <i class="fas fa-edit profile-edit-button"></i>
                 <i class="fas fa-ban profile-edit-button"></i>
               </div>

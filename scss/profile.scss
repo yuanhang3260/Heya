@@ -77,245 +77,242 @@ body {
 .profile-panel {
   flex-grow: 1;
 
-  .save-btn {
-    width: 105px;
-    height: 25px;
-    padding: 0;
-    font-size: 13px;
-  }
-
-  .cancel-btn {
-    width: 58px;
-    height: 26px;
-    padding: 0;
-    font-size: 13px;
-    border-color: #bbb;
-  }
-
   .subpanel {
     display: none;
 
-    label.profile-edit-label {
-      margin-right: 10px;
-      width: 40px;
-    }
+    div.profile-info-edit {
+      display: none;
 
-    input.profile-edit-input {
+      div.form-group {
+        margin: 0 0 15px 0;
+      }
+
+      label.profile-edit-label {
+        margin: 0 5px 0 0;
+        text-align: right;
+        width: 45px;
+        color: #444;
+        font-size: 15px;
+      }
+
+      input.profile-edit-input {
+        display: inline-block;
+        width: 300px;
+        height: 30px;
+        padding: 0 7px;
+        background-color: #f7f7f7;
+        font-size: 13px;
+
+        &:focus {
+          background-color: #fcfcfc;
+        };
+      }
+
+      select.profile-edit-select {
+        display: inline-block;
+        width: 70px;
+        height: 30px;
+        padding-left: 7px;
+        background-color: #f7f7f7;
+        font-size: 13px;
+        box-shadow: none;
+
+        &:focus {
+          background-color: #fcfcfc;
+        };
+      }
+
+      div.edit-year {
+        margin-top: -7px;
+
+        .profile-edit-select {
+          width: 65px;
+          margin: 0;
+          padding: 0 0 0 5px;
+          height: 20px;
+          vertical-align: middle;
+        }
+
+        .year-to {
+          margin: 0 5px 0 5px;
+          font-size: 12px;
+        }
+      }
+
+      .button-box {
+        position: relative;
+        left: 185px;
+        margin: 10px 0 10px 0;
+
+        .save-btn {
+          width: 105px;
+          height: 25px;
+          padding: 0;
+          font-size: 13px;
+        }
+
+        .cancel-btn {
+          width: 58px;
+          height: 26px;
+          padding: 0;
+          font-size: 13px;
+          border-color: #bbb;
+        }
+      }
+    }  /* profile-info-edit */
+
+    div.profile-info-box {
+      div.profile-info-display {
+        position: relative;
+        border-bottom: 1px solid #d5d5d5;
+        padding-bottom: 10px;
+
+        .profile-info {
+          position: relative;;
+          margin-left: 50px;
+
+          a.profile-name {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 550;
+            font-family: "Calibri";
+            color: #1a0c67;
+          }
+
+          p.profile-detail {
+            margin: 0;
+            font-size: 12px;
+            color: #333;
+          }
+        }
+
+        .profile-icon {
+          position: absolute;
+          left: 0;
+          top: 1px;
+          font-size: 30px;
+          color: #bcb9ca;
+        }
+
+        .corner-buttons {
+          position: absolute;
+          right: 0;
+          top: 0;
+          font-size: 10px;
+
+          .profile-edit-button {
+            margin-left: 3px;
+            color: #8b85a9;
+
+            &:hover {
+              cursor: pointer;
+              color: #23185a;
+            }
+          }
+        }
+      } /* profile-info-display */
+    }  /* profile-info-box */
+
+    div.add-new-item {
       display: inline-block;
-      width: 300px;
-      height: 30px;
-      padding: 0 7px;
-      background-color: #f7f7f7;
-      font-size: 13px;
 
-      &:focus {
-        background-color: #fcfcfc;
-      };
-    }
+      .add-item-button {
+        color: #2d2d8e;
 
-    select.profile-edit-select {
-      display: inline-block;
-      width: 70px;
-      height: 30px;
-      padding-left: 7px;
-      background-color: #f7f7f7;
-      font-size: 13px;
-      box-shadow: none;
+        .add-item-icon {
+          margin-right: 1px;
+          vertical-align: middle;
+        }
 
-      &:focus {
-        background-color: #fcfcfc;
-      };
-    }
-  }
-}
-
-.profile-basic-panel {
-  padding: 15px 25px 0 25px;
-
-  ul.basic-info-display {
-    display: block;
-    margin: 0;
-    list-style: none;
-
-    li {
-      height: 35px;
-      line-height: 35px;
-
-      .basic-info-icon {
-        color : #aaa;
-        margin-right: 10px;
-      }
-
-      .icon-phone {
-        margin-left: 2px;
-        margin-right: 14px;
-      }
-
-      .icon-birth {
-        margin-right: 12px;
-      }
-
-      span {
-        font-size: 14px;
-        color: #333;
-      }
-    }
-
-    .edit-button {
-      width: 150px;
-      margin: 15px 0;
-      color: #5e5590;
-      font-size: 13px;
-
-      &:hover {
-        cursor: pointer;
-        color: #291b79;
-        text-decoration: underline;
-      };
-    }
-  }
-
-  div.basic-info-edit {
-    display: none;
-    font-size: 14px;
-
-    .button-box {
-      margin-left: 185px;
-    }
-
-    .update-error-msg {
-      display: inline-block;
-      position: relative;
-      left: 185px;
-      width: auto;
-      margin: 0;
-      margin-bottom: 16px;
-      padding: 5px 9px;
-      font-size: 14px;
-    }
-  }
-}
-
-div.profile-education-panel {
-  padding: 20px 25px 0 25px;
-}
-
-div.profile-info-box {
-  div.profile-info-display {
-    position: relative;
-    border-bottom: 1px solid #d5d5d5;
-    padding-bottom: 10px;
-
-    .profile-info {
-      position: relative;;
-      margin-left: 50px;
-
-      a.profile-name {
-        margin: 0;
-        font-size: 17px;
-        font-weight: 550;
-        font-family: "Calibri";
-        color: #1a0c67;
-      }
-
-      p.profile-detail {
-        margin: 0;
-        font-size: 12px;
-        color: #333;
-      }
-    }
-
-    .profile-icon {
-      position: absolute;
-      left: 0;
-      top: 1px;
-      font-size: 30px;
-      color: #bcb9ca;
-    }
-
-    .edit-button-box {
-      position: absolute;
-      right: 0;
-      top: 0;
-      font-size: 10px;
-
-      .profile-edit-button {
-        margin-left: 3px;
-        color: #8b85a9;
+        span.add-item-text {
+          font-size: 13px;
+          vertical-align: middle;
+        }
 
         &:hover {
           cursor: pointer;
-          color: #23185a;
+          color: #18184e;
+        };
+      }
+    }  /* add-new-item */
+  }  /* subpanel */
+
+  .profile-basic-panel {
+    padding: 15px 25px 0 25px;
+
+    ul.basic-info-display {
+      display: block;
+      margin: 0;
+      list-style: none;
+
+      li {
+        height: 35px;
+        line-height: 35px;
+
+        .basic-info-icon {
+          color : #aaa;
+          margin-right: 10px;
         }
+
+        .icon-phone {
+          margin-left: 2px;
+          margin-right: 14px;
+        }
+
+        .icon-birth {
+          margin-right: 12px;
+        }
+
+        span {
+          font-size: 14px;
+          color: #333;
+        }
+      }
+
+      .edit-button {
+        margin-top: 7px;
+        width: 150px;
+        color: #5e5590;
+        font-size: 13px;
+
+        &:hover {
+          cursor: pointer;
+          color: #291b79;
+          text-decoration: underline;
+        };
+      }
+    }
+
+    div.basic-info-edit {
+      display: none;
+      font-size: 14px;
+
+      .button-box {
+        margin-left: 185px;
+      }
+
+      .update-error-msg {
+        display: inline-block;
+        position: relative;
+        left: 185px;
+        width: auto;
+        margin: 0;
+        margin-bottom: 16px;
+        padding: 5px 9px;
+        font-size: 14px;
+      }
+    }
+  }  /* profile-basic-panel */
+
+  div.profile-education-panel {
+    padding: 20px 25px 0 25px;
+
+    .profile-info-edit {
+      label.profile-edit-label {
+        width: 50px;
       }
     }
   }
-}
-
-div.profile-info-edit {
-  display: none;
-
-  div.form-group {
-    margin: 0 0 5px 0;
-  }
-
-  label.profile-edit-label {
-    margin: 0 5px 0 0;
-    text-align: right;
-    width: 45px;
-    color: #444;
-    font-size: 15px;
-  }
-
-  input.profile-edit-input {
-    height: 25px;
-  }
-
-  div.edit-year {
-    margin-bottom: 6px;
-
-    .profile-edit-select {
-      width: 65px;
-      margin: 0;
-      padding: 0 0 0 5px;
-      height: 20px;
-      vertical-align: middle;
-    }
-
-    .year-to {
-      margin: 0 5px 0 5px;
-      font-size: 12px;
-    }
-  }
-
-  .button-box {
-    position: relative;
-    left: 185px;
-    margin: 10px 0 10px 0;
-  }
-}
-
-.add-new-item {
-  display: inline-block;
-
-  .add-item-button {
-    color: #2d2d8e;
-
-    .add-item-icon {
-      margin-right: 1px;
-      vertical-align: middle;
-    }
-
-    span.add-item-text {
-      font-size: 13px;
-      vertical-align: middle;
-    }
-
-    &:hover {
-      cursor: pointer;
-      color: #18184e;
-    };
-  }
 
 
-}
+}  /* profile-panel */
