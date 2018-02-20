@@ -262,7 +262,7 @@ public class User {
     return request.getURI().toString();
   }
 
-  static public boolean updateUserBaiscInfo(
+  static public boolean updateUserBasicInfo(
       int uid, String name, String email, String phone, Date birth) {
     String updateUser = "UPDATE Users " +
                         "SET email = ? " +

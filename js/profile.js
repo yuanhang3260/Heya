@@ -1,4 +1,6 @@
-define(["jquery", "profile-basic"], function($, basic) {
+define(["jquery", "profile-basic", "profile-education"],
+       function($, basic, education) {
+
   function Profile(el) {
     this.el = $(el);
 
@@ -81,7 +83,8 @@ define(["jquery", "profile-basic"], function($, basic) {
     this.el = $(el);
 
     this.basic = new basic.ProfileBasic(this.el.find(".profile-basic-panel"));
-    this.education = this.el.find(".profile-education-panel");
+    this.education =
+      new education.ProfileEducation(this.el.find(".profile-education-panel"));
     this.work = this.el.find(".profile-work-panel");
     this.places = this.el.find(".profile-places-panel");
     this.other = this.el.find(".profile-other-panel");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<!-- <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ page import = "bean.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -28,7 +28,7 @@
       uid = viewer_uid;
     }
   }
-%>
+%> -->
 
 <html lang="en">
 <head>
@@ -83,18 +83,18 @@
             </div>
           </ul>
           <div class="basic-info-edit">
-            <form method="post" action="signup">
+            <form method="post">
               <div class="form-group edit-name">
                 <label class="profile-edit-label">Name</label>
                 <input type="text" name="name" class="form-control profile-edit-input">
               </div>
               <div class="form-group edit-birth">
                 <label class="profile-edit-label">Birth</label>
-                <select class="form-control birth-select" name="year">
+                <select class="form-control profile-edit-select" name="year">
                 </select>
-                <select class="form-control birth-select" name="month">
+                <select class="form-control profile-edit-select" name="month">
                 </select>
-                <select class="form-control birth-select" name="date">
+                <select class="form-control profile-edit-select" name="date">
                 </select>
               </div>
               <div class="form-group edit-email">
@@ -114,7 +114,57 @@
           </div>
         </div>
 
-        <div class="subpanel profile-education-panel">education</div>
+        <div class="subpanel profile-education-panel">
+          <div class="profile-info-box" educationId="1">
+            <div class="profile-info-display">
+              <div class="profile-info">
+                <a href="https://www.google.com/search?q=Shanghai JiaoTong University" class="profile-name" target="_blank">
+                  <span>Shanghai JiaoTong University</span>
+                </a>
+                <p class="profile-detail">
+                  Class of <span class="year-info">2013</span>
+                  <span> &middot Electrical Engineering</span>
+                </p>
+              </div>
+              <i class="fas fa-graduation-cap profile-icon"></i>
+              <div class="edit-button-box">
+                <i class="fas fa-edit profile-edit-button"></i>
+                <i class="fas fa-ban profile-edit-button"></i>
+              </div>
+            </div>
+            <!-- <div class="profile-info-edit"</div> -->
+          </div>
+          <div class="add-new-item">
+            <div class="add-item-button">
+              <i class="far fa-plus-square add-item-icon"></i>
+              <span class="add-item-text">Add a school</span>
+            </div>
+            <div class="profile-info-edit">
+              <form method="post">
+                <div class="form-group edit-school">
+                  <label class="profile-edit-label">School</label>
+                  <input type="text" name="name" class="form-control profile-edit-input">
+                </div>
+                <div class="form-group edit-year">
+                  <label class="profile-edit-label"></label>
+                  <select class="form-control profile-edit-select" name="start">
+                  </select>
+                  <span class="year-to">to</span>
+                  <select class="form-control profile-edit-select" name="end">
+                  </select>
+                </div>
+                <div class="form-group edit-major">
+                  <label class="profile-edit-label">Major</label>
+                  <input type="text" name="major" class="form-control profile-edit-input">
+                </div>
+                <div class="button-box">
+                  <button type="button" class="btn btn-success save-btn mb-3">Save Changes</button>
+                  <button type="button" class="btn btn-light cancel-btn mb-3">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
 
         <div class="subpanel profile-work-panel">work</div>
         

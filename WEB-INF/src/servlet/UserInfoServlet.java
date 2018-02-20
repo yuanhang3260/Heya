@@ -138,7 +138,7 @@ public class UserInfoServlet extends HttpServlet {
       birth = null;
     }
 
-    if (!User.updateUserBaiscInfo(uid, name, email, phone, birth)) {
+    if (!User.updateUserBasicInfo(uid, name, email, phone, birth)) {
       json_obj.put("success", false);
       json_obj.put("reason", "internal database error");
       return json_obj;
