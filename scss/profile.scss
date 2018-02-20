@@ -77,7 +77,7 @@ body {
 .profile-panel {
   flex-grow: 1;
 
-  .subpanel {
+  div.subpanel {
     display: none;
 
     div.profile-info-edit {
@@ -116,42 +116,26 @@ body {
         background-color: #f7f7f7;
         font-size: 13px;
         box-shadow: none;
+        vertical-align: middle;
 
         &:focus {
           background-color: #fcfcfc;
         };
       }
 
-      div.edit-year {
-        margin-top: -7px;
-
-        .profile-edit-select {
-          width: 65px;
-          margin: 0;
-          padding: 0 0 0 5px;
-          height: 20px;
-          vertical-align: middle;
-        }
-
-        .year-to {
-          margin: 0 5px 0 5px;
-          font-size: 12px;
-        }
-      }
-
-      .button-box {
+      div.button-box {
         position: relative;
         left: 185px;
         margin: 10px 0 10px 0;
 
-        .save-btn {
+        button.save-btn {
           width: 105px;
           height: 25px;
           padding: 0;
           font-size: 13px;
         }
 
-        .cancel-btn {
+        button.cancel-btn {
           width: 58px;
           height: 26px;
           padding: 0;
@@ -237,7 +221,7 @@ body {
     }  /* add-new-item */
   }  /* subpanel */
 
-  .profile-basic-panel {
+  div.profile-basic-panel {
     padding: 15px 25px 0 25px;
 
     ul.basic-info-display {
@@ -260,7 +244,8 @@ body {
         }
 
         .icon-birth {
-          margin-right: 12px;
+          margin-left: 1px;
+          margin-right: 11px;
         }
 
         span {
@@ -270,7 +255,7 @@ body {
       }
 
       .edit-button {
-        margin-top: 7px;
+        margin: 7px 0 0 1px;
         width: 150px;
         color: #5e5590;
         font-size: 13px;
@@ -307,7 +292,28 @@ body {
   div.profile-education-panel {
     padding: 20px 25px 0 25px;
 
-    .profile-info-edit {
+    div.profile-info-edit {
+      div.form-group {
+        margin: 0 0 5px 0;
+      }
+
+      div.edit-year {
+        margin-top: -2px;
+        margin-bottom: 8px;
+
+        .profile-edit-select {
+          width: 65px;
+          height: 20px;
+          margin: 0;
+          padding: 0 0 0 5px;
+        }
+
+        .year-to {
+          margin: 0 5px 0 5px;
+          font-size: 12px;
+        }
+      }
+
       label.profile-edit-label {
         width: 50px;
       }
