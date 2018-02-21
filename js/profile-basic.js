@@ -20,8 +20,6 @@ define(["jquery", "profile-edit", "profile-display"],
     this.el.show();
   }
 
-  ProfileBasic.prototype.items = ["name", "email", "phone", "birth"];
-
   ProfileBasic.prototype.initUserInfo = function(data) {
     this.display.displayData(data);
   }
@@ -53,7 +51,7 @@ define(["jquery", "profile-edit", "profile-display"],
     ele.append($("<span>").html(content));
 
     // Insert to the correct position orderly.
-    let items = ProfileBasic.prototype.items;
+    let items = Display.prototype.items;
     let inserted = false;
     for (var i = items.indexOf(item) + 1; i < items.length; i++) {
       if (this[items[i]]) {
@@ -76,9 +74,9 @@ define(["jquery", "profile-edit", "profile-display"],
       var content = data[item];
 
       // Format birth.
-      if (item === "birth" &&
-          Object.prototype.toString.call(content) === "[object Object]") {
-        if (!isNaN(content.year) &&
+      if (item === "birth") {
+        if (Object.prototype.toString.call(content) === "[object Object]" &&
+            !isNaN(content.year) &&
             !isNaN(content.month) && !isNaN(content.date)) {
           content = this.formatBirth(content.year, content.month, content.date);
         } else if (Object.prototype.toString.call(content) !==
@@ -193,9 +191,13 @@ define(["jquery", "profile-edit", "profile-display"],
       }
     }
 
+    if (!formData.email) {
+      this.showErrorMsg("Email must NOT be empty");
+      return;
+    }
+
     // Disable the buttons.
-    this.el.find("button.save-btn").attr("disabled", "true");
-    this.el.find("button.cancel-btn").attr("disabled", "true");
+    this.disableButtons();
 
     // Process the form.
     var me = this;
@@ -209,8 +211,7 @@ define(["jquery", "profile-edit", "profile-display"],
       // log data to the console so we can see.
       console.log(data);
 
-      me.el.find("button.save-btn").removeAttr("disabled");
-      me.el.find("button.cancel-btn").removeAttr("disabled");
+      this.enableButtons();
       if (data.success) {
         me.hideErrorMsg();
         me.hide();
@@ -219,19 +220,6 @@ define(["jquery", "profile-edit", "profile-display"],
         me.showErrorMsg(data.reason);
       }
     });
-  }
-
-  Edit.prototype.hideErrorMsg = function() {
-    this.el.find(".update-error-msg").html("").hide();
-  }
-
-  Edit.prototype.showErrorMsg = function(msg) {
-    this.el.find(".update-error-msg").html("Failed: " + msg).show();
-  }
-
-  Edit.prototype.show = function() {
-    this.hideErrorMsg();
-    edit.EditBase.prototype.show.call(this);
   }
 
   return {

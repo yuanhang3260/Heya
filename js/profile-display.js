@@ -2,15 +2,17 @@ define(["jquery"], function($) {
   function DisplayBase(el, config) {
     this.el = $(el);
     this.config = config;
+
+    this.edit = null;
   }
 
-  // For sub class to implement.
-  DisplayBase.prototype.createItem = function() {}
+  // For sub class to implement. This function accepts data from editor or
+  // backend and display the data.
+  DisplayBase.prototype.displayData = function(data) {
+    this.show();
+  }
 
-  // For sub class to implement.
-  DisplayBase.prototype.displayData = function(data) {}
-
-  // For sub class to implement.
+  // For sub class to implement. Generate data for editor to pre-set.
   DisplayBase.prototype.generateData = function() {
     return {};
   }

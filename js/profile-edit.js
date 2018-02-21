@@ -74,11 +74,11 @@ define(["jquery"], function($) {
     this.config = config;
 
     // Buttons.
-    this.el.find(".button-box .cancel-btn")
-           .click($.proxy(this.clickEditCancel, this));
+    this.cancelBtn = this.el.find(".cancel-btn");
+    this.cancelBtn.click($.proxy(this.clickEditCancel, this));
 
-    this.el.find(".button-box .save-btn")
-           .click($.proxy(this.clickEditSave, this));
+    this.saveBtn = this.el.find(".save-btn");
+    this.saveBtn.click($.proxy(this.clickEditSave, this));
 
     // Create text inputs.
     for (let input of config.inputs) {
@@ -90,6 +90,8 @@ define(["jquery"], function($) {
       this[select.name] =
           new Select(this.el.find(".edit-" + select.name), select);
     }
+
+    this.display = null;
   }
 
   EditBase.prototype.setData = function(data) {
@@ -104,21 +106,7 @@ define(["jquery"], function($) {
     }
   }
 
-  EditBase.prototype.clickEditCancel = function() {
-    this.hide();
-    if (this.display) {
-      this.display.show();
-    }
-  }
-
-  EditBase.prototype.clickEditSave = function() {
-    this.submitData();
-  }
-
-  // For sub class to implement.
-  EditBase.prototype.submitData = function() {}
-
-  // This should be called by clickEditSave to submit data to backend and
+  // This should be called by submitData to submit data to backend and
   // display.
   EditBase.prototype.generateData = function() {
     var data = {};
@@ -142,12 +130,45 @@ define(["jquery"], function($) {
     return data;
   }
 
+  // For sub class to implement.
+  EditBase.prototype.submitData = function() {}
+
+  EditBase.prototype.clickEditSave = function() {
+    this.submitData();
+  }
+
+  EditBase.prototype.clickEditCancel = function() {
+    this.hide();
+    if (this.display) {
+      this.display.show();
+    }
+  }
+
+  EditBase.prototype.disableButtons = function() {
+    this.saveBtn.attr("disabled", "true");
+    this.cancelBtn.attr("disabled", "true");
+  }
+
+  EditBase.prototype.enableButtons = function() {
+    this.saveBtn.removeAttr("disabled");
+    this.cancelBtn.removeAttr("disabled");
+  }
+
+  EditBase.prototype.hideErrorMsg = function() {
+    this.el.find(".update-error-msg").html(null).hide();
+  }
+
+  EditBase.prototype.showErrorMsg = function(msg) {
+    this.el.find(".update-error-msg").html("Failed: " + msg).show();
+  }
+
   EditBase.prototype.hide = function() {
     this.el.hide();
   }
 
   EditBase.prototype.show = function() {
-    this.el.show();
+    this.hideErrorMsg();
+    this.show();
   }
 
   return {

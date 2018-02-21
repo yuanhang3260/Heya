@@ -116,23 +116,8 @@
 
         <div class="subpanel profile-education-panel">
           <div class="profile-info-box" educationId="1">
-            <div class="profile-info-display">
-              <div class="profile-info">
-                <a href="https://www.google.com/search?q=Shanghai JiaoTong University" class="profile-name" target="_blank">
-                  <span>Shanghai JiaoTong University</span>
-                </a>
-                <p class="profile-detail">
-                  Class of <span class="year-info">2013</span>
-                  <span> &middot Electrical Engineering</span>
-                </p>
-              </div>
-              <i class="fas fa-graduation-cap profile-icon"></i>
-              <div class="corner-buttons">
-                <i class="fas fa-edit profile-edit-button"></i>
-                <i class="fas fa-ban profile-edit-button"></i>
-              </div>
-            </div>
-            <!-- <div class="profile-info-edit"</div> -->
+            <!-- <div class="profile-info-display"></div> -->
+            <!-- <div class="profile-info-edit"></div> -->
           </div>
           <div class="add-new-item">
             <div class="add-item-button">
@@ -162,6 +147,17 @@
                   <button type="button" class="btn btn-light cancel-btn mb-3">Cancel</button>
                 </div>
               </form>
+            </div>
+            <div class="profile-info-display">
+              <div class="profile-info">
+                <a href="#" class="profile-name school-info" target="_blank"></a>
+                <p class="profile-detail"></p>
+              </div>
+              <i class="fas fa-graduation-cap profile-icon"></i>
+              <div class="corner-buttons">
+                <i class="fas fa-edit profile-edit-button"></i>
+                <i class="fas fa-ban profile-edit-button"></i>
+              </div>
             </div>
           </div>
         </div>
