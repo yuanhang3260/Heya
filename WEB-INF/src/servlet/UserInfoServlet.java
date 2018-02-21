@@ -90,7 +90,9 @@ public class UserInfoServlet extends HttpServlet {
       // Update user profile.
       String section = request.getParameter("section");
       if (section != null && section.equals("basic")) {
-        json_obj = updateBasicInfo(request, response);
+        json_obj = updateBasicInfo(user, request, response);
+      } else if (section != null && section.equals("education")) {
+        json_obj = updateEducationInfo(user, request, response);
       } else {
         json_obj.put("success", false);
         json_obj.put("reason", "invalid request");
@@ -103,20 +105,12 @@ public class UserInfoServlet extends HttpServlet {
     }
   }
 
-  private JSONObject updateBasicInfo(
-      HttpServletRequest request, HttpServletResponse response) 
+  private JSONObject updateBasicInfo(User user,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) 
       throws JSONException {
     JSONObject json_obj = new JSONObject();
 
-    int uid = -1;
-    try {
-      uid = Integer.parseInt(request.getParameter("uid"));
-    } catch (NumberFormatException e) {
-      e.printStackTrace();
-      json_obj.put("success", false);
-      json_obj.put("reason", "invalid uid");
-      return json_obj;
-    }
     String name = request.getParameter("name");
     String email = request.getParameter("email");
     if (email == null || email.isEmpty()) {
@@ -138,13 +132,74 @@ public class UserInfoServlet extends HttpServlet {
       birth = null;
     }
 
-    if (!User.updateUserBasicInfo(uid, name, email, phone, birth)) {
+    if (!user.updateUserBasicInfo(name, email, phone, birth)) {
       json_obj.put("success", false);
       json_obj.put("reason", "internal database error");
       return json_obj;
     }
 
     json_obj.put("success", true);
+    return json_obj;
+  }
+
+  private JSONObject updateEducationInfo(User user,
+                                         HttpServletRequest request,
+                                         HttpServletResponse response)
+      throws JSONException {
+    JSONObject json_obj = new JSONObject();
+
+    String school = request.getParameter("school");
+    String major = request.getParameter("major");
+
+    JSONObject yearJSON;
+    yearJSON = new JSONObject(request.getParameter("year"));
+    Integer startYear = null, endYear = null;
+    try {
+      startYear = new Integer(yearJSON.getInt("start"));
+      endYear = new Integer(yearJSON.getInt("end"));
+    } catch (JSONException e) {
+      startYear = null;
+      endYear = null;
+      e.printStackTrace();
+    }
+
+    String action = request.getParameter("action");
+    json_obj.put("action", action);
+
+    boolean success = false;
+    if (action.equals("add")) {
+      int sid = user.addSchoolInfo(school, major, startYear, endYear);
+      if (sid >= 0) {
+        success = true;
+        json_obj.put("schoolId", sid);
+      } else {
+        success = false;
+        json_obj.put("reason", "internal database error");
+      }
+    } else {
+      int sid = -1;
+      if (request.getParameter("sid") != null) {
+        try {
+          sid = Integer.parseInt(request.getParameter("sid"));
+        } catch (NumberFormatException e) {}
+      }
+
+      if (sid > 0) {
+        if (action.equals("update")) {
+          if (!user.updateSchoolInfo(sid, school, major, startYear, endYear)) {
+            success = false;
+            json_obj.put("reason", "internal database error");
+          }
+        } else if (action.equals("delete")) {
+
+        }
+      } else {
+        success = false;
+        json_obj.put("reason", "school id not specified");
+      }
+    }
+
+    json_obj.put("success", success);
     return json_obj;
   }
 

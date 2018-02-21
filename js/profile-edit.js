@@ -39,9 +39,10 @@ define(["jquery"], function($) {
 
   Select.prototype.setData = function(data) {
     this.resetSelectOptions();
+
     for (let sub of this.config.subs) {
       let subName = sub.name;
-      if (data[subName]) {
+      if (data && data[subName]) {
         let option = this[subName].find("option[value=" + data[subName] + "]");
         if (option) {
           option.attr("selected", "true");
@@ -163,12 +164,13 @@ define(["jquery"], function($) {
   }
 
   EditBase.prototype.hide = function() {
+    this.hideErrorMsg();
     this.el.hide();
   }
 
   EditBase.prototype.show = function() {
     this.hideErrorMsg();
-    this.show();
+    this.el.show();
   }
 
   return {

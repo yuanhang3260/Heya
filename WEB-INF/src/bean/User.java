@@ -262,8 +262,8 @@ public class User {
     return request.getURI().toString();
   }
 
-  static public boolean updateUserBasicInfo(
-      int uid, String name, String email, String phone, Date birth) {
+  public boolean updateUserBasicInfo(
+      String name, String email, String phone, Date birth) {
     String updateUser = "UPDATE Users " +
                         "SET email = ? " +
                         "WHERE uid = ?";
@@ -279,7 +279,7 @@ public class User {
 
       stmt = conn.prepareStatement(updateUser);
       stmt.setString(1, email);
-      stmt.setInt(2, uid);
+      stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
       stmt = conn.prepareStatement(updateDetail);
@@ -298,13 +298,132 @@ public class User {
       } else {
         stmt.setNull(3, Types.DATE);
       }
-      stmt.setInt(4, uid);
+      stmt.setInt(4, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+
+      this.name = name;
+      this.email = email;
+      this.phone = phone;
+      this.birth = birth;
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public int addSchoolInfo(String school, String major,
+                               Integer startYear, Integer endYear) {
+    if (this.education == null) {
+      this.education = new ArrayList<Education>();
+    }
+
+    int sid = 0;
+    if (!this.education.isEmpty()) {
+      sid = this.education.get(this.education.size() - 1).getId() + 1;
+    }
+
+    Education newSchool = Education.getBuilder()
+                                   .setId(sid)
+                                   .setSchool(school)
+                                   .setMajor(major)
+                                   .setStartYear(startYear)
+                                   .setEndYear(endYear)
+                                   .build();
+
+    JSONArray array = Education.toJSONArray(this.education);
+    array.put(newSchool.toJSONObject());
+
+    String addSchoolSql = "UPDATE UserDetail set education = ? WHERE uid = ?";
+    System.out.println("education: " + array);
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(addSchoolSql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      this.education.add(newSchool);
+      return sid;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return -1;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public boolean updateSchoolInfo(int sid, String school, String major,
+                                  Integer startYear, Integer endYear) {
+    if (this.education == null) {
+      return false;
+    }
+
+    int index = -1;
+    for (index = 0; index < this.education.size(); index++) {
+      if (this.education.get(index).getId() == sid) {
+        break;
+      }
+    }
+
+    if (index < 0) {
+      return false;
+    }
+
+    Education copy = new Education(this.education.get(index));
+    this.education.set(index, Education.getBuilder()
+                                       .setId(sid)
+                                       .setSchool(school)
+                                       .setMajor(major)
+                                       .setStartYear(startYear)
+                                       .setEndYear(endYear)
+                                       .build());
+
+    JSONArray array = Education.toJSONArray(this.education);
+
+    String addSchoolSql = "UPDATE UserDetail set education = ? WHERE uid = ?";
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(addSchoolSql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
       conn.commit();
       return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      // Rollback local education info.
+      this.education.set(index, copy);
       return false;
     } finally {
       try {

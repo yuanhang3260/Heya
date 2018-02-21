@@ -51,7 +51,7 @@ define(["jquery", "profile-edit", "profile-display"],
     ele.append($("<span>").html(content));
 
     // Insert to the correct position orderly.
-    let items = Display.prototype.items;
+    let items = Display.prototype.config.items;
     let inserted = false;
     for (var i = items.indexOf(item) + 1; i < items.length; i++) {
       if (this[items[i]]) {
@@ -192,7 +192,7 @@ define(["jquery", "profile-edit", "profile-display"],
     }
 
     if (!formData.email) {
-      this.showErrorMsg("Email must NOT be empty");
+      this.showErrorMsg("Email required");
       return;
     }
 
@@ -211,7 +211,7 @@ define(["jquery", "profile-edit", "profile-display"],
       // log data to the console so we can see.
       console.log(data);
 
-      this.enableButtons();
+      me.enableButtons();
       if (data.success) {
         me.hideErrorMsg();
         me.hide();
@@ -220,6 +220,12 @@ define(["jquery", "profile-edit", "profile-display"],
         me.showErrorMsg(data.reason);
       }
     });
+
+    // Local front end test.
+    // this.enableButtons();
+    // this.hideErrorMsg();
+    // this.hide();
+    // this.display.displayData(formData);
   }
 
   return {

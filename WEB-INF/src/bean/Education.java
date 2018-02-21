@@ -11,10 +11,18 @@ public class Education {
   private int id;  // internal ID just for this user.
   private String school;
   private String major;
-  private int startYear;
-  private int endYear;
+  private Integer startYear;
+  private Integer endYear;
 
+  // Constructors.
   public Education() {}
+  public Education(Education other) {
+    this.id = other.id;
+    this.school = other.school;
+    this.major = other.major;
+    this.startYear = other.startYear;
+    this.endYear = other.endYear;
+  }
 
   // Builder pattern.
   public static class Builder {
@@ -41,11 +49,11 @@ public class Education {
       obj().setMajor(major);
       return this;
     }
-    public Builder setStartYear(int year) {
+    public Builder setStartYear(Integer year) {
       obj().setStartYear(year);
       return this;
     }
-    public Builder setEndYear(int year) {
+    public Builder setEndYear(Integer year) {
       obj().setEndYear(year);
       return this;
     }
@@ -92,11 +100,19 @@ public class Education {
   public JSONObject toJSONObject() {
     JSONObject json_obj = new JSONObject();
     try {
-      json_obj.put("id", this.id)
-              .put("school", this.school)
-              .put("major", this.major)
-              .put("startYear", startYear)
-              .put("endYear", endYear);
+      json_obj.put("id", this.id);
+      if (this.school != null) {
+        json_obj.put("school", this.school);
+      }
+      if (this.major != null) {
+        json_obj.put("major", this.major);
+      }
+      if (this.startYear != null) {
+        json_obj.put("startYear", this.startYear);
+      }
+      if (this.endYear != null) {
+        json_obj.put("endYear", this.endYear);
+      }
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -155,14 +171,14 @@ public class Education {
   public int getStartYear() {
     return this.startYear;
   }
-  public void setStartYear(int year) {
+  public void setStartYear(Integer year) {
     this.startYear = year;
   }
 
   public int getEndYear() {
     return this.endYear;
   }
-  public void setEndYear(int year) {
+  public void setEndYear(Integer year) {
     this.endYear = year;
   }
 }

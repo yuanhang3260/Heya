@@ -80,6 +80,55 @@ body {
   div.subpanel {
     display: none;
 
+    div.profile-info-display {
+      display: none;
+      position: relative;
+
+      .profile-info {
+        position: relative;;
+        margin-left: 50px;
+
+        a.profile-name {
+          margin: 0;
+          font-size: 17px;
+          font-weight: 550;
+          font-family: "Calibri";
+          color: #1a0c67;
+        }
+
+        p.profile-detail {
+          margin: 0;
+          font-size: 12px;
+          color: #333;
+        }
+      }
+
+      .profile-icon {
+        position: absolute;
+        left: 0;
+        top: 1px;
+        font-size: 30px;
+        color: #bcb9ca;
+      }
+
+      .corner-buttons {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 10px;
+
+        .profile-edit-button, .profile-delete-button {
+          margin-left: 3px;
+          color: #8b85a9;
+
+          &:hover {
+            cursor: pointer;
+            color: #23185a;
+          }
+        }
+      }
+    } /* profile-info-display */
+
     div.profile-info-edit {
       display: none;
 
@@ -143,64 +192,30 @@ body {
           border-color: #bbb;
         }
       }
+
+      .update-error-msg {
+        display: inline-block;
+        position: relative;
+        left: 185px;
+        width: auto;
+        margin: 0;
+        margin-bottom: 16px;
+        padding: 5px 9px;
+        font-size: 14px;
+      }
     }  /* profile-info-edit */
 
     div.profile-info-box {
-      div.profile-info-display {
-        position: relative;
-        border-bottom: 1px solid #d5d5d5;
-        padding-bottom: 10px;
-
-        .profile-info {
-          position: relative;;
-          margin-left: 50px;
-
-          a.profile-name {
-            margin: 0;
-            font-size: 17px;
-            font-weight: 550;
-            font-family: "Calibri";
-            color: #1a0c67;
-          }
-
-          p.profile-detail {
-            margin: 0;
-            font-size: 12px;
-            color: #333;
-          }
-        }
-
-        .profile-icon {
-          position: absolute;
-          left: 0;
-          top: 1px;
-          font-size: 30px;
-          color: #bcb9ca;
-        }
-
-        .corner-buttons {
-          position: absolute;
-          right: 0;
-          top: 0;
-          font-size: 10px;
-
-          .profile-edit-button {
-            margin-left: 3px;
-            color: #8b85a9;
-
-            &:hover {
-              cursor: pointer;
-              color: #23185a;
-            }
-          }
-        }
-      } /* profile-info-display */
+      border-bottom: 1px solid #d5d5d5;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
     }  /* profile-info-box */
 
     div.add-new-item {
-      display: inline-block;
-
       .add-item-button {
+        display: inline-block;
+        margin-bottom: 15px;
+
         color: #2d2d8e;
 
         .add-item-icon {
@@ -275,17 +290,6 @@ body {
       .button-box {
         margin-left: 185px;
       }
-
-      .update-error-msg {
-        display: inline-block;
-        position: relative;
-        left: 185px;
-        width: auto;
-        margin: 0;
-        margin-bottom: 16px;
-        padding: 5px 9px;
-        font-size: 14px;
-      }
     }
   }  /* profile-basic-panel */
 
@@ -303,7 +307,7 @@ body {
 
         .profile-edit-select {
           width: 65px;
-          height: 20px;
+          height: 25px;
           margin: 0;
           padding: 0 0 0 5px;
         }

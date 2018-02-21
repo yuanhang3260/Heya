@@ -106,8 +106,8 @@
                 <input type="text" name="phone" class="form-control profile-edit-input">
               </div>
               <div class="button-box">
-                <button type="button" class="btn btn-success save-btn mb-3">Save Changes</button>
-                <button type="button" class="btn btn-light cancel-btn mb-3">Cancel</button>
+                <button type="button" class="btn btn-success save-btn">Save Changes</button>
+                <button type="button" class="btn btn-light cancel-btn">Cancel</button>
               </div>
               <div class="alert alert-danger update-error-msg" role="alert"></div>
             </form>
@@ -115,10 +115,6 @@
         </div>
 
         <div class="subpanel profile-education-panel">
-          <div class="profile-info-box" educationId="1">
-            <!-- <div class="profile-info-display"></div> -->
-            <!-- <div class="profile-info-edit"></div> -->
-          </div>
           <div class="add-new-item">
             <div class="add-item-button">
               <i class="far fa-plus-square add-item-icon"></i>
@@ -143,9 +139,10 @@
                   <input type="text" name="major" class="form-control profile-edit-input">
                 </div>
                 <div class="button-box">
-                  <button type="button" class="btn btn-success save-btn mb-3">Save Changes</button>
-                  <button type="button" class="btn btn-light cancel-btn mb-3">Cancel</button>
+                  <button type="button" class="btn btn-success save-btn">Save Changes</button>
+                  <button type="button" class="btn btn-light cancel-btn">Cancel</button>
                 </div>
+                <div class="alert alert-danger update-error-msg" role="alert"></div>
               </form>
             </div>
             <div class="profile-info-display">
@@ -156,7 +153,7 @@
               <i class="fas fa-graduation-cap profile-icon"></i>
               <div class="corner-buttons">
                 <i class="fas fa-edit profile-edit-button"></i>
-                <i class="fas fa-ban profile-edit-button"></i>
+                <i class="fas fa-ban profile-delete-button"></i>
               </div>
             </div>
           </div>
