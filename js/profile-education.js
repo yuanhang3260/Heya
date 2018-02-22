@@ -188,11 +188,10 @@ define(["jquery", "profile-edit", "profile-display"],
     }).done(function(data) {
       // log data to the console so we can see.
       console.log(data);
-        me.box.remove();
       if (data.success) {
-        
+        me.box.remove();
       } else {
-        // ?
+        window.alert("Delete school failed - " + data.reason);
       }
     });
 

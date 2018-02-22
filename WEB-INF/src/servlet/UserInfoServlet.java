@@ -191,7 +191,10 @@ public class UserInfoServlet extends HttpServlet {
             json_obj.put("reason", "internal database error");
           }
         } else if (action.equals("delete")) {
-
+          if (!user.deleteSchoolInfo(sid)) {
+            success = false;
+            json_obj.put("reason", "internal database error");
+          }
         }
       } else {
         success = false;

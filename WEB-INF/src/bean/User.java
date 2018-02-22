@@ -34,7 +34,7 @@ public class User {
   private Date birth;
   private Sex sex;
   private ArrayList<Education> education;
-  private String work;
+  private ArrayList<Work> work;
   private String places;
   private String relationship;
   private String phone;
@@ -104,7 +104,10 @@ public class User {
           this.education = Education.parseFromJSONArray(
               new JSONArray(rset.getString("education")));
         }
-        this.work = rset.getString("work");
+        if (rset.getString("work") != null) {
+          this.work = Work.parseFromJSONArray(
+              new JSONArray(rset.getString("work")));
+        }
         this.places = rset.getString("places");
         this.relationship = rset.getString("relationship");
         this.phone = rset.getString("phone");
@@ -323,8 +326,9 @@ public class User {
     }
   }
 
+  // ----------------------------------------------------------------------- //
   public int addSchoolInfo(String school, String major,
-                               Integer startYear, Integer endYear) {
+                           Integer startYear, Integer endYear) {
     if (this.education == null) {
       this.education = new ArrayList<Education>();
     }
@@ -345,7 +349,7 @@ public class User {
     JSONArray array = Education.toJSONArray(this.education);
     array.put(newSchool.toJSONObject());
 
-    String addSchoolSql = "UPDATE UserDetail set education = ? WHERE uid = ?";
+    String sql = "UPDATE UserDetail set education = ? WHERE uid = ?";
     System.out.println("education: " + array);
 
     Connection conn = null;
@@ -354,7 +358,7 @@ public class User {
       conn = DBManager.getDBConnection();
       conn.setAutoCommit(false);
 
-      stmt = conn.prepareStatement(addSchoolSql);
+      stmt = conn.prepareStatement(sql);
       stmt.setString(1, array.toString());
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
@@ -405,7 +409,7 @@ public class User {
 
     JSONArray array = Education.toJSONArray(this.education);
 
-    String addSchoolSql = "UPDATE UserDetail set education = ? WHERE uid = ?";
+    String sql = "UPDATE UserDetail set education = ? WHERE uid = ?";
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -413,7 +417,7 @@ public class User {
       conn = DBManager.getDBConnection();
       conn.setAutoCommit(false);
 
-      stmt = conn.prepareStatement(addSchoolSql);
+      stmt = conn.prepareStatement(sql);
       stmt.setString(1, array.toString());
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
@@ -424,6 +428,223 @@ public class User {
       e.printStackTrace();
       // Rollback local education info.
       this.education.set(index, copy);
+      return false;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public boolean deleteSchoolInfo(int sid) {
+    if (this.education == null) {
+      return true;
+    }
+
+    int index = -1;
+    for (index = 0; index < this.education.size(); index++) {
+      if (this.education.get(index).getId() == sid) {
+        break;
+      }
+    }
+
+    if (index < 0) {
+      return true;
+    }
+
+    Education removed = this.education.remove(index);
+    JSONArray array = Education.toJSONArray(this.education);
+
+    String sql = "UPDATE UserDetail set education = ? WHERE uid = ?";
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(sql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local education info.
+      this.education.add(index, removed);
+      return false;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  // ----------------------------------------------------------------------- //
+  public int addCompanyInfo(String company, String position,
+                            Integer startYear, Integer endYear) {
+    if (this.work == null) {
+      this.work = new ArrayList<Work>();
+    }
+
+    int cid = 0;
+    if (!this.work.isEmpty()) {
+      cid = this.work.get(this.work.size() - 1).getId() + 1;
+    }
+
+    Work newCompany = Work.getBuilder()
+                          .setId(cid)
+                          .setCompany(company)
+                          .setPosition(position)
+                          .setStartYear(startYear)
+                          .setEndYear(endYear)
+                          .build();
+
+    JSONArray array = Work.toJSONArray(this.work);
+    array.put(newCompany.toJSONObject());
+
+    String sql = "UPDATE UserDetail set work = ? WHERE uid = ?";
+    System.out.println("work: " + array);
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(sql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      this.work.add(newCompany);
+      return cid;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return -1;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public boolean updateCompanyInfo(int cid, String company, String position,
+                                   Integer startYear, Integer endYear) {
+    if (this.work == null) {
+      return false;
+    }
+
+    int index = -1;
+    for (index = 0; index < this.work.size(); index++) {
+      if (this.work.get(index).getId() == cid) {
+        break;
+      }
+    }
+
+    if (index < 0) {
+      return false;
+    }
+
+    Work copy = new Work(this.work.get(index));
+    this.work.set(index, Work.getBuilder()
+                             .setId(cid)
+                             .setCompany(company)
+                             .setPosition(position)
+                             .setStartYear(startYear)
+                             .setEndYear(endYear)
+                             .build());
+
+    JSONArray array = Work.toJSONArray(this.work);
+
+    String sql = "UPDATE UserDetail set work = ? WHERE uid = ?";
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(sql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local work info.
+      this.work.set(index, copy);
+      return false;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public boolean deleteCompanyInfo(int cid) {
+    if (this.work == null) {
+      return true;
+    }
+
+    int index = -1;
+    for (index = 0; index < this.work.size(); index++) {
+      if (this.work.get(index).getId() == cid) {
+        break;
+      }
+    }
+
+    if (index < 0) {
+      return true;
+    }
+
+    Work removed = this.work.remove(index);
+    JSONArray array = Work.toJSONArray(this.work);
+
+    String sql = "UPDATE UserDetail set work = ? WHERE uid = ?";
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(sql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local work info.
+      this.work.add(index, removed);
       return false;
     } finally {
       try {
@@ -461,7 +682,7 @@ public class User {
         json_obj.put("education", Education.toJSONArray(education));
       }
       if (work != null) {
-        json_obj.put("work", work);
+        json_obj.put("work", Work.toJSONArray(work));
       }
       if (places != null) {
         json_obj.put("places", new JSONArray(places));
@@ -538,12 +759,28 @@ public class User {
     this.sex = sex;
   }
 
-  public String getWork() {
+  public List<Work> getWork() {
     return this.work;
   }
 
-  public void setWork(String work) {
-    this.work = work;
+  public void addWork(Work work) {
+    this.work.add(work);
+  }
+
+  public void updateEducation(Work work) {
+    for (int i = 0; i < this.work.size(); i++) {
+      if (this.work.get(i).getId() == work.getId()) {
+        this.work.set(i, work);
+      }
+    }
+  }
+
+  public void deleteWork(int id) {
+    for (int i = 0; i < this.work.size(); i++) {
+      if (this.work.get(i).getId() == id) {
+        this.work.remove(i);
+      }
+    }
   }
 
   public List<Education> getEducation() {
