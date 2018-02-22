@@ -17,6 +17,8 @@ define(["jquery", "profile-edit", "profile-display"],
   }
 
   ProfileBasic.prototype.show = function() {
+    // this.display.show();
+    // this.edit.hide();
     this.el.show();
   }
 

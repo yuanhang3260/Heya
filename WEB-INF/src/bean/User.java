@@ -335,11 +335,11 @@ public class User {
 
     int sid = 0;
     if (!this.education.isEmpty()) {
-      sid = this.education.get(this.education.size() - 1).getId() + 1;
+      sid = this.education.get(this.education.size() - 1).getSid() + 1;
     }
 
     Education newSchool = Education.getBuilder()
-                                   .setId(sid)
+                                   .setSid(sid)
                                    .setSchool(school)
                                    .setMajor(major)
                                    .setStartYear(startYear)
@@ -389,7 +389,7 @@ public class User {
 
     int index = -1;
     for (index = 0; index < this.education.size(); index++) {
-      if (this.education.get(index).getId() == sid) {
+      if (this.education.get(index).getSid() == sid) {
         break;
       }
     }
@@ -400,7 +400,7 @@ public class User {
 
     Education copy = new Education(this.education.get(index));
     this.education.set(index, Education.getBuilder()
-                                       .setId(sid)
+                                       .setSid(sid)
                                        .setSchool(school)
                                        .setMajor(major)
                                        .setStartYear(startYear)
@@ -448,7 +448,7 @@ public class User {
 
     int index = -1;
     for (index = 0; index < this.education.size(); index++) {
-      if (this.education.get(index).getId() == sid) {
+      if (this.education.get(index).getSid() == sid) {
         break;
       }
     }
@@ -501,11 +501,11 @@ public class User {
 
     int cid = 0;
     if (!this.work.isEmpty()) {
-      cid = this.work.get(this.work.size() - 1).getId() + 1;
+      cid = this.work.get(this.work.size() - 1).getCid() + 1;
     }
 
     Work newCompany = Work.getBuilder()
-                          .setId(cid)
+                          .setCid(cid)
                           .setCompany(company)
                           .setPosition(position)
                           .setStartYear(startYear)
@@ -555,7 +555,7 @@ public class User {
 
     int index = -1;
     for (index = 0; index < this.work.size(); index++) {
-      if (this.work.get(index).getId() == cid) {
+      if (this.work.get(index).getCid() == cid) {
         break;
       }
     }
@@ -566,7 +566,7 @@ public class User {
 
     Work copy = new Work(this.work.get(index));
     this.work.set(index, Work.getBuilder()
-                             .setId(cid)
+                             .setCid(cid)
                              .setCompany(company)
                              .setPosition(position)
                              .setStartYear(startYear)
@@ -614,7 +614,7 @@ public class User {
 
     int index = -1;
     for (index = 0; index < this.work.size(); index++) {
-      if (this.work.get(index).getId() == cid) {
+      if (this.work.get(index).getCid() == cid) {
         break;
       }
     }
@@ -767,9 +767,9 @@ public class User {
     this.work.add(work);
   }
 
-  public void updateEducation(Work work) {
+  public void updateWork(Work work) {
     for (int i = 0; i < this.work.size(); i++) {
-      if (this.work.get(i).getId() == work.getId()) {
+      if (this.work.get(i).getCid() == work.getCid()) {
         this.work.set(i, work);
       }
     }
@@ -777,7 +777,7 @@ public class User {
 
   public void deleteWork(int id) {
     for (int i = 0; i < this.work.size(); i++) {
-      if (this.work.get(i).getId() == id) {
+      if (this.work.get(i).getCid() == id) {
         this.work.remove(i);
       }
     }
@@ -793,15 +793,15 @@ public class User {
 
   public void updateEducation(Education education) {
     for (int i = 0; i < this.education.size(); i++) {
-      if (this.education.get(i).getId() == education.getId()) {
+      if (this.education.get(i).getSid() == education.getSid()) {
         this.education.set(i, education);
       }
     }
   }
 
-  public void deleteEducation(int id) {
+  public void deleteEducation(int sid) {
     for (int i = 0; i < this.education.size(); i++) {
-      if (this.education.get(i).getId() == id) {
+      if (this.education.get(i).getSid() == sid) {
         this.education.remove(i);
       }
     }

@@ -87,6 +87,7 @@ body {
       .profile-info {
         position: relative;;
         margin-left: 50px;
+        min-height: 40px;
 
         a.profile-name {
           margin: 0;
@@ -207,8 +208,8 @@ body {
 
     div.profile-info-box {
       border-bottom: 1px solid #d5d5d5;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
+      padding-bottom: 13px;
+      margin-bottom: 10px;
     }  /* profile-info-box */
 
     div.add-new-item {
@@ -322,7 +323,44 @@ body {
         width: 50px;
       }
     }
-  }
+  } /* profile-education-panel */
+
+  div.profile-work-panel {
+    padding: 20px 25px 0 25px;
+
+    div.profile-info-display {
+      .profile-icon {
+        top: 5px;
+      }
+    }
+
+    div.profile-info-edit {
+      div.form-group {
+        margin: 0 0 5px 0;
+      }
+
+      div.edit-year {
+        margin-top: -2px;
+        margin-bottom: 8px;
+
+        .profile-edit-select {
+          width: 65px;
+          height: 25px;
+          margin: 0;
+          padding: 0 0 0 5px;
+        }
+
+        .year-to {
+          margin: 0 5px 0 5px;
+          font-size: 12px;
+        }
+      }
+
+      label.profile-edit-label {
+        width: 75px;
+      }
+    }
+  } /* profile-work-panel */
 
 
 }  /* profile-panel */

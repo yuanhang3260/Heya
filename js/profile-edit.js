@@ -56,6 +56,7 @@ define(["jquery"], function($) {
   }
 
   Select.prototype.addNumberOptions = function(select, start, end) {
+    select.find("option").remove();
     select.append($('<option></option>')
           .val("--").html("--").attr("selected", "true"));
     for (let num = start; num <= end; num++) {

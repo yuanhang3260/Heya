@@ -93,6 +93,8 @@ public class UserInfoServlet extends HttpServlet {
         json_obj = updateBasicInfo(user, request, response);
       } else if (section != null && section.equals("education")) {
         json_obj = updateEducationInfo(user, request, response);
+      } else if (section != null && section.equals("work")) {
+        json_obj = updateWorkInfo(user, request, response);
       } else {
         json_obj.put("success", false);
         json_obj.put("reason", "invalid request");
@@ -151,16 +153,18 @@ public class UserInfoServlet extends HttpServlet {
     String school = request.getParameter("school");
     String major = request.getParameter("major");
 
-    JSONObject yearJSON;
-    yearJSON = new JSONObject(request.getParameter("year"));
     Integer startYear = null, endYear = null;
-    try {
-      startYear = new Integer(yearJSON.getInt("start"));
-      endYear = new Integer(yearJSON.getInt("end"));
-    } catch (JSONException e) {
-      startYear = null;
-      endYear = null;
-      e.printStackTrace();
+    String year = request.getParameter("year");
+    if (year != null) {
+      JSONObject yearJSON = new JSONObject(year);
+      try {
+        startYear = new Integer(yearJSON.getInt("start"));
+        endYear = new Integer(yearJSON.getInt("end"));
+      } catch (JSONException e) {
+        startYear = null;
+        endYear = null;
+        e.printStackTrace();
+      }
     }
 
     String action = request.getParameter("action");
@@ -184,21 +188,89 @@ public class UserInfoServlet extends HttpServlet {
         } catch (NumberFormatException e) {}
       }
 
-      if (sid > 0) {
+      if (sid >= 0) {
         if (action.equals("update")) {
-          if (!user.updateSchoolInfo(sid, school, major, startYear, endYear)) {
-            success = false;
+          success = user.updateSchoolInfo(sid, school, major,
+                                          startYear, endYear);
+          if (!success) {
             json_obj.put("reason", "internal database error");
           }
         } else if (action.equals("delete")) {
-          if (!user.deleteSchoolInfo(sid)) {
-            success = false;
+          success = user.deleteSchoolInfo(sid);
+          if (!success) {
             json_obj.put("reason", "internal database error");
           }
+        } else {
+          json_obj.put("reason", "invalid request");
         }
       } else {
-        success = false;
         json_obj.put("reason", "school id not specified");
+      }
+    }
+
+    json_obj.put("success", success);
+    return json_obj;
+  }
+
+  private JSONObject updateWorkInfo(User user,
+                                    HttpServletRequest request,
+                                    HttpServletResponse response)
+      throws JSONException {
+    JSONObject json_obj = new JSONObject();
+
+    String company = request.getParameter("company");
+    String position = request.getParameter("position");
+
+    Integer startYear = null, endYear = null;
+    String year = request.getParameter("year");
+    if (year != null) {
+      JSONObject yearJSON = new JSONObject(year);
+      try {
+        startYear = new Integer(yearJSON.getInt("start"));
+      } catch (JSONException e) {}
+      try {
+        endYear = new Integer(yearJSON.getInt("end"));
+      } catch (JSONException e) {}
+    }
+
+    String action = request.getParameter("action");
+    json_obj.put("action", action);
+
+    boolean success = false;
+    if (action.equals("add")) {
+      int sid = user.addCompanyInfo(company, position, startYear, endYear);
+      if (sid >= 0) {
+        success = true;
+        json_obj.put("companyId", sid);
+      } else {
+        success = false;
+        json_obj.put("reason", "internal database error");
+      }
+    } else {
+      int cid = -1;
+      if (request.getParameter("cid") != null) {
+        try {
+          cid = Integer.parseInt(request.getParameter("cid"));
+        } catch (NumberFormatException e) {}
+      }
+
+      if (cid >= 0) {
+        if (action.equals("update")) {
+          success = user.updateCompanyInfo(cid, company, position,
+                                           startYear, endYear);
+          if (!success) {
+            json_obj.put("reason", "internal database error");
+          }
+        } else if (action.equals("delete")) {
+          success = user.deleteCompanyInfo(cid);
+          if (!success) {
+            json_obj.put("reason", "internal database error");
+          }
+        } else {
+          json_obj.put("reason", "invalid request");
+        }
+      } else {
+        json_obj.put("reason", "company id not specified");
       }
     }
 

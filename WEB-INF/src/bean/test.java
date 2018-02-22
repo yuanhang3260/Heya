@@ -13,14 +13,14 @@ class test {
   static public void main(String[] args) throws JSONException {
     List<Education> list = new ArrayList<Education>();
     list.add(Education.getBuilder()
-                      .setId(0)
+                      .setSid(0)
                       .setSchool("Shanghai JiaoTong University")
                       .setStartYear(2009)
                       .setEndYear(2013)
                       .setMajor("MicroElectronics")
                       .build());
     list.add(Education.getBuilder()
-                      .setId(1)
+                      .setSid(1)
                       .setSchool("Haimen Middle School")
                       .setStartYear(2006)
                       .setEndYear(2009)

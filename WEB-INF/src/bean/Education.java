@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class Education {
-  private int id;  // internal ID just for this user.
+  private int sid;  // internal ID just for this user.
   private String school;
   private String major;
   private Integer startYear;
@@ -17,7 +17,7 @@ public class Education {
   // Constructors.
   public Education() {}
   public Education(Education other) {
-    this.id = other.id;
+    this.sid = other.sid;
     this.school = other.school;
     this.major = other.major;
     this.startYear = other.startYear;
@@ -37,8 +37,8 @@ public class Education {
       return this.obj;
     }
 
-    public Builder setId(int id) {
-      obj().setId(id);
+    public Builder setSid(int sid) {
+      obj().setSid(sid);
       return this;
     }
     public Builder setSchool(String school) {
@@ -61,8 +61,8 @@ public class Education {
     public Education buildFromJSON(JSONObject json_obj) {
       this.obj = new Education();
       try {
-        if (!json_obj.isNull("id")) {
-          this.obj.setId(json_obj.getInt("id"));
+        if (!json_obj.isNull("sid")) {
+          this.obj.setSid(json_obj.getInt("sid"));
         }
         if (!json_obj.isNull("school")) {
           this.obj.setSchool(json_obj.getString("school"));
@@ -70,11 +70,14 @@ public class Education {
         if (!json_obj.isNull("major")) {
           this.obj.setMajor(json_obj.getString("major"));
         }
-        if (!json_obj.isNull("startYear")) {
-          this.obj.setStartYear(json_obj.getInt("startYear"));
-        }
-        if (!json_obj.isNull("endYear")) {
-          this.obj.setEndYear(json_obj.getInt("endYear"));
+        if (!json_obj.isNull("year")) {
+          JSONObject year_obj = (JSONObject)json_obj.get("year");
+          if (!year_obj.isNull("start")) {
+            this.obj.setStartYear(year_obj.getInt("start"));
+          }
+          if (!year_obj.isNull("end")) {
+            this.obj.setEndYear(year_obj.getInt("end"));
+          }
         }
       } catch (JSONException e) {
         e.printStackTrace();
@@ -100,18 +103,23 @@ public class Education {
   public JSONObject toJSONObject() {
     JSONObject json_obj = new JSONObject();
     try {
-      json_obj.put("id", this.id);
+      json_obj.put("sid", this.sid);
       if (this.school != null) {
         json_obj.put("school", this.school);
       }
       if (this.major != null) {
         json_obj.put("major", this.major);
       }
-      if (this.startYear != null) {
-        json_obj.put("startYear", this.startYear);
-      }
-      if (this.endYear != null) {
-        json_obj.put("endYear", this.endYear);
+
+      if (this.startYear != null || this.endYear != null) {
+        JSONObject year_obj = new JSONObject();
+        if (this.startYear != null) {
+          year_obj.put("start", this.startYear);
+        }
+        if (this.endYear != null) {
+          year_obj.put("end", this.endYear);
+        }
+        json_obj.put("year", year_obj);
       }
     } catch (JSONException e) {
       e.printStackTrace();
@@ -147,11 +155,11 @@ public class Education {
     return educations;
   }
 
-  public int getId() {
-    return this.id;
+  public int getSid() {
+    return this.sid;
   }
-  public void setId(int id) {
-    this.id = id;
+  public void setSid(int sid) {
+    this.sid = sid;
   }
 
   public String getSchool() {

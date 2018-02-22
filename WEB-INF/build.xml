@@ -24,7 +24,7 @@
 
   <target name="compile">
     <mkdir dir="${classes.dir}"/>
-    <javac target="1.8" includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath">
+    <javac target="1.9" includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath">
       <compilerarg line="-Xlint:unchecked"/>
     </javac>
   </target>

@@ -1,47 +1,47 @@
 define(["jquery", "profile-edit", "profile-display"],
        function($, edit, display) {
   // ----------------------------------------------------------------------- //
-  // Profile education section, top panel.
-  function ProfileEducation(el) {
+  // Profile work section, top panel.
+  function ProfileWork(el) {
     this.el = $(el);
 
     this.addNew = new AddNew(this.el.find(".add-new-item"), this);
-    this.schools = [];
+    this.companies = [];
   }
 
-  ProfileEducation.prototype.addSchool = function(school) {
-    this.schools.push(school);
-    // TODO: Sort schools based on graduation time in descending order?
+  ProfileWork.prototype.addCompany = function(company) {
+    this.companies.push(company);
+    // TODO: Sort companies based on graduation time in descending order?
   }
 
-  ProfileEducation.prototype.removeSchool = function(sid) {
-    for (let i = 0; i < this.schools.length; i++) {
-      if (this.schools[i].sid === sid) {
-        this.schools.splice(i, 1);
+  ProfileWork.prototype.removeCompany = function(cid) {
+    for (let i = 0; i < this.companies.length; i++) {
+      if (this.companies[i].cid === cid) {
+        this.companies.splice(i, 1);
         return;
       }
     }
   }
 
-  ProfileEducation.prototype.initUserInfo = function(data) {
-    var education = data.education;
-    if (education && Object.prototype.toString.call(education)) {
-      for (let school of education) {
-        this.addNew.createNewSchool(school);
+  ProfileWork.prototype.initUserInfo = function(data) {
+    var work = data.work;
+    if (work && Object.prototype.toString.call(work)) {
+      for (let company of work) {
+        this.addNew.createNewCompany(company);
       }
     }
   }
 
-  ProfileEducation.prototype.hide = function() {
+  ProfileWork.prototype.hide = function() {
     this.el.hide();
   }
 
-  ProfileEducation.prototype.show = function() {
+  ProfileWork.prototype.show = function() {
     this.el.show();
   }
 
   // ----------------------------------------------------------------------- //
-  // Add new school.
+  // Add new company.
   function AddNew(el, panel) {
     this.el = $(el);
 
@@ -58,10 +58,10 @@ define(["jquery", "profile-edit", "profile-display"],
     this.panel = panel;
   }
 
-  AddNew.prototype.createNewSchool = function(data) {
-    var school = new School(this, data);
+  AddNew.prototype.createNewCompany = function(data) {
+    var company = new Company(this, data);
     if (this.panel) {
-      this.panel.addSchool(school);
+      this.panel.addCompany(company);
     }
   }
 
@@ -86,12 +86,12 @@ define(["jquery", "profile-edit", "profile-display"],
 
 
   // ----------------------------------------------------------------------- //
-  // School info box.
-  function School(creator, data) {
-    var el = $("<div>", {"class": "profile-info-box", "sid": data.sid});
+  // company info box.
+  function Company(creator, data) {
+    var el = $("<div>", {"class": "profile-info-box", "cid": data.cid});
     creator.el.before(el);
     this.el = el;
-    this.sid = data.sid;
+    this.cid = data.cid;
 
     // Create display. It clones the displayTemplate DOM from AddNew.
     var displayEle = creator.cloneDisplay();
@@ -114,13 +114,13 @@ define(["jquery", "profile-edit", "profile-display"],
     this.panel = creator.panel;
   }
 
-  School.prototype.remove = function() {
-    this.panel.removeSchool(this.sid);
+  Company.prototype.remove = function() {
+    this.panel.removeCompany(this.cid);
     this.el.remove();
   }
 
-  School.prototype.getSid = function() {
-    return this.sid;
+  Company.prototype.getcid = function() {
+    return this.cid;
   }
 
   // ----------------------------------------------------------------------- //
@@ -138,24 +138,37 @@ define(["jquery", "profile-edit", "profile-display"],
   var googleSearch = "https://www.google.com/search?q=";
 
   Display.prototype.displayData = function(data) {
-    this.el.find("a.school-info").html(data.school)
-                                 .attr("href", googleSearch + data.school);
+    this.el.find("a.company-info").html(data.company)
+                                 .attr("href", googleSearch + data.company);
 
     var detail = this.el.find("p.profile-detail");
     detail.empty();
-    var yearAdded = false;
-    if (data.year && !isNaN(data.year.start) && !isNaN(data.year.end)) {
-      detail.append($("<span>").html("Class of "))
-            .append($("<span>", {"class": "year-info",
-                                 "start-year": data.year.start})
-                     .html(data.year.end));
-      yearAdded = true;
+
+    var positionAdded = false;
+    if (data.position) {
+      detail.append($('<span class="position-info">').html(data.position));
+      positionAdded = true;
     }
-    if (data.major) {
-      if (yearAdded) {
-        detail.append($("<span>").html(" &middot "));
+
+    if (data.year) {
+      var start = $("<span>", {"class": "start-year",
+                               "year": data.year.start})
+                  .html(data.year.start);
+      var end = $("<span>", {"class": "end-year",
+                             "year": data.year.end})
+                .html(data.year.end);
+
+      year = $("<span>");
+      if (positionAdded) {
+        year.append($("<span>").html(" &middot "));
       }
-      detail.append($("<span>", {"class": "major-info"}).html(data.major));
+      year.append(start).append($("<span>").html(" - ")).append(end);
+      if (!isNaN(data.year.start) && !isNaN(data.year.end)) {
+        year.show();
+      } else {
+        year.hide();
+      }
+      detail.append(year);
     }
 
     this.el.show();
@@ -163,17 +176,17 @@ define(["jquery", "profile-edit", "profile-display"],
 
   Display.prototype.generateData = function() {
     var data = {};
-    data.school = this.el.find(".school-info").html();
-    data.major = this.el.find(".major-info").html();
+    data.company = this.el.find(".company-info").html();
+    data.position = this.el.find(".position-info").html();
 
     data.year = {};
-    data.year.start = this.el.find(".year-info").attr("start-year");
-    data.year.end = this.el.find(".year-info").html();
+    data.year.start = this.el.find(".start-year").html();
+    data.year.end = this.el.find(".end-year").html();
     return data;
   }
 
   Display.prototype.clickDelete = function() {
-    var doDelete = window.confirm("Delete this school?");
+    var doDelete = window.confirm("Delete this company?");
     if (!doDelete) {
       return;
     }
@@ -181,9 +194,9 @@ define(["jquery", "profile-edit", "profile-display"],
     var reqData = {
       "uid" : +$("body").attr("uid"),
       "username" : $("body").attr("user"),
-      "section": "education",
+      "section": "work",
       "action": "delete",
-      "sid": this.box.getSid(),
+      "cid": this.box.getcid(),
     };
 
     console.log(reqData);
@@ -202,7 +215,7 @@ define(["jquery", "profile-edit", "profile-display"],
       if (data.success) {
         me.box.remove();
       } else {
-        window.alert("Delete school failed - " + data.reason);
+        window.alert("Delete company failed - " + data.reason);
       }
     });
 
@@ -212,7 +225,7 @@ define(["jquery", "profile-edit", "profile-display"],
 
 
   // ----------------------------------------------------------------------- //
-  // Component - Edit/Add school, inherits from EditBase.
+  // Component - Edit/Add company, inherits from EditBase.
   function Edit(el) {
     edit.EditBase.call(this, el, Edit.prototype.config);
   }
@@ -221,7 +234,7 @@ define(["jquery", "profile-edit", "profile-display"],
   Edit.prototype.constructor = Edit;
 
   Edit.prototype.config = {
-    "inputs": ["school", "major"],
+    "inputs": ["company", "position"],
     "selects": [
       {
         "name" : "year",
@@ -253,12 +266,12 @@ define(["jquery", "profile-edit", "profile-display"],
     var reqData = {
       "uid" : +$("body").attr("uid"),
       "username" : $("body").attr("user"),
-      "section": "education",
+      "section": "work",
       "action": action,
     };
 
     if (action === "update") {
-      reqData.sid = this.box.getSid();
+      reqData.cid = this.box.getcid();
     }
 
     // Add form data to http request data.
@@ -272,8 +285,8 @@ define(["jquery", "profile-edit", "profile-display"],
       }
     }
 
-    if (!formData.school) {
-      this.showErrorMsg("School name required");
+    if (!formData.company) {
+      this.showErrorMsg("company name required");
       return;
     }
 
@@ -297,7 +310,7 @@ define(["jquery", "profile-edit", "profile-display"],
       me.enableButtons();
       if (data.success) {
         me.hide();
-        me.updateEducationInfo(data.schoolId, formData);
+        me.updateworkInfo(data.companyId, formData);
       } else {
         me.showErrorMsg(data.reason);
       }
@@ -306,21 +319,21 @@ define(["jquery", "profile-edit", "profile-display"],
     // Local front end test.
     // this.enableButtons();
     // this.hide();
-    // this.updateEducationInfo(0, formData);
+    // this.updateworkInfo(0, formData);
   }
 
-  Edit.prototype.updateEducationInfo = function(sid, data) {
+  Edit.prototype.updateworkInfo = function(cid, data) {
     if (this.display instanceof AddNewButton) {
-      // Add new school to display.
-      data.sid = sid;
-      this.parent.createNewSchool(data);
-      this.display.displayData();  // Displays "Add new school".
+      // Add new company to display.
+      data.cid = cid;
+      this.parent.createNewCompany(data);
+      this.display.displayData();  // Displays "Add new company".
     } else {
       this.display.displayData(data);
     }
   }
 
   return {
-    ProfileEducation: ProfileEducation,
+    ProfileWork: ProfileWork,
   }
 });
