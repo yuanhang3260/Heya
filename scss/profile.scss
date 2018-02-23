@@ -208,33 +208,31 @@ body {
 
     div.profile-info-box {
       border-bottom: 1px solid #d5d5d5;
-      padding-bottom: 13px;
-      margin-bottom: 10px;
+      padding-bottom: 10px;
+      margin-bottom: 13px;
     }  /* profile-info-box */
 
-    div.add-new-item {
-      .add-item-button {
-        display: inline-block;
-        margin-bottom: 15px;
+    div.add-item-button {
+      display: inline-block;
+      margin-bottom: 15px;
 
-        color: #2d2d8e;
+      color: #2d2d8e;
 
-        .add-item-icon {
-          margin-right: 1px;
-          vertical-align: middle;
-        }
-
-        span.add-item-text {
-          font-size: 13px;
-          vertical-align: middle;
-        }
-
-        &:hover {
-          cursor: pointer;
-          color: #18184e;
-        };
+      .add-item-icon {
+        margin-right: 1px;
+        vertical-align: middle;
       }
-    }  /* add-new-item */
+
+      span.add-item-text {
+        font-size: 13px;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        cursor: pointer;
+        color: #18184e;
+      };
+    }  /* add-item-button */
   }  /* subpanel */
 
   div.profile-basic-panel {
@@ -332,6 +330,10 @@ body {
       .profile-icon {
         top: 5px;
       }
+
+      .profile-icon {
+        font-size: 28px;
+      }
     }
 
     div.profile-info-edit {
@@ -361,6 +363,79 @@ body {
       }
     }
   } /* profile-work-panel */
+  
+  div.profile-places-panel {
+    padding: 20px 25px 0 25px;
+
+    .critical-place-title {
+      padding-bottom: 5px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #d5d5d5;
+      color: gray;
+    }
+
+    div.add-item-button {
+      margin-bottom: 5px;
+      margin-left: 5px;
+    }
+
+    div.profile-info-box {
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }  /* profile-info-box */
+
+    div.profile-info-display {
+      .profile-info {
+        p.profile-detail {
+          margin: 0;
+          font-size: 12px;
+          color: #777;
+        }
+      }
+    }
+
+    div.current-live {
+      div.profile-info-display {
+        .profile-info {
+          position: relative;;
+          margin-left: 40px;
+          min-height: 34px;
+        }
+
+        .profile-icon {
+          top: 3px;
+          left: 4px;
+          font-size: 30px;
+        }
+      }
+    }
+
+    div.hometown {
+      div.profile-info-display {
+        .profile-info {
+          position: relative;;
+          margin-left: 41px;
+          min-height: 35px;
+        }
+
+        .profile-icon {
+          top: 3px;
+          left: 1px;
+          font-size: 27px;
+        }
+      }
+    }
+
+    div.profile-info-edit {
+      div.form-group {
+        margin: 0 0 5px 0;
+      }
+
+      label.profile-edit-label {
+        width: 45px;
+      }
+    }
+  } /* profile-places-panel */
 
 
 }  /* profile-panel */

@@ -59,8 +59,18 @@ define(["jquery", "profile-edit", "profile-display"],
   }
 
   AddNew.prototype.createNewCompany = function(data) {
-    var company = new Company(this, data);
+    // Create company box. It clones display and edit DOMs from templates
+    // in addNew.
+    var el = $("<div>", {"class": "profile-info-box", "cid": data.cid});
+    el.append(this.cloneDisplay());
+    el.append(this.cloneEdit());
+
+    this.el.before(el);
+
+    var company = new Company(el, data.cid);
     if (this.panel) {
+      company.panel = this.panel;
+      company.displayCompanyInfo(data);
       this.panel.addCompany(company);
     }
   }
@@ -87,31 +97,26 @@ define(["jquery", "profile-edit", "profile-display"],
 
   // ----------------------------------------------------------------------- //
   // company info box.
-  function Company(creator, data) {
-    var el = $("<div>", {"class": "profile-info-box", "cid": data.cid});
-    creator.el.before(el);
-    this.el = el;
-    this.cid = data.cid;
+  function Company(el, cid) {
+    this.el = $(el);
+    this.cid = cid;
 
-    // Create display. It clones the displayTemplate DOM from AddNew.
-    var displayEle = creator.cloneDisplay();
-    this.el.append(displayEle);
-    this.display = new Display(displayEle);
-    this.display.displayData(data);
+    // Create display.
+    this.display = new Display(this.el.find(".profile-info-display"));
     this.display.box = this;
 
-    // Create edit. It clones the editor DOM from AddNew.
-    var editEle = creator.cloneEdit();
-    this.el.append(editEle);
-    this.edit = new Edit(editEle);
+    // Create edit.
+    this.edit = new Edit(this.el.find(".profile-info-edit"));
     this.edit.box = this;
 
     // Keep reference of each other.
     this.edit.display = this.display;
     this.display.edit = this.edit;
+  }
 
-    // Top panel.
-    this.panel = creator.panel;
+  Company.prototype.displayCompanyInfo = function(data) {
+    this.edit.hide();
+    this.display.displayData(data);
   }
 
   Company.prototype.remove = function() {
@@ -119,8 +124,12 @@ define(["jquery", "profile-edit", "profile-display"],
     this.el.remove();
   }
 
-  Company.prototype.getcid = function() {
+  Company.prototype.getCid = function() {
     return this.cid;
+  }
+
+  Company.prototype.setCid = function(cid) {
+    this.cid = cid;
   }
 
   // ----------------------------------------------------------------------- //
@@ -196,7 +205,7 @@ define(["jquery", "profile-edit", "profile-display"],
       "username" : $("body").attr("user"),
       "section": "work",
       "action": "delete",
-      "cid": this.box.getcid(),
+      "cid": this.box.getCid(),
     };
 
     console.log(reqData);
@@ -271,7 +280,7 @@ define(["jquery", "profile-edit", "profile-display"],
     };
 
     if (action === "update") {
-      reqData.cid = this.box.getcid();
+      reqData.cid = this.box.getCid();
     }
 
     // Add form data to http request data.

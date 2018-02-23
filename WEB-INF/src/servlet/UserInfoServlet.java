@@ -95,6 +95,8 @@ public class UserInfoServlet extends HttpServlet {
         json_obj = updateEducationInfo(user, request, response);
       } else if (section != null && section.equals("work")) {
         json_obj = updateWorkInfo(user, request, response);
+      } else if (section != null && section.equals("places")) {
+        json_obj = updatePlacesInfo(user, request, response);
       } else {
         json_obj.put("success", false);
         json_obj.put("reason", "invalid request");
@@ -271,6 +273,60 @@ public class UserInfoServlet extends HttpServlet {
         }
       } else {
         json_obj.put("reason", "company id not specified");
+      }
+    }
+
+    json_obj.put("success", success);
+    return json_obj;
+  }
+
+  private JSONObject updatePlacesInfo(User user,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response)
+      throws JSONException {
+    JSONObject json_obj = new JSONObject();
+
+    String place = request.getParameter("place");
+    boolean current = Boolean.parseBoolean(request.getParameter("current"));
+    boolean hometown = Boolean.parseBoolean(request.getParameter("hometown"));
+
+    String action = request.getParameter("action");
+    json_obj.put("action", action);
+
+    boolean success = false;
+    if (action.equals("add")) {
+      int pid = user.addPlaceInfo(place, current, hometown);
+      if (pid >= 0) {
+        success = true;
+        json_obj.put("placeId", pid);
+      } else {
+        success = false;
+        json_obj.put("reason", "internal database error");
+      }
+    } else {
+      int pid = -1;
+      if (request.getParameter("pid") != null) {
+        try {
+          pid = Integer.parseInt(request.getParameter("pid"));
+        } catch (NumberFormatException e) {}
+      }
+
+      if (pid >= 0) {
+        if (action.equals("update")) {
+          success = user.updatePlaceInfo(pid, place, current, hometown);
+          if (!success) {
+            json_obj.put("reason", "internal database error");
+          }
+        } else if (action.equals("delete")) {
+          success = user.deletePlaceInfo(pid);
+          if (!success) {
+            json_obj.put("reason", "internal database error");
+          }
+        } else {
+          json_obj.put("reason", "invalid request");
+        }
+      } else {
+        json_obj.put("reason", "place id not specified");
       }
     }
 

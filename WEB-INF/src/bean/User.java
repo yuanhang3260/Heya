@@ -110,9 +110,9 @@ public class User {
           this.work = Work.parseFromJSONArray(
               new JSONArray(rset.getString("work")));
         }
-        if (rset.getString("place") != null) {
-          this.work = Work.parseFromJSONArray(
-              new JSONArray(rset.getString("place")));
+        if (rset.getString("places") != null) {
+          this.places = Place.parseFromJSONArray(
+              new JSONArray(rset.getString("places")));
         }
         this.relationship = rset.getString("relationship");
         this.phone = rset.getString("phone");
@@ -364,7 +364,7 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
@@ -372,6 +372,9 @@ public class User {
       this.education.add(newSchool);
       return sid;
     } catch (SQLException e) {
+      e.printStackTrace();
+      return -1;
+    } catch (JSONException e) {
       e.printStackTrace();
       return -1;
     } finally {
@@ -423,13 +426,18 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
       conn.commit();
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local education info.
+      this.education.set(index, copy);
+      return false;
+    } catch (JSONException e) {
       e.printStackTrace();
       // Rollback local education info.
       this.education.set(index, copy);
@@ -474,13 +482,18 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
       conn.commit();
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local education info.
+      this.education.add(index, removed);
+      return false;
+    } catch (JSONException e) {
       e.printStackTrace();
       // Rollback local education info.
       this.education.add(index, removed);
@@ -530,7 +543,7 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
@@ -538,6 +551,9 @@ public class User {
       this.work.add(newCompany);
       return cid;
     } catch (SQLException e) {
+      e.printStackTrace();
+      return -1;
+    } catch (JSONException e) {
       e.printStackTrace();
       return -1;
     } finally {
@@ -589,13 +605,18 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
       conn.commit();
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local work info.
+      this.work.set(index, copy);
+      return false;
+    } catch (JSONException e) {
       e.printStackTrace();
       // Rollback local work info.
       this.work.set(index, copy);
@@ -640,13 +661,18 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
       conn.commit();
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local work info.
+      this.work.add(index, removed);
+      return false;
+    } catch (JSONException e) {
       e.printStackTrace();
       // Rollback local work info.
       this.work.add(index, removed);
@@ -684,8 +710,8 @@ public class User {
     JSONArray array = Place.toJSONArray(this.places);
     array.put(newPlace.toJSONObject());
 
-    String sql = "UPDATE UserDetail set place = ? WHERE uid = ?";
-    System.out.println("place: " + array);
+    String sql = "UPDATE UserDetail set places = ? WHERE uid = ?";
+    System.out.println("places: " + array);
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -694,7 +720,7 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
@@ -702,6 +728,9 @@ public class User {
       this.places.add(newPlace);
       return pid;
     } catch (SQLException e) {
+      e.printStackTrace();
+      return -1;
+    } catch (JSONException e) {
       e.printStackTrace();
       return -1;
     } finally {
@@ -743,7 +772,7 @@ public class User {
 
     JSONArray array = Place.toJSONArray(this.places);
 
-    String sql = "UPDATE UserDetail set place = ? WHERE uid = ?";
+    String sql = "UPDATE UserDetail set places = ? WHERE uid = ?";
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -752,13 +781,18 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
       conn.commit();
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local work info.
+      this.places.set(index, copy);
+      return false;
+    } catch (JSONException e) {
       e.printStackTrace();
       // Rollback local work info.
       this.places.set(index, copy);
@@ -794,7 +828,7 @@ public class User {
     Place removed = this.places.remove(index);
     JSONArray array = Place.toJSONArray(this.places);
 
-    String sql = "UPDATE UserDetail set place = ? WHERE uid = ?";
+    String sql = "UPDATE UserDetail set places = ? WHERE uid = ?";
 
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -803,7 +837,7 @@ public class User {
       conn.setAutoCommit(false);
 
       stmt = conn.prepareStatement(sql);
-      stmt.setString(1, array.toString());
+      stmt.setString(1, array.toString(2));
       stmt.setInt(2, this.uid);
       stmt.executeUpdate();
 
@@ -814,7 +848,11 @@ public class User {
       // Rollback local work info.
       this.places.add(index, removed);
       return false;
-    } finally {
+    } catch (JSONException e) {
+      this.places.add(index, removed);
+      return false;
+    }
+    finally {
       try {
         if (stmt != null) {
           stmt.close();
@@ -853,7 +891,7 @@ public class User {
         json_obj.put("work", Work.toJSONArray(work));
       }
       if (places != null) {
-        json_obj.put("place", Place.toJSONArray(places));
+        json_obj.put("places", Place.toJSONArray(places));
       }
       if (relationship != null) {
         json_obj.put("relationship", relationship);

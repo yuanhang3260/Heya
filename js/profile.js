@@ -1,5 +1,6 @@
-define(["jquery", "profile-basic", "profile-education", "profile-work"],
-       function($, basic, education, work) {
+define(["jquery", "profile-basic", "profile-education", "profile-work",
+        "profile-places"],
+       function($, basic, education, work, places) {
 
   function Profile(el) {
     this.el = $(el);
@@ -37,6 +38,7 @@ define(["jquery", "profile-basic", "profile-education", "profile-work"],
         me.panel["basic"].initUserInfo(data);
         me.panel["education"].initUserInfo(data);
         me.panel["work"].initUserInfo(data);
+        me.panel["places"].initUserInfo(data);
       }
     });
   };
@@ -88,7 +90,8 @@ define(["jquery", "profile-basic", "profile-education", "profile-work"],
     this.education =
       new education.ProfileEducation(this.el.find(".profile-education-panel"));
     this.work = new work.ProfileWork(this.el.find(".profile-work-panel"));
-    this.places = this.el.find(".profile-places-panel");
+    this.places =
+      new places.ProfilePlaces(this.el.find(".profile-places-panel"));
     this.other = this.el.find(".profile-other-panel");
 
     this.basic.show();

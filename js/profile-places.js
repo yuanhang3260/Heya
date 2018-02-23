@@ -6,6 +6,7 @@ define(["jquery", "profile-edit", "profile-display"],
     this.el = $(el);
 
     this.current = new Place(".current-live", {current: true});
+    this.hometown = new Place(".hometown", {hometown: true});
 
     // this.addNew = new AddNew(this.el.find(".add-new-item"), this);
     // this.places = [];
@@ -16,9 +17,9 @@ define(["jquery", "profile-edit", "profile-display"],
     if (places && Object.prototype.toString.call(places) === "[object Array]") {
       for (let place of places) {
         if (place.current) {
-          // 
+          this.current.displayPlaceInfo(place);
         } else if (place.hometown) {
-          // 
+          this.hometown.displayPlaceInfo(place);
         }
       }
     }
@@ -37,7 +38,7 @@ define(["jquery", "profile-edit", "profile-display"],
   function Place(el, config) {
     this.el = $(el);
     this.config = config;
-    this.pid = this.el.attr("pid");
+    this.pid = null;
 
     this.add = new AddNewButton(this.el.find(".add-item-button"));
     this.display = new Display(this.el.find(".profile-info-display"));
@@ -55,28 +56,38 @@ define(["jquery", "profile-edit", "profile-display"],
     this.edit.box = this;
 
     // Top panel.
-    this.panel = creator.panel;
-
     this.empty = true;
   }
 
+  Place.prototype.displayPlaceInfo = function(data) {
+    this.add.hide();
+    this.edit.hide();
+    this.display.displayData(data);
+    this.setEmpty(false);
+  }
+
   Place.prototype.isCurrent = function() {
-    this.config.current;
+    return this.config.current;
   }  
 
   Place.prototype.isHometown = function() {
-    this.config.hometown;
+    return this.config.hometown;
   }
 
   Place.prototype.getPid = function() {
     return this.pid;
   }
 
-  place.prototype.isEmpty = function() {
+  Place.prototype.setPid = function(pid) {
+    this.pid = pid;
+    this.el.attr("pid", pid);
+  }
+
+  Place.prototype.isEmpty = function() {
     return this.empty;
   }
 
-  place.prototype.setEmpty = function(empty) {
+  Place.prototype.setEmpty = function(empty) {
     this.empty = empty;
   }
 
@@ -109,37 +120,15 @@ define(["jquery", "profile-edit", "profile-display"],
   var googleMapSearch = "https://www.google.com/maps/search/";
 
   Display.prototype.displayData = function(data) {
-    this.el.find("a.place-info").html(data.school)
-                                 .attr("href", googleMapSearch + data.school);
-
-    var detail = this.el.find("p.profile-detail");
-    detail.empty();
-    var yearAdded = false;
-    if (data.year && !isNaN(data.year.start) && !isNaN(data.year.end)) {
-      detail.append($("<span>").html("Class of "))
-            .append($("<span>", {"class": "year-info",
-                                 "start-year": data.year.start})
-                     .html(data.year.end));
-      yearAdded = true;
-    }
-    if (data.major) {
-      if (yearAdded) {
-        detail.append($("<span>").html(" &middot "));
-      }
-      detail.append($("<span>", {"class": "major-info"}).html(data.major));
-    }
-
+    this.el.find("a.place-info").html(data.place)
+                                .attr("href", googleMapSearch + data.place);
+    this.box.setPid(data.pid);
     this.el.show();
   }
 
   Display.prototype.generateData = function() {
     var data = {};
-    data.school = this.el.find(".school-info").html();
-    data.major = this.el.find(".major-info").html();
-
-    data.year = {};
-    data.year.start = this.el.find(".year-info").attr("start-year");
-    data.year.end = this.el.find(".year-info").html();
+    data.place = this.el.find(".place-info").html();
     return data;
   }
 
@@ -172,16 +161,20 @@ define(["jquery", "profile-edit", "profile-display"],
       console.log(data);
       if (data.success) {
         // TODO: Reset everything for Display?
-        this.hide();
-        this.edit.hide();
-        this.add.show();
+        me.box.setEmpty(true);
+        me.hide();
+        me.edit.hide();
+        me.add.show();
       } else {
         window.alert("Delete place failed - " + data.reason);
       }
     });
 
     // Local front end test.
-    // this.box.remove();
+    // this.box.setEmpty(true);
+    // this.hide();
+    // this.edit.hide();
+    // this.add.show();
   }
 
 

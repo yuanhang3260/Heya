@@ -204,6 +204,7 @@ body {
   /* profile-basic-panel */
   /* profile-education-panel */
   /* profile-work-panel */
+  /* profile-places-panel */
 }
 /* line 80, ../scss/profile.scss */
 .profile-panel div.subpanel {
@@ -211,7 +212,7 @@ body {
   /* profile-info-display */
   /* profile-info-edit */
   /* profile-info-box */
-  /* add-new-item */
+  /* add-item-button */
 }
 /* line 83, ../scss/profile.scss */
 .profile-panel div.subpanel div.profile-info-display {
@@ -342,148 +343,212 @@ body {
 /* line 209, ../scss/profile.scss */
 .profile-panel div.subpanel div.profile-info-box {
   border-bottom: 1px solid #d5d5d5;
-  padding-bottom: 13px;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 13px;
 }
-/* line 216, ../scss/profile.scss */
-.profile-panel div.subpanel div.add-new-item .add-item-button {
+/* line 215, ../scss/profile.scss */
+.profile-panel div.subpanel div.add-item-button {
   display: inline-block;
   margin-bottom: 15px;
   color: #2d2d8e;
 }
-/* line 222, ../scss/profile.scss */
-.profile-panel div.subpanel div.add-new-item .add-item-button .add-item-icon {
+/* line 221, ../scss/profile.scss */
+.profile-panel div.subpanel div.add-item-button .add-item-icon {
   margin-right: 1px;
   vertical-align: middle;
 }
-/* line 227, ../scss/profile.scss */
-.profile-panel div.subpanel div.add-new-item .add-item-button span.add-item-text {
+/* line 226, ../scss/profile.scss */
+.profile-panel div.subpanel div.add-item-button span.add-item-text {
   font-size: 13px;
   vertical-align: middle;
 }
-/* line 232, ../scss/profile.scss */
-.profile-panel div.subpanel div.add-new-item .add-item-button:hover {
+/* line 231, ../scss/profile.scss */
+.profile-panel div.subpanel div.add-item-button:hover {
   cursor: pointer;
   color: #18184e;
 }
-/* line 240, ../scss/profile.scss */
+/* line 238, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel {
   padding: 15px 25px 0 25px;
 }
-/* line 243, ../scss/profile.scss */
+/* line 241, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display {
   display: block;
   margin: 0;
   list-style: none;
 }
-/* line 248, ../scss/profile.scss */
+/* line 246, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display li {
   height: 35px;
   line-height: 35px;
 }
-/* line 252, ../scss/profile.scss */
+/* line 250, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display li .basic-info-icon {
   color: #aaa;
   margin-right: 10px;
 }
-/* line 257, ../scss/profile.scss */
+/* line 255, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display li .icon-phone {
   margin-left: 2px;
   margin-right: 14px;
 }
-/* line 262, ../scss/profile.scss */
+/* line 260, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display li .icon-birth {
   margin-left: 1px;
   margin-right: 11px;
 }
-/* line 267, ../scss/profile.scss */
+/* line 265, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display li span {
   font-size: 14px;
   color: #333;
 }
-/* line 273, ../scss/profile.scss */
+/* line 271, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display .edit-button {
   margin: 7px 0 0 1px;
   width: 150px;
   color: #5e5590;
   font-size: 13px;
 }
-/* line 279, ../scss/profile.scss */
+/* line 277, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel ul.basic-info-display .edit-button:hover {
   cursor: pointer;
   color: #291b79;
   text-decoration: underline;
 }
-/* line 287, ../scss/profile.scss */
+/* line 285, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel div.basic-info-edit {
   display: none;
   font-size: 14px;
 }
-/* line 291, ../scss/profile.scss */
+/* line 289, ../scss/profile.scss */
 .profile-panel div.profile-basic-panel div.basic-info-edit .button-box {
   margin-left: 185px;
 }
-/* line 297, ../scss/profile.scss */
+/* line 295, ../scss/profile.scss */
 .profile-panel div.profile-education-panel {
   padding: 20px 25px 0 25px;
 }
-/* line 301, ../scss/profile.scss */
+/* line 299, ../scss/profile.scss */
 .profile-panel div.profile-education-panel div.profile-info-edit div.form-group {
   margin: 0 0 5px 0;
 }
-/* line 305, ../scss/profile.scss */
+/* line 303, ../scss/profile.scss */
 .profile-panel div.profile-education-panel div.profile-info-edit div.edit-year {
   margin-top: -2px;
   margin-bottom: 8px;
 }
-/* line 309, ../scss/profile.scss */
+/* line 307, ../scss/profile.scss */
 .profile-panel div.profile-education-panel div.profile-info-edit div.edit-year .profile-edit-select {
   width: 65px;
   height: 25px;
   margin: 0;
   padding: 0 0 0 5px;
 }
-/* line 316, ../scss/profile.scss */
+/* line 314, ../scss/profile.scss */
 .profile-panel div.profile-education-panel div.profile-info-edit div.edit-year .year-to {
   margin: 0 5px 0 5px;
   font-size: 12px;
 }
-/* line 322, ../scss/profile.scss */
+/* line 320, ../scss/profile.scss */
 .profile-panel div.profile-education-panel div.profile-info-edit label.profile-edit-label {
   width: 50px;
 }
-/* line 328, ../scss/profile.scss */
+/* line 326, ../scss/profile.scss */
 .profile-panel div.profile-work-panel {
   padding: 20px 25px 0 25px;
 }
-/* line 332, ../scss/profile.scss */
+/* line 330, ../scss/profile.scss */
 .profile-panel div.profile-work-panel div.profile-info-display .profile-icon {
   top: 5px;
 }
-/* line 338, ../scss/profile.scss */
+/* line 334, ../scss/profile.scss */
+.profile-panel div.profile-work-panel div.profile-info-display .profile-icon {
+  font-size: 28px;
+}
+/* line 340, ../scss/profile.scss */
 .profile-panel div.profile-work-panel div.profile-info-edit div.form-group {
   margin: 0 0 5px 0;
 }
-/* line 342, ../scss/profile.scss */
+/* line 344, ../scss/profile.scss */
 .profile-panel div.profile-work-panel div.profile-info-edit div.edit-year {
   margin-top: -2px;
   margin-bottom: 8px;
 }
-/* line 346, ../scss/profile.scss */
+/* line 348, ../scss/profile.scss */
 .profile-panel div.profile-work-panel div.profile-info-edit div.edit-year .profile-edit-select {
   width: 65px;
   height: 25px;
   margin: 0;
   padding: 0 0 0 5px;
 }
-/* line 353, ../scss/profile.scss */
+/* line 355, ../scss/profile.scss */
 .profile-panel div.profile-work-panel div.profile-info-edit div.edit-year .year-to {
   margin: 0 5px 0 5px;
   font-size: 12px;
 }
-/* line 359, ../scss/profile.scss */
+/* line 361, ../scss/profile.scss */
 .profile-panel div.profile-work-panel div.profile-info-edit label.profile-edit-label {
   width: 75px;
+}
+/* line 367, ../scss/profile.scss */
+.profile-panel div.profile-places-panel {
+  padding: 20px 25px 0 25px;
+  /* profile-info-box */
+}
+/* line 370, ../scss/profile.scss */
+.profile-panel div.profile-places-panel .critical-place-title {
+  padding-bottom: 5px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #d5d5d5;
+  color: gray;
+}
+/* line 377, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.add-item-button {
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+/* line 382, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.profile-info-box {
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+/* line 389, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.profile-info-display .profile-info p.profile-detail {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+/* line 399, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.current-live div.profile-info-display .profile-info {
+  position: relative;
+  margin-left: 40px;
+  min-height: 34px;
+}
+/* line 405, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.current-live div.profile-info-display .profile-icon {
+  top: 3px;
+  left: 4px;
+  font-size: 30px;
+}
+/* line 415, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.hometown div.profile-info-display .profile-info {
+  position: relative;
+  margin-left: 41px;
+  min-height: 35px;
+}
+/* line 421, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.hometown div.profile-info-display .profile-icon {
+  top: 3px;
+  left: 1px;
+  font-size: 27px;
+}
+/* line 430, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.profile-info-edit div.form-group {
+  margin: 0 0 5px 0;
+}
+/* line 434, ../scss/profile.scss */
+.profile-panel div.profile-places-panel div.profile-info-edit label.profile-edit-label {
+  width: 45px;
 }
 
 /* profile-panel */

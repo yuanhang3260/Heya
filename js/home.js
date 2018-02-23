@@ -7,32 +7,29 @@ define(["jquery"], function($) {
   };
 
   UserInfo.prototype.displayUserInfo = function(data) {
+    // TODO: Sort work and education.
     if (data.work) {
-      this.el.append(this.createWorkInfo(data.work));
+      for (var i = 0; i < data.work.length; i++) {
+        var work = data.work[i];
+        this.el.append(this.createWorkInfo(work.company, true));
+      }
     }
     if (data.education) {
       for (var i = 0; i < data.education.length; i++) {
-        var school = data.education[i];
-        if (school.highest) {
-          // Highest education level.
-          this.el.append(this.createEducationInfo(school.name, true));
+        var education = data.education[i];
+        if (!education.highest) {
+          this.el.append(this.createEducationInfo(education.school, false));
         }
       }
-      for (var i = 0; i < data.education.length; i++) {
-        var school = data.education[i];
-        if (!school.highest) {
-          this.el.append(this.createEducationInfo(school.name, false));
-        }
-      }
-    }
-    if (data.live) {
-      this.el.append(this.createLiveInfo(data.live));
     }
     if (data.places) {
       for (var i = 0; i < data.places.length; i++) {
         var place = data.places[i];
+        if (place.current) {
+          this.el.append(this.createLiveInfo(place.place));
+        }
         if (place.hometown) {
-          this.el.append(this.createHomeTownInfo(place.name, true));
+          this.el.append(this.createHomeTownInfo(place.place));
         }
       }
     }
@@ -74,7 +71,7 @@ define(["jquery"], function($) {
     var item = $("<div>", {"class": "user-profile-item"});
     var icon = $("<i>", {"class": "user-profile-icon fa fa-home"});
     var detail = $("<p>", {"class": "user-profile-detail"});
-    detail.append("Live in ");
+    detail.append("Lives in ");
     var link = $("<a>", {"href": "https://www.google.com/maps/search/" + live,
                          "target": "_blank",
                          "class": "user-profile-link"});

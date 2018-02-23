@@ -60,8 +60,18 @@ define(["jquery", "profile-edit", "profile-display"],
   }
 
   AddNew.prototype.createNewSchool = function(data) {
-    var school = new School(this, data);
+    // Create school box. It clones display and edit DOMs from templates
+    // in addNew.
+    var el = $("<div>", {"class": "profile-info-box", "sid": data.sid});
+    el.append(this.cloneDisplay());
+    el.append(this.cloneEdit());
+
+    this.el.before(el);
+
+    var school = new School(el, data.sid);
     if (this.panel) {
+      school.panel = this.panel;
+      school.displaySchoolInfo(data);
       this.panel.addSchool(school);
     }
   }
@@ -88,31 +98,26 @@ define(["jquery", "profile-edit", "profile-display"],
 
   // ----------------------------------------------------------------------- //
   // School info box.
-  function School(creator, data) {
-    var el = $("<div>", {"class": "profile-info-box", "sid": data.sid});
-    creator.el.before(el);
-    this.el = el;
-    this.sid = data.sid;
+  function School(el, cid) {
+    this.el = $(el);
+    this.cid = cid;
 
-    // Create display. It clones the displayTemplate DOM from AddNew.
-    var displayEle = creator.cloneDisplay();
-    this.el.append(displayEle);
-    this.display = new Display(displayEle);
-    this.display.displayData(data);
+    // Create display.
+    this.display = new Display(this.el.find(".profile-info-display"));
     this.display.box = this;
 
-    // Create edit. It clones the editor DOM from AddNew.
-    var editEle = creator.cloneEdit();
-    this.el.append(editEle);
-    this.edit = new Edit(editEle);
+    // Create edit.
+    this.edit = new Edit(this.el.find(".profile-info-edit"));
     this.edit.box = this;
 
     // Keep reference of each other.
     this.edit.display = this.display;
     this.display.edit = this.edit;
+  }
 
-    // Top panel.
-    this.panel = creator.panel;
+  School.prototype.displaySchoolInfo = function(data) {
+    this.edit.hide();
+    this.display.displayData(data);
   }
 
   School.prototype.remove = function() {
@@ -122,6 +127,10 @@ define(["jquery", "profile-edit", "profile-display"],
 
   School.prototype.getSid = function() {
     return this.sid;
+  }
+
+  School.prototype.setSid = function(sid) {
+    this.sid = sid;
   }
 
   // ----------------------------------------------------------------------- //

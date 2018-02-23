@@ -83,14 +83,18 @@ define(["jquery"], function($) {
     this.saveBtn.click($.proxy(this.clickEditSave, this));
 
     // Create text inputs.
-    for (let input of config.inputs) {
-      this[input] = new Input(this.el.find(".edit-" + input));
+    if (config.inputs) {
+      for (let input of config.inputs) {
+        this[input] = new Input(this.el.find(".edit-" + input));
+      }
     }
 
     // Create select options.
-    for (let select of config.selects) {
-      this[select.name] =
-          new Select(this.el.find(".edit-" + select.name), select);
+    if (config.selects) {
+      for (let select of config.selects) {
+        this[select.name] =
+            new Select(this.el.find(".edit-" + select.name), select);
+      }
     }
 
     this.display = null;
@@ -98,13 +102,17 @@ define(["jquery"], function($) {
 
   EditBase.prototype.setData = function(data) {
     // Preset input data.
-    for (let input of this.config.inputs) {
-      this[input].setData(data[input]);
+    if (this.config.inputs) {
+      for (let input of this.config.inputs) {
+        this[input].setData(data[input]);
+      }
     }
 
     // Preset select data.
-    for (let select of this.config.selects) {
-      this[select.name].setData(data[select.name]);
+    if (this.config.selects) {
+      for (let select of this.config.selects) {
+        this[select.name].setData(data[select.name]);
+      }
     }
   }
 
@@ -114,18 +122,22 @@ define(["jquery"], function($) {
     var data = {};
 
     // Input data.
-    for (let input of this.config.inputs) {
-      var inputData = this[input].getData();
-      if (inputData) {
-        data[input] = inputData;
+    if (this.config.inputs) {
+      for (let input of this.config.inputs) {
+        var inputData = this[input].getData();
+        if (inputData) {
+          data[input] = inputData;
+        }
       }
     }
 
     // Select data.
-    for (let select of this.config.selects) {
-      var selectData = this[select.name].getData();
-      if (selectData) {
-        data[select.name] = selectData;
+    if (this.config.selects) {
+      for (let select of this.config.selects) {
+        var selectData = this[select.name].getData();
+        if (selectData) {
+          data[select.name] = selectData;
+        }
       }
     }
 
