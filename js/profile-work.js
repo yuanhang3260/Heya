@@ -25,7 +25,7 @@ define(["jquery", "profile-edit", "profile-display"],
 
   ProfileWork.prototype.initUserInfo = function(data) {
     var work = data.work;
-    if (work && Object.prototype.toString.call(work)) {
+    if (work && Object.prototype.toString.call(work) === "[object Array]") {
       for (let company of work) {
         this.addNew.createNewCompany(company);
       }

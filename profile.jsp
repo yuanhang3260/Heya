@@ -204,7 +204,50 @@
           </div>
         </div>
         
-        <div class="subpanel profile-places-panel">places</div>
+        <div class="subpanel profile-places-panel">
+          <div class="profile-info-box current-live">
+            <div class="add-item-button">
+              <i class="far fa-plus-square add-item-icon"></i>
+              <span class="add-item-text">Set current live place</span>
+            </div>
+            <div class="profile-info-edit">
+              <form method="post">
+                <div class="form-group edit-company">
+                  <label class="profile-edit-label">Company</label>
+                  <input type="text" name="company" class="form-control profile-edit-input">
+                </div>
+                <div class="form-group edit-year">
+                  <label class="profile-edit-label"></label>
+                  <select class="form-control profile-edit-select" name="start">
+                  </select>
+                  <span class="year-to">to</span>
+                  <select class="form-control profile-edit-select" name="end">
+                  </select>
+                </div>
+                <div class="form-group edit-position">
+                  <label class="profile-edit-label">Position</label>
+                  <input type="text" name="position" class="form-control profile-edit-input">
+                </div>
+                <div class="button-box">
+                  <button type="button" class="btn btn-success save-btn">Save Changes</button>
+                  <button type="button" class="btn btn-light cancel-btn">Cancel</button>
+                </div>
+                <div class="alert alert-danger update-error-msg" role="alert"></div>
+              </form>
+            </div>
+            <div class="profile-info-display">
+              <div class="profile-info">
+                <a href="#" class="profile-name company-info" target="_blank"></a>
+                <p class="profile-detail"></p>
+              </div>
+              <i class="fas fa-laptop profile-icon"></i>
+              <div class="corner-buttons">
+                <i class="fas fa-edit profile-edit-button"></i>
+                <i class="fas fa-ban profile-delete-button"></i>
+              </div>
+            </div>
+          </div>
+        </div>
         
         <div class="subpanel profile-other-panel">other</div>
       </div>

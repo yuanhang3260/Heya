@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import bean.Education;
+import bean.Work;
+import bean.Place;
 import db.DBManager;
 
 public class User {
@@ -35,7 +37,7 @@ public class User {
   private Sex sex;
   private ArrayList<Education> education;
   private ArrayList<Work> work;
-  private String places;
+  private ArrayList<Place> places;
   private String relationship;
   private String phone;
   private String links;
@@ -108,7 +110,10 @@ public class User {
           this.work = Work.parseFromJSONArray(
               new JSONArray(rset.getString("work")));
         }
-        this.places = rset.getString("places");
+        if (rset.getString("place") != null) {
+          this.work = Work.parseFromJSONArray(
+              new JSONArray(rset.getString("place")));
+        }
         this.relationship = rset.getString("relationship");
         this.phone = rset.getString("phone");
         this.links = rset.getString("links");
@@ -658,6 +663,169 @@ public class User {
     }
   }
 
+  // ----------------------------------------------------------------------- //
+  public int addPlaceInfo(String place, boolean current, boolean hometown) {
+    if (this.places == null) {
+      this.places = new ArrayList<Place>();
+    }
+
+    int pid = 0;
+    if (!this.places.isEmpty()) {
+      pid = this.places.get(this.places.size() - 1).getPid() + 1;
+    }
+
+    Place newPlace = Place.getBuilder()
+                          .setPid(pid)
+                          .setPlace(place)
+                          .setCurrent(current)
+                          .setHometown(hometown)
+                          .build();
+
+    JSONArray array = Place.toJSONArray(this.places);
+    array.put(newPlace.toJSONObject());
+
+    String sql = "UPDATE UserDetail set place = ? WHERE uid = ?";
+    System.out.println("place: " + array);
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(sql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      this.places.add(newPlace);
+      return pid;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return -1;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public boolean updatePlaceInfo(int pid, String place,
+                                 boolean current, boolean hometown) {
+    if (this.places == null) {
+      return false;
+    }
+
+    int index = -1;
+    for (index = 0; index < this.places.size(); index++) {
+      if (this.places.get(index).getPid() == pid) {
+        break;
+      }
+    }
+
+    if (index < 0) {
+      return false;
+    }
+
+    Place copy = new Place(this.places.get(index));
+    this.places.set(index, Place.getBuilder()
+                               .setPid(pid)
+                               .setPlace(place)
+                               .setCurrent(current)
+                               .setHometown(hometown)
+                               .build());
+
+    JSONArray array = Place.toJSONArray(this.places);
+
+    String sql = "UPDATE UserDetail set place = ? WHERE uid = ?";
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(sql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local work info.
+      this.places.set(index, copy);
+      return false;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  public boolean deletePlaceInfo(int pid) {
+    if (this.places == null) {
+      return true;
+    }
+
+    int index = -1;
+    for (index = 0; index < this.places.size(); index++) {
+      if (this.places.get(index).getPid() == pid) {
+        break;
+      }
+    }
+
+    if (index < 0) {
+      return true;
+    }
+
+    Place removed = this.places.remove(index);
+    JSONArray array = Place.toJSONArray(this.places);
+
+    String sql = "UPDATE UserDetail set place = ? WHERE uid = ?";
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      stmt = conn.prepareStatement(sql);
+      stmt.setString(1, array.toString());
+      stmt.setInt(2, this.uid);
+      stmt.executeUpdate();
+
+      conn.commit();
+      return true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Rollback local work info.
+      this.places.add(index, removed);
+      return false;
+    } finally {
+      try {
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
   public JSONObject toJSONObject() {
     JSONObject json_obj = new JSONObject();
     try {
@@ -685,7 +853,7 @@ public class User {
         json_obj.put("work", Work.toJSONArray(work));
       }
       if (places != null) {
-        json_obj.put("places", new JSONArray(places));
+        json_obj.put("place", Place.toJSONArray(places));
       }
       if (relationship != null) {
         json_obj.put("relationship", relationship);
@@ -807,12 +975,28 @@ public class User {
     }
   }
 
-  public String getPlaces() {
+  public List<Place> getPlace() {
     return this.places;
   }
 
-  public void setPlaces(String places) {
-    this.places = places;
+  public void addPlace(Place place) {
+    this.places.add(place);
+  }
+
+  public void updatePlace(Place place) {
+    for (int i = 0; i < this.places.size(); i++) {
+      if (this.places.get(i).getPid() == place.getPid()) {
+        this.places.set(i, place);
+      }
+    }
+  }
+
+  public void deletePlace(int pid) {
+    for (int i = 0; i < this.places.size(); i++) {
+      if (this.places.get(i).getPid() == pid) {
+        this.places.remove(i);
+      }
+    }
   }
 
   public String getRelationship() {

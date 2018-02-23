@@ -2,76 +2,82 @@ define(["jquery", "profile-edit", "profile-display"],
        function($, edit, display) {
   // ----------------------------------------------------------------------- //
   // Profile education section, top panel.
-  function ProfileEducation(el) {
+  function ProfilePlaces(el) {
     this.el = $(el);
 
-    this.addNew = new AddNew(this.el.find(".add-new-item"), this);
-    this.schools = [];
+    this.current = new Place(".current-live", {current: true});
+
+    // this.addNew = new AddNew(this.el.find(".add-new-item"), this);
+    // this.places = [];
   }
 
-  ProfileEducation.prototype.addSchool = function(school) {
-    this.schools.push(school);
-    // TODO: Sort schools based on graduation time in descending order?
-  }
-
-  ProfileEducation.prototype.removeSchool = function(sid) {
-    for (let i = 0; i < this.schools.length; i++) {
-      if (this.schools[i].sid === sid) {
-        this.schools.splice(i, 1);
-        return;
+  ProfilePlaces.prototype.initUserInfo = function(data) {
+    var places = data.places;
+    if (places && Object.prototype.toString.call(places) === "[object Array]") {
+      for (let place of places) {
+        if (place.current) {
+          // 
+        } else if (place.hometown) {
+          // 
+        }
       }
     }
   }
 
-  ProfileEducation.prototype.initUserInfo = function(data) {
-    var education = data.education;
-    if (education &&
-        Object.prototype.toString.call(education) === "[object Array]") {
-      for (let school of education) {
-        this.addNew.createNewSchool(school);
-      }
-    }
-  }
-
-  ProfileEducation.prototype.hide = function() {
+  ProfilePlaces.prototype.hide = function() {
     this.el.hide();
   }
 
-  ProfileEducation.prototype.show = function() {
+  ProfilePlaces.prototype.show = function() {
     this.el.show();
   }
 
   // ----------------------------------------------------------------------- //
-  // Add new school.
-  function AddNew(el, panel) {
+  // Place info box.
+  function Place(el, config) {
     this.el = $(el);
+    this.config = config;
+    this.pid = this.el.attr("pid");
 
-    this.button = new AddNewButton(this.el.find(".add-item-button"));
+    this.add = new AddNewButton(this.el.find(".add-item-button"));
+    this.display = new Display(this.el.find(".profile-info-display"));
     this.edit = new Edit(this.el.find(".profile-info-edit"));
 
-    this.edit.display = this.button;
-    this.button.edit = this.edit;
+    // Keep reference of each other.
+    this.add.edit = this.edit;
+    this.display.edit = this.edit;
+    this.display.add = this.add;
+    this.edit.display = this.display;
+    this.edit.add = this.add;
 
-    this.displayTemplate = this.el.find(".profile-info-display");
+    // Keep reference of container.
+    this.display.box = this;
+    this.edit.box = this;
 
-    // Pass this reference to editor.
-    this.edit.parent = this;
-    this.panel = panel;
+    // Top panel.
+    this.panel = creator.panel;
+
+    this.empty = true;
   }
 
-  AddNew.prototype.createNewSchool = function(data) {
-    var school = new School(this, data);
-    if (this.panel) {
-      this.panel.addSchool(school);
-    }
+  Place.prototype.isCurrent = function() {
+    this.config.current;
+  }  
+
+  Place.prototype.isHometown = function() {
+    this.config.hometown;
   }
 
-  AddNew.prototype.cloneEdit = function() {
-    return this.edit.el.clone();
+  Place.prototype.getPid = function() {
+    return this.pid;
   }
 
-  AddNew.prototype.cloneDisplay = function() {
-    return this.displayTemplate.clone();
+  place.prototype.isEmpty = function() {
+    return this.empty;
+  }
+
+  place.prototype.setEmpty = function(empty) {
+    this.empty = empty;
   }
 
   // ----------------------------------------------------------------------- //
@@ -85,45 +91,6 @@ define(["jquery", "profile-edit", "profile-display"],
   AddNewButton.prototype = Object.create(display.DisplayBase.prototype);
   AddNewButton.prototype.constructor = AddNewButton;
 
-
-  // ----------------------------------------------------------------------- //
-  // School info box.
-  function School(creator, data) {
-    var el = $("<div>", {"class": "profile-info-box", "sid": data.sid});
-    creator.el.before(el);
-    this.el = el;
-    this.sid = data.sid;
-
-    // Create display. It clones the displayTemplate DOM from AddNew.
-    var displayEle = creator.cloneDisplay();
-    this.el.append(displayEle);
-    this.display = new Display(displayEle);
-    this.display.displayData(data);
-    this.display.box = this;
-
-    // Create edit. It clones the editor DOM from AddNew.
-    var editEle = creator.cloneEdit();
-    this.el.append(editEle);
-    this.edit = new Edit(editEle);
-    this.edit.box = this;
-
-    // Keep reference of each other.
-    this.edit.display = this.display;
-    this.display.edit = this.edit;
-
-    // Top panel.
-    this.panel = creator.panel;
-  }
-
-  School.prototype.remove = function() {
-    this.panel.removeSchool(this.sid);
-    this.el.remove();
-  }
-
-  School.prototype.getSid = function() {
-    return this.sid;
-  }
-
   // ----------------------------------------------------------------------- //
   function Display(el, config) {
     display.DisplayBase.call(this, el, config);
@@ -136,11 +103,14 @@ define(["jquery", "profile-edit", "profile-display"],
   Display.prototype = Object.create(display.DisplayBase.prototype);
   Display.prototype.constructor = Display;
 
-  var googleSearch = "https://www.google.com/search?q=";
+  Display.prototype.resetDisplay = function() {
+  }
+
+  var googleMapSearch = "https://www.google.com/maps/search/";
 
   Display.prototype.displayData = function(data) {
-    this.el.find("a.school-info").html(data.school)
-                                 .attr("href", googleSearch + data.school);
+    this.el.find("a.place-info").html(data.school)
+                                 .attr("href", googleMapSearch + data.school);
 
     var detail = this.el.find("p.profile-detail");
     detail.empty();
@@ -174,7 +144,7 @@ define(["jquery", "profile-edit", "profile-display"],
   }
 
   Display.prototype.clickDelete = function() {
-    var doDelete = window.confirm("Delete this school?");
+    var doDelete = window.confirm("Delete this place?");
     if (!doDelete) {
       return;
     }
@@ -182,9 +152,9 @@ define(["jquery", "profile-edit", "profile-display"],
     var reqData = {
       "uid" : +$("body").attr("uid"),
       "username" : $("body").attr("user"),
-      "section": "education",
+      "section": "places",
       "action": "delete",
-      "sid": this.box.getSid(),
+      "pid": this.box.getPid(),
     };
 
     console.log(reqData);
@@ -201,9 +171,12 @@ define(["jquery", "profile-edit", "profile-display"],
       // log data to the console so we can see.
       console.log(data);
       if (data.success) {
-        me.box.remove();
+        // TODO: Reset everything for Display?
+        this.hide();
+        this.edit.hide();
+        this.add.show();
       } else {
-        window.alert("Delete school failed - " + data.reason);
+        window.alert("Delete place failed - " + data.reason);
       }
     });
 
@@ -222,29 +195,22 @@ define(["jquery", "profile-edit", "profile-display"],
   Edit.prototype.constructor = Edit;
 
   Edit.prototype.config = {
-    "inputs": ["school", "major"],
-    "selects": [
-      {
-        "name" : "year",
-        "subs": [
-          {
-            "name" : "start",
-            "min" : 1980,
-            "max" : (new Date()).getFullYear(),
-          },
-          {
-            "name" : "end",
-            "min" : 1980,
-            "max" : (new Date()).getFullYear(),
-          },
-        ],
-      },
-    ],
+    "inputs": ["place"],
+  }
+
+  // Override clickEditCancel.
+  Edit.prototype.clickEditCancel = function() {
+    this.hide();
+    if (this.box.isEmpty()) {
+      this.add.show();
+    } else {
+      this.display.show();
+    }
   }
 
   Edit.prototype.submitData = function() {
     var action;
-    if (this.display instanceof AddNewButton) {
+    if (this.box.isEmpty()) {
       action = "add";
     } else {
       action = "update";
@@ -254,12 +220,19 @@ define(["jquery", "profile-edit", "profile-display"],
     var reqData = {
       "uid" : +$("body").attr("uid"),
       "username" : $("body").attr("user"),
-      "section": "education",
+      "section": "places",
       "action": action,
     };
 
     if (action === "update") {
-      reqData.sid = this.box.getSid();
+      reqData.pid = this.box.getPid();
+    }
+
+    if (this.box.isCurrent()) {
+      reqData.current = true;
+    }
+    if (this.box.isHometown()) {
+      reqData.hometown = true;
     }
 
     // Add form data to http request data.
@@ -273,8 +246,8 @@ define(["jquery", "profile-edit", "profile-display"],
       }
     }
 
-    if (!formData.school) {
-      this.showErrorMsg("School name required");
+    if (!formData.place) {
+      this.showErrorMsg("Place required");
       return;
     }
 
@@ -298,7 +271,7 @@ define(["jquery", "profile-edit", "profile-display"],
       me.enableButtons();
       if (data.success) {
         me.hide();
-        me.updateEducationInfo(data.schoolId, formData);
+        me.updatePlaceInfo(data.placeId, formData);
       } else {
         me.showErrorMsg(data.reason);
       }
@@ -307,21 +280,23 @@ define(["jquery", "profile-edit", "profile-display"],
     // Local front end test.
     // this.enableButtons();
     // this.hide();
-    // this.updateEducationInfo(0, formData);
+    // this.updatePlaceInfo(0, formData);
   }
 
-  Edit.prototype.updateEducationInfo = function(sid, data) {
-    if (this.display instanceof AddNewButton) {
-      // Add new school to display.
-      data.sid = sid;
-      this.parent.createNewSchool(data);
-      this.display.displayData();  // Displays "Add new school".
+  Edit.prototype.updatePlaceInfo = function(pid, data) {
+    if (this.box.isEmpty()) {
+      // Add new place info.
+      data.pid = pid;
+      this.add.hide();
+      this.hide();
+      this.display.displayData(data);
+      this.box.setEmpty(false);
     } else {
       this.display.displayData(data);
     }
   }
 
   return {
-    ProfileEducation: ProfileEducation,
+    ProfilePlaces: ProfilePlaces,
   }
 });
