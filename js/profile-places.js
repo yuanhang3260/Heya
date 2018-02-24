@@ -47,9 +47,7 @@ define(["jquery", "profile-edit", "profile-display"],
     // Keep reference of each other.
     this.add.edit = this.edit;
     this.display.edit = this.edit;
-    this.display.add = this.add;
     this.edit.display = this.display;
-    this.edit.add = this.add;
 
     // Keep reference of container.
     this.display.box = this;
@@ -60,10 +58,27 @@ define(["jquery", "profile-edit", "profile-display"],
   }
 
   Place.prototype.displayPlaceInfo = function(data) {
+    this.setEmpty(false);
     this.add.hide();
     this.edit.hide();
     this.display.displayData(data);
-    this.setEmpty(false);
+  }
+
+  Place.prototype.resetDisplay = function(data) {
+    this.setEmpty(true);
+    this.setPid(null);
+    this.edit.hide();
+    this.display.hide();
+    this.add.show();
+  }
+
+  Place.prototype.cancelEdit = function() {
+    this.edit.hide();
+    if (this.isEmpty()) {
+      this.add.show();
+    } else {
+      this.display.show();
+    }
   }
 
   Place.prototype.isCurrent = function() {
@@ -114,15 +129,14 @@ define(["jquery", "profile-edit", "profile-display"],
   Display.prototype = Object.create(display.DisplayBase.prototype);
   Display.prototype.constructor = Display;
 
-  Display.prototype.resetDisplay = function() {
-  }
-
   var googleMapSearch = "https://www.google.com/maps/search/";
 
   Display.prototype.displayData = function(data) {
     this.el.find("a.place-info").html(data.place)
                                 .attr("href", googleMapSearch + data.place);
-    this.box.setPid(data.pid);
+    if (data.pid) {
+      this.box.setPid(data.pid);
+    }
     this.el.show();
   }
 
@@ -160,21 +174,14 @@ define(["jquery", "profile-edit", "profile-display"],
       // log data to the console so we can see.
       console.log(data);
       if (data.success) {
-        // TODO: Reset everything for Display?
-        me.box.setEmpty(true);
-        me.hide();
-        me.edit.hide();
-        me.add.show();
+        me.box.resetDisplay();
       } else {
         window.alert("Delete place failed - " + data.reason);
       }
     });
 
     // Local front end test.
-    // this.box.setEmpty(true);
-    // this.hide();
-    // this.edit.hide();
-    // this.add.show();
+    // this.box.resetDisplay();
   }
 
 
@@ -193,12 +200,7 @@ define(["jquery", "profile-edit", "profile-display"],
 
   // Override clickEditCancel.
   Edit.prototype.clickEditCancel = function() {
-    this.hide();
-    if (this.box.isEmpty()) {
-      this.add.show();
-    } else {
-      this.display.show();
-    }
+    this.box.cancelEdit();
   }
 
   Edit.prototype.submitData = function() {
@@ -263,7 +265,6 @@ define(["jquery", "profile-edit", "profile-display"],
 
       me.enableButtons();
       if (data.success) {
-        me.hide();
         me.updatePlaceInfo(data.placeId, formData);
       } else {
         me.showErrorMsg(data.reason);
@@ -272,21 +273,12 @@ define(["jquery", "profile-edit", "profile-display"],
 
     // Local front end test.
     // this.enableButtons();
-    // this.hide();
     // this.updatePlaceInfo(0, formData);
   }
 
   Edit.prototype.updatePlaceInfo = function(pid, data) {
-    if (this.box.isEmpty()) {
-      // Add new place info.
-      data.pid = pid;
-      this.add.hide();
-      this.hide();
-      this.display.displayData(data);
-      this.box.setEmpty(false);
-    } else {
-      this.display.displayData(data);
-    }
+    data.pid = pid;
+    this.box.displayPlaceInfo(data);
   }
 
   return {

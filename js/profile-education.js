@@ -53,10 +53,11 @@ define(["jquery", "profile-edit", "profile-display"],
     this.button.edit = this.edit;
 
     this.displayTemplate = this.el.find(".profile-info-display");
+    
+    this.panel = panel;
 
     // Pass this reference to editor.
-    this.edit.parent = this;
-    this.panel = panel;
+    this.edit.box = this;
   }
 
   AddNew.prototype.createNewSchool = function(data) {
@@ -65,15 +66,12 @@ define(["jquery", "profile-edit", "profile-display"],
     var el = $("<div>", {"class": "profile-info-box", "sid": data.sid});
     el.append(this.cloneDisplay());
     el.append(this.cloneEdit());
-
     this.el.before(el);
 
     var school = new School(el, data.sid);
-    if (this.panel) {
-      school.panel = this.panel;
-      school.displaySchoolInfo(data);
-      this.panel.addSchool(school);
-    }
+    school.panel = this.panel;
+    school.displaySchoolInfo(data);
+    this.panel.addSchool(school);
   }
 
   AddNew.prototype.cloneEdit = function() {
@@ -306,7 +304,6 @@ define(["jquery", "profile-edit", "profile-display"],
 
       me.enableButtons();
       if (data.success) {
-        me.hide();
         me.updateEducationInfo(data.schoolId, formData);
       } else {
         me.showErrorMsg(data.reason);
@@ -321,11 +318,15 @@ define(["jquery", "profile-edit", "profile-display"],
 
   Edit.prototype.updateEducationInfo = function(sid, data) {
     if (this.display instanceof AddNewButton) {
-      // Add new school to display.
+      // Add new school to display. This is in school box, this.display points
+      // to addNew instance.
       data.sid = sid;
-      this.parent.createNewSchool(data);
-      this.display.displayData();  // Displays "Add new school".
+      this.box.createNewSchool(data);
+
+      this.hide();
+      this.display.displayData(null);  // Displays "Add new school".
     } else {
+      // This is in school box, this.display points to Display instance.
       this.display.displayData(data);
     }
   }

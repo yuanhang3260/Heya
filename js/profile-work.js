@@ -68,11 +68,9 @@ define(["jquery", "profile-edit", "profile-display"],
     this.el.before(el);
 
     var company = new Company(el, data.cid);
-    if (this.panel) {
-      company.panel = this.panel;
-      company.displayCompanyInfo(data);
-      this.panel.addCompany(company);
-    }
+    company.panel = this.panel;
+    company.displayCompanyInfo(data);
+    this.panel.addCompany(company);
   }
 
   AddNew.prototype.cloneEdit = function() {
@@ -318,8 +316,7 @@ define(["jquery", "profile-edit", "profile-display"],
 
       me.enableButtons();
       if (data.success) {
-        me.hide();
-        me.updateworkInfo(data.companyId, formData);
+        me.updateWorkInfo(data.companyId, formData);
       } else {
         me.showErrorMsg(data.reason);
       }
@@ -331,13 +328,16 @@ define(["jquery", "profile-edit", "profile-display"],
     // this.updateworkInfo(0, formData);
   }
 
-  Edit.prototype.updateworkInfo = function(cid, data) {
+  Edit.prototype.updateWorkInfo = function(cid, data) {
     if (this.display instanceof AddNewButton) {
       // Add new company to display.
       data.cid = cid;
       this.parent.createNewCompany(data);
-      this.display.displayData();  // Displays "Add new company".
+
+      this.hide();
+      this.display.displayData(null);  // Displays "Add new company".
     } else {
+      this.hide();
       this.display.displayData(data);
     }
   }

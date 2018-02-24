@@ -187,10 +187,13 @@ public class UserInfoServlet extends HttpServlet {
       if (request.getParameter("sid") != null) {
         try {
           sid = Integer.parseInt(request.getParameter("sid"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException e) {
+          json_obj.put("reason", "invalid school id");
+        }
       }
 
       if (sid >= 0) {
+        json_obj.put("schoolId", sid);
         if (action.equals("update")) {
           success = user.updateSchoolInfo(sid, school, major,
                                           startYear, endYear);
@@ -232,7 +235,9 @@ public class UserInfoServlet extends HttpServlet {
       } catch (JSONException e) {}
       try {
         endYear = new Integer(yearJSON.getInt("end"));
-      } catch (JSONException e) {}
+      } catch (JSONException e) {
+        json_obj.put("reason", "invalid company id");
+      }
     }
 
     String action = request.getParameter("action");
@@ -257,6 +262,7 @@ public class UserInfoServlet extends HttpServlet {
       }
 
       if (cid >= 0) {
+        json_obj.put("companyId", cid);
         if (action.equals("update")) {
           success = user.updateCompanyInfo(cid, company, position,
                                            startYear, endYear);
@@ -308,10 +314,13 @@ public class UserInfoServlet extends HttpServlet {
       if (request.getParameter("pid") != null) {
         try {
           pid = Integer.parseInt(request.getParameter("pid"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException e) {
+          json_obj.put("reason", "invalid place id");
+        }
       }
 
       if (pid >= 0) {
+        json_obj.put("placeId", pid);
         if (action.equals("update")) {
           success = user.updatePlaceInfo(pid, place, current, hometown);
           if (!success) {

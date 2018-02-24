@@ -5,9 +5,6 @@ define(["jquery"], function($) {
   }
 
   // For sub class to implement.
-  DisplayBase.prototype.createItem = function() {}
-
-  // For sub class to implement.
   DisplayBase.prototype.displayData = function(data) {}
 
   // For sub class to implement.
