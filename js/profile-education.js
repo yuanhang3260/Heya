@@ -1,5 +1,5 @@
-define(["jquery", "profile-edit", "profile-display"],
-       function($, edit, display) {
+define(["jquery", "profile-edit", "profile-display", "utils"],
+       function($, edit, display, utils) {
   // ----------------------------------------------------------------------- //
   // Profile education section, top panel.
   function ProfileEducation(el) {
@@ -27,6 +27,7 @@ define(["jquery", "profile-edit", "profile-display"],
     var education = data.education;
     if (education &&
         Object.prototype.toString.call(education) === "[object Array]") {
+      education.sort(utils.sortByYearDesc);
       for (let school of education) {
         this.addNew.createNewSchool(school);
       }
@@ -96,9 +97,9 @@ define(["jquery", "profile-edit", "profile-display"],
 
   // ----------------------------------------------------------------------- //
   // School info box.
-  function School(el, cid) {
+  function School(el, sid) {
     this.el = $(el);
-    this.cid = cid;
+    this.sid = sid;
 
     // Create display.
     this.display = new Display(this.el.find(".profile-info-display"));
@@ -327,6 +328,7 @@ define(["jquery", "profile-edit", "profile-display"],
       this.display.displayData(null);  // Displays "Add new school".
     } else {
       // This is in school box, this.display points to Display instance.
+      this.hide();
       this.display.displayData(data);
     }
   }

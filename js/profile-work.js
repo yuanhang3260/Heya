@@ -1,5 +1,5 @@
-define(["jquery", "profile-edit", "profile-display"],
-       function($, edit, display) {
+define(["jquery", "profile-edit", "profile-display", "utils"],
+       function($, edit, display, utils) {
   // ----------------------------------------------------------------------- //
   // Profile work section, top panel.
   function ProfileWork(el) {
@@ -26,6 +26,7 @@ define(["jquery", "profile-edit", "profile-display"],
   ProfileWork.prototype.initUserInfo = function(data) {
     var work = data.work;
     if (work && Object.prototype.toString.call(work) === "[object Array]") {
+      work.sort(utils.sortByYearDesc);
       for (let company of work) {
         this.addNew.createNewCompany(company);
       }

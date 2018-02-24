@@ -37,6 +37,7 @@
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/home.css">
+  <script src="js/font-awesome.5.0.6.min.js"></script>
 </head>
 
 <body uid="<%= uid %>" user="<%= username %>" viewer_id="<%= viewer_uid %>" viewer="<%= viewer_username %>" >
@@ -81,7 +82,7 @@
     </div>
 
     <div id="user-info" class="card home-profile-detail-container">
-      <h6 class="profile-card-title">About<small>-</small> 
+      <h6 class="profile-card-title">About <small>-</small> 
       <a href="profile?username=<%= username %>" class="profile-edit-button" >Edit</a></h6>
     </div>
   </div>

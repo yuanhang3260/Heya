@@ -273,27 +273,37 @@ body {
 /* line 144, ../scss/home.scss */
 .user-profile-icon {
   vertical-align: middle;
-  margin-right: 12px;
+  margin: 0 12px 0 -1px;
   color: #888;
 }
 
 /* line 150, ../scss/home.scss */
+.user-work-icon {
+  font-size: 14px;
+}
+
+/* line 154, ../scss/home.scss */
 .user-education-icon {
   display: inline-block;
-  margin-left: -3px;
+  margin-left: -1px;
   margin-right: 8px;
 }
 
-/* line 156, ../scss/home.scss */
-.user-hometown-icon {
+/* line 160, ../scss/home.scss */
+.user-live-icon {
   margin-left: 2px;
-  margin-right: 15px;
+  margin-right: 13px;
 }
 
-/* line 161, ../scss/home.scss */
+/* line 165, ../scss/home.scss */
+.user-hometown-icon {
+  margin: -1px 10px 0 -1px;
+}
+
+/* line 169, ../scss/home.scss */
 .user-profile-detail {
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   width: 175px;
   margin: 0;
   padding: 0;
@@ -303,7 +313,7 @@ body {
   font-family: arial;
 }
 
-/* line 173, ../scss/home.scss */
+/* line 181, ../scss/home.scss */
 .user-profile-link {
   color: #285e98;
 }

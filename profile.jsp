@@ -268,7 +268,7 @@
           </div>
         </div>
         
-        <div class="subpanel profile-other-panel">other</div>
+        <div class="subpanel profile-other-panel"></div>
       </div>
     </div>
   </div>

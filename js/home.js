@@ -1,4 +1,4 @@
-define(["jquery"], function($) {
+define(["jquery", "utils"], function($, utils) {
   function UserInfo(el) {
     this.el = $(el);
 
@@ -7,15 +7,16 @@ define(["jquery"], function($) {
   };
 
   UserInfo.prototype.displayUserInfo = function(data) {
-    // TODO: Sort work and education.
     if (data.work) {
-      for (var i = 0; i < data.work.length; i++) {
+      data.work.sort(utils.sortByYearDesc);
+      for (var i = 0; i < Math.min(data.work.length, 2); i++) {
         var work = data.work[i];
         this.el.append(this.createWorkInfo(work.company, true));
       }
     }
     if (data.education) {
-      for (var i = 0; i < data.education.length; i++) {
+      data.education.sort(utils.sortByYearDesc);
+      for (var i = 0; i < Math.min(data.education.length, 2); i++) {
         var education = data.education[i];
         if (!education.highest) {
           this.el.append(this.createEducationInfo(education.school, false));
@@ -37,7 +38,8 @@ define(["jquery"], function($) {
 
   UserInfo.prototype.createWorkInfo = function(work) {
     var item = $("<div>", {"class": "user-profile-item"});
-    var icon = $("<i>", {"class": "user-profile-icon fa fa-building-o"});
+    var icon = $("<i>", {"class": "user-profile-icon user-work-icon " +
+                                  "fa fa-laptop"});
     var detail = $("<p>", {"class": "user-profile-detail"});
     detail.append("Works at ");
     var link = $("<a>", {"href": "https://www.google.com/search?q=" + work,
@@ -51,7 +53,8 @@ define(["jquery"], function($) {
 
   UserInfo.prototype.createEducationInfo = function(school, graduate) {
     var item = $("<div>", {"class": "user-profile-item"});
-    var icon = $("<i>", {"class": "user-profile-icon user-education-icon fa fa-graduation-cap"});
+    var icon = $("<i>", {"class": "user-profile-icon user-education-icon " +
+                                  "fa fa-graduation-cap"});
     var detail = $("<p>", {"class": "user-profile-detail"});
     if (graduate) {
       detail.append("Graduated from ");
@@ -69,7 +72,8 @@ define(["jquery"], function($) {
 
   UserInfo.prototype.createLiveInfo = function(live) {
     var item = $("<div>", {"class": "user-profile-item"});
-    var icon = $("<i>", {"class": "user-profile-icon fa fa-home"});
+    var icon = $("<i>", {"class": "user-profile-icon user-live-icon " +
+                                  "fa fa-map-marker-alt"});
     var detail = $("<p>", {"class": "user-profile-detail"});
     detail.append("Lives in ");
     var link = $("<a>", {"href": "https://www.google.com/maps/search/" + live,
@@ -83,7 +87,8 @@ define(["jquery"], function($) {
 
   UserInfo.prototype.createHomeTownInfo = function(hometown) {
     var item = $("<div>", {"class": "user-profile-item"});
-    var icon = $("<i>", {"class": "user-profile-icon user-hometown-icon fa fa-map-marker"});
+    var icon =
+        $("<i>", {"class": "user-profile-icon user-hometown-icon fa fa-home"});
     var detail = $("<p>", {"class": "user-profile-detail"});
     detail.append("From ");
     var link = $("<a>", {"href": "https://www.google.com/maps/search/" +
