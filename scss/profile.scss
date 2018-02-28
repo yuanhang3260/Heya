@@ -175,20 +175,18 @@ body {
 
       div.button-box {
         position: relative;
-        left: 185px;
+        left: 180px;
         margin: 10px 0 10px 0;
 
         button.save-btn {
-          width: 105px;
           height: 25px;
-          padding: 0;
+          padding: 0 10px;
           font-size: 13px;
         }
 
         button.cancel-btn {
-          width: 58px;
           height: 26px;
-          padding: 0;
+          padding: 0 10px;
           font-size: 13px;
           border-color: #bbb;
         }
@@ -287,7 +285,7 @@ body {
       font-size: 14px;
 
       .button-box {
-        margin-left: 185px;
+        margin-left: 195px;
       }
     }
   }  /* profile-basic-panel */
@@ -322,7 +320,7 @@ body {
       }
 
       div.button-box {
-        left: 190px;
+        left: 185px;
       }
     }
   } /* profile-education-panel */
@@ -367,7 +365,7 @@ body {
       }
 
       div.button-box {
-        left: 215px;
+        left: 210px;
       }
     }
   } /* profile-work-panel */

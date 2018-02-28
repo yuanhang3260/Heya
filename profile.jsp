@@ -34,9 +34,7 @@
 <head>
   <meta charset="utf-8">
   <title>Heya User Profile</title>
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/profile.css">
-  <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/font-awesome.5.0.6.min.js"></script>
 </head>
 
@@ -276,5 +274,6 @@
 
 </body>
 
+<link rel="stylesheet" href="css/profile.css">
 <script src="js/require.js" data-main="js/profile_main"></script>
 </html>

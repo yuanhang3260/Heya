@@ -7,17 +7,29 @@ define(["jquery", "utils"], function($, utils) {
   };
 
   UserInfo.prototype.displayUserInfo = function(data) {
+    function isCurrentYear(year) {
+      return year === (new Date()).getFullYear();
+    }
+
     if (data.work) {
       data.work.sort(utils.sortByYearDesc);
       for (var i = 0; i < Math.min(data.work.length, 2); i++) {
         var work = data.work[i];
-        this.el.append(this.createWorkInfo(work.company, true));
+        var current = false;
+        if (work.year && !isNaN(work.year.end)) {
+          current = isCurrentYear(work.year.end);
+        }
+        this.el.append(this.createWorkInfo(work.company, current));
       }
     }
     if (data.education) {
       data.education.sort(utils.sortByYearDesc);
       for (var i = 0; i < Math.min(data.education.length, 2); i++) {
         var education = data.education[i];
+        var current = false;
+        if (education.year && !isNaN(education.year.end)) {
+          current = isCurrentYear(education.year.end);
+        }
         if (!education.highest) {
           this.el.append(this.createEducationInfo(education.school, false));
         }
@@ -36,12 +48,13 @@ define(["jquery", "utils"], function($, utils) {
     }
   }
 
-  UserInfo.prototype.createWorkInfo = function(work) {
+  UserInfo.prototype.createWorkInfo = function(work, current) {
     var item = $("<div>", {"class": "user-profile-item"});
     var icon = $("<i>", {"class": "user-profile-icon user-work-icon " +
                                   "fa fa-laptop"});
     var detail = $("<p>", {"class": "user-profile-detail"});
-    detail.append("Works at ");
+    var verb = current ? "Works" : "Worked";
+    detail.append(verb + " at ");
     var link = $("<a>", {"href": "https://www.google.com/search?q=" + work,
                          "target": "_blank",
                          "class": "user-profile-link"});
@@ -51,16 +64,13 @@ define(["jquery", "utils"], function($, utils) {
     return item;
   }
 
-  UserInfo.prototype.createEducationInfo = function(school, graduate) {
+  UserInfo.prototype.createEducationInfo = function(school, current) {
     var item = $("<div>", {"class": "user-profile-item"});
     var icon = $("<i>", {"class": "user-profile-icon user-education-icon " +
                                   "fa fa-graduation-cap"});
     var detail = $("<p>", {"class": "user-profile-detail"});
-    if (graduate) {
-      detail.append("Graduated from ");
-    } else {
-      detail.append("Studied at ");
-    }
+    var verb = current ? "Studies" : "Studied";
+    detail.append(verb + " at ");
     var link = $("<a>", {"href": "https://www.google.com/search?q=" + school,
                          "target": "_blank",
                          "class": "user-profile-link"});

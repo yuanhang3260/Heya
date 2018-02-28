@@ -1,5 +1,5 @@
-define(["jquery", "profile-edit", "profile-display", "utils"],
-       function($, edit, display, utils) {
+define(["jquery", "profile-edit", "profile-display", "utils", "popups"],
+       function($, edit, display, utils, popups) {
   // ----------------------------------------------------------------------- //
   // Profile work section, top panel.
   function ProfileWork(el) {
@@ -194,11 +194,12 @@ define(["jquery", "profile-edit", "profile-display", "utils"],
   }
 
   Display.prototype.clickDelete = function() {
-    var doDelete = window.confirm("Delete this company?");
-    if (!doDelete) {
-      return;
-    }
+    let company = this.el.find(".company-info").html();
+    popups.confirm("Are you sure delete company " + company + "?",
+                   $.proxy(this.deleteCompany, this));
+  }
 
+  Display.prototype.deleteCompany = function() {
     var reqData = {
       "uid" : +$("body").attr("uid"),
       "username" : $("body").attr("user"),

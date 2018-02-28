@@ -1,5 +1,5 @@
-define(["jquery", "profile-edit", "profile-display", "utils"],
-       function($, edit, display, utils) {
+define(["jquery", "profile-edit", "profile-display", "utils", "popups"],
+       function($, edit, display, utils, popups) {
   // ----------------------------------------------------------------------- //
   // Profile education section, top panel.
   function ProfileEducation(el) {
@@ -181,12 +181,7 @@ define(["jquery", "profile-edit", "profile-display", "utils"],
     return data;
   }
 
-  Display.prototype.clickDelete = function() {
-    var doDelete = window.confirm("Delete this school?");
-    if (!doDelete) {
-      return;
-    }
-
+  Display.prototype.deleteSchool = function() {
     var reqData = {
       "uid" : +$("body").attr("uid"),
       "username" : $("body").attr("user"),
@@ -217,8 +212,13 @@ define(["jquery", "profile-edit", "profile-display", "utils"],
 
     // Local front end test.
     // this.box.remove();
-  }
+  }  
 
+  Display.prototype.clickDelete = function() {
+    let school = this.el.find(".school-info").html();
+    popups.confirm("Are you sure delete school " + school + "?",
+                   $.proxy(this.deleteSchool, this));
+  }
 
   // ----------------------------------------------------------------------- //
   // Component - Edit/Add school, inherits from EditBase.

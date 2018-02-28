@@ -1,5 +1,5 @@
-define(["jquery", "profile-edit", "profile-display"],
-       function($, edit, display) {
+define(["jquery", "profile-edit", "profile-display", "popups"],
+       function($, edit, display, popups) {
   // ----------------------------------------------------------------------- //
   // Profile education section, top panel.
   function ProfilePlaces(el) {
@@ -147,11 +147,12 @@ define(["jquery", "profile-edit", "profile-display"],
   }
 
   Display.prototype.clickDelete = function() {
-    var doDelete = window.confirm("Delete this place?");
-    if (!doDelete) {
-      return;
-    }
+    let place = this.el.find(".place-info").html();
+    popups.confirm("Are you sure delete place " + place + "?",
+                   $.proxy(this.deletePlace, this));
+  }
 
+  Display.prototype.deletePlace = function() {
     var reqData = {
       "uid" : +$("body").attr("uid"),
       "username" : $("body").attr("user"),
