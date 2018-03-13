@@ -175,15 +175,19 @@ body {
   background-size: cover;
   background-color: white;
 }
+/* line 60, ../scss/home.scss */
+.profile-img-container:hover {
+  cursor: pointer;
+}
 
-/* line 61, ../scss/home.scss */
+/* line 65, ../scss/home.scss */
 .profile-img {
   height: 100%;
   width: 100%;
   border-radius: 50%;
 }
 
-/* line 67, ../scss/home.scss */
+/* line 71, ../scss/home.scss */
 .username-container {
   position: absolute;
   top: 150px;
@@ -197,7 +201,7 @@ body {
   padding: 0;
 }
 
-/* line 80, ../scss/home.scss */
+/* line 84, ../scss/home.scss */
 .follower-container {
   position: absolute;
   top: 185px;
@@ -207,7 +211,7 @@ body {
   padding: 0 40px;
 }
 
-/* line 89, ../scss/home.scss */
+/* line 93, ../scss/home.scss */
 .follower {
   display: inline-block;
   vertical-align: middle;
@@ -217,20 +221,20 @@ body {
   padding-left: 2px;
 }
 
-/* line 98, ../scss/home.scss */
+/* line 102, ../scss/home.scss */
 .follower .follower-title {
   text-align: center;
   color: #666;
 }
 
-/* line 103, ../scss/home.scss */
+/* line 107, ../scss/home.scss */
 .follower .follower-num {
   text-align: center;
   color: #222;
   font-weight: 520;
 }
 
-/* line 109, ../scss/home.scss */
+/* line 113, ../scss/home.scss */
 .follower-split-line {
   display: inline-block;
   vertical-align: middle;
@@ -242,7 +246,7 @@ body {
   background-color: #ccc;
 }
 
-/* line 120, ../scss/home.scss */
+/* line 124, ../scss/home.scss */
 .home-profile-detail-container {
   width: 230px;
   margin: 20px 5px 5px 5px;
@@ -250,57 +254,57 @@ body {
   background-color: #f9f9f9;
 }
 
-/* line 127, ../scss/home.scss */
+/* line 131, ../scss/home.scss */
 .profile-card-title {
   margin: 3px 10px 10px 15px;
   font-size: 14px;
   font-weight: 550;
 }
 
-/* line 133, ../scss/home.scss */
+/* line 137, ../scss/home.scss */
 .profile-edit-button {
   font-weight: 450;
   font-size: 12px;
   text-decoration: none;
 }
 
-/* line 139, ../scss/home.scss */
+/* line 143, ../scss/home.scss */
 .user-profile-item {
   margin: 3px 0px 3px 15px;
   padding: 0;
 }
 
-/* line 144, ../scss/home.scss */
+/* line 148, ../scss/home.scss */
 .user-profile-icon {
   vertical-align: middle;
   margin: 0 12px 0 -1px;
   color: #888;
 }
 
-/* line 150, ../scss/home.scss */
+/* line 154, ../scss/home.scss */
 .user-work-icon {
   font-size: 14px;
 }
 
-/* line 154, ../scss/home.scss */
+/* line 158, ../scss/home.scss */
 .user-education-icon {
   display: inline-block;
   margin-left: -1px;
   margin-right: 8px;
 }
 
-/* line 160, ../scss/home.scss */
+/* line 164, ../scss/home.scss */
 .user-live-icon {
   margin-left: 2px;
   margin-right: 13px;
 }
 
-/* line 165, ../scss/home.scss */
+/* line 169, ../scss/home.scss */
 .user-hometown-icon {
   margin: -1px 10px 0 -1px;
 }
 
-/* line 169, ../scss/home.scss */
+/* line 173, ../scss/home.scss */
 .user-profile-detail {
   display: inline-block;
   vertical-align: top;
@@ -313,7 +317,7 @@ body {
   font-family: arial;
 }
 
-/* line 181, ../scss/home.scss */
+/* line 185, ../scss/home.scss */
 .user-profile-link {
   color: #285e98;
 }

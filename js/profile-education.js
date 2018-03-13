@@ -216,8 +216,10 @@ define(["jquery", "profile-edit", "profile-display", "utils", "popups"],
 
   Display.prototype.clickDelete = function() {
     let school = this.el.find(".school-info").html();
-    popups.confirm("Are you sure delete school " + school + "?",
-                   $.proxy(this.deleteSchool, this));
+    popups.confirm({
+      message: "Are you sure delete school " + school + "?",
+      task: $.proxy(this.deleteSchool, this),
+    });
   }
 
   // ----------------------------------------------------------------------- //

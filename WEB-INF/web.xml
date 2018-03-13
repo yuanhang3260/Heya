@@ -66,6 +66,16 @@
     <servlet-name>UserInfo</servlet-name>
     <servlet-class>servlet.UserInfoServlet</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>ProfileImage</servlet-name>
+    <servlet-class>servlet.ProfileImageServlet</servlet-class>
+    <multipart-config>
+      <max-file-size>10485760</max-file-size>
+      <max-request-size>20971520</max-request-size>
+      <file-size-threshold>5242880</file-size-threshold>
+    </multipart-config>
+  </servlet>
     
 
   <!-- SERVLETS MAPPINGS -->
@@ -112,6 +122,11 @@
   <servlet-mapping>
     <servlet-name>UserInfo</servlet-name>
     <url-pattern>/updateuserinfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ProfileImage</servlet-name>
+    <url-pattern>/profileimage</url-pattern>
   </servlet-mapping>
 
   <!-- CONFIG -->

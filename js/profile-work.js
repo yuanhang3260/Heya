@@ -195,8 +195,10 @@ define(["jquery", "profile-edit", "profile-display", "utils", "popups"],
 
   Display.prototype.clickDelete = function() {
     let company = this.el.find(".company-info").html();
-    popups.confirm("Are you sure delete company " + company + "?",
-                   $.proxy(this.deleteCompany, this));
+    popups.confirm({
+      message: "Are you sure delete company " + company + "?",
+      task: $.proxy(this.deleteCompany, this),
+    });
   }
 
   Display.prototype.deleteCompany = function() {

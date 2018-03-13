@@ -64,8 +64,8 @@
   <div class="home-left-bar">
     <div class="card home-profile-container">
       <img class="card-img-top cover-img" src="<%= user.getProfileCoverImg(request)%>" style="opacity: 0.7">
-      <div class="profile-img-container" style="background-image: url(<%= user.getProfileImg(request) %>)">
-        <!-- <img class="profile-img" src="img/default-profile2.jpg"> -->
+      <div id="profile-image" class="profile-img-container" style="background-image: url(<%= user.getProfileImg(request) %>)">
+        <span></span>
       </div>
       <div class="card-body username-container"><%= user.getUsername()%></div>
       <div class="card-body follower-container">

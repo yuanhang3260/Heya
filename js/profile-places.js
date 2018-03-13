@@ -148,8 +148,10 @@ define(["jquery", "profile-edit", "profile-display", "popups"],
 
   Display.prototype.clickDelete = function() {
     let place = this.el.find(".place-info").html();
-    popups.confirm("Are you sure delete place " + place + "?",
-                   $.proxy(this.deletePlace, this));
+    popups.confirm({
+      message: "Are you sure delete place " + place + "?",
+      task: $.proxy(this.deletePlace, this),
+    });
   }
 
   Display.prototype.deletePlace = function() {

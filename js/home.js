@@ -1,4 +1,5 @@
-define(["jquery", "utils"], function($, utils) {
+define(["jquery", "utils", "ImageClipper"], function($, utils, ImageClipper) {
+  // ---------------------------- User Info --------------------------------- //
   function UserInfo(el) {
     this.el = $(el);
 
@@ -120,11 +121,11 @@ define(["jquery", "utils"], function($, utils) {
     // Process the form.
     var me = this;
     $.ajax({
-        type : "GET",
-        url : "getuserinfo",
-        data : formData,
-        dataType : "json",
-        encode : true,
+        type: "GET",
+        url: "getuserinfo",
+        data: formData,
+        dataType: "json",
+        encode: true,
     }).done(function(data) {
       // log data to the console so we can see.
       console.log(data);
@@ -134,7 +135,43 @@ define(["jquery", "utils"], function($, utils) {
     });
   };
 
+  // --------------------------- Profile Image ---------------------------- //
+  function ProfileImage(el) {
+    this.$el = $(el);
+
+    var clipper = new ImageClipper("Update Profile Image",
+                                   $.proxy(this.updateProfileImage, this));
+
+    this.$el.on("click", function() {
+      clipper.open();
+    });
+  }
+
+  ProfileImage.prototype.updateProfileImage = function(filename, blob) {
+    // console.log("image submitted");
+
+    var formData = new FormData();
+    formData.append("uid", +$("body").attr("uid"));
+    formData.append("action", "update");
+    formData.append("filename", filename);
+    formData.append("imagedata", blob);
+
+    // Process the form.
+    var me = this;
+    $.ajax({
+      type: "POST",
+      url: "profileimage",
+      data: formData,
+      processData: false,
+      contentType: false,
+    }).done(function(data) {
+      // log data to the console so we can see.
+      console.log(data);
+    });
+  }
+
   return {
     UserInfo: UserInfo,
+    ProfileImage: ProfileImage,
   }
 });
