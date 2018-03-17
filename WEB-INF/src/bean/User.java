@@ -220,51 +220,21 @@ public class User {
     }
   }
 
-  public String getProfileImg(HttpServletRequest request) {
-    ServletContext context = request.getServletContext();
-    String baseDir = context.getInitParameter("data-storage");
-    String path = Paths.get(
-        baseDir, "user/", Integer.toString(uid), "/profile.jpg").toString();
-    File file = new File(path);
-    if (file.exists()) {
-      return profileImageURL(Integer.toString(uid));
-    } else {
-      return profileImageURL("default");
-    }
-  }
-
-  public String getProfileCoverImg(HttpServletRequest request) {
-    ServletContext context = request.getServletContext();
-    String baseDir = context.getInitParameter("data-storage");
-    String path = Paths.get(
-      baseDir, "user/", Integer.toString(uid), "/profile-cover.jpg").toString();
-    File file = new File(path);
-    if (file.exists()) {
-      return profileCoverImageURL(Integer.toString(uid));
-    } else {
-      return profileCoverImageURL("default");
-    }
-  }
-
-  private String profileImageURL(String user) {
+  public String profileImageURL() {
     final HttpUriRequest request = RequestBuilder.get()
-        .setUri("image")
-        .addParameter("type", "userinfo")
-        .addParameter("uid", user)
-        .addParameter("username", username)
-        .addParameter("q", "profile")
+        .setUri("profileimage")
+        .addParameter("uid", Integer.toString(uid))
+        .addParameter("type", "profile")
         .build();
 
     return request.getURI().toString();
   }
 
-  private String profileCoverImageURL(String user) {
+  public String profileCoverImageURL() {
     final HttpUriRequest request = RequestBuilder.get()
-        .setUri("image")
-        .addParameter("type", "userinfo")
-        .addParameter("uid", user)
-        .addParameter("username", username)
-        .addParameter("q", "profile-cover")
+        .setUri("profileimage")
+        .addParameter("uid", Integer.toString(uid))
+        .addParameter("type", "cover")
         .build();
 
     return request.getURI().toString();

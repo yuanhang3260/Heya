@@ -139,8 +139,11 @@ define(["jquery", "utils", "ImageClipper"], function($, utils, ImageClipper) {
   function ProfileImage(el) {
     this.$el = $(el);
 
-    var clipper = new ImageClipper("Update Profile Image",
-                                   $.proxy(this.updateProfileImage, this));
+    var clipper = new ImageClipper({
+      title: "Update Profile Image",
+      callback: $.proxy(this.updateProfileImage, this),
+      outputFormat: "jpeg",
+    });
 
     this.$el.on("click", function() {
       clipper.open();
@@ -148,11 +151,10 @@ define(["jquery", "utils", "ImageClipper"], function($, utils, ImageClipper) {
   }
 
   ProfileImage.prototype.updateProfileImage = function(filename, blob) {
-    // console.log("image submitted");
-
     var formData = new FormData();
     formData.append("uid", +$("body").attr("uid"));
     formData.append("action", "update");
+    formData.append("type", "profile");
     formData.append("filename", filename);
     formData.append("imagedata", blob);
 
