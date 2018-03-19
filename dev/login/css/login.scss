@@ -1,5 +1,5 @@
-@import "common";
-@import "navbar";
+@import "../../common/css/common";
+@import "../../common/css/navbar";
 
 body {
   background-color: #ececec;
@@ -53,17 +53,11 @@ body {
 #intro-container {
   position: relative;
   padding: 0;
-}
-
-#intro-container::after {
   content : "";
-  display: block;
-  position: absolute;
   top: 0;
   left: 0;
   width: 570px;
   height: 330px;
-  background: url("../img/social2.jpg");
   background-size: 570px 330px;
   background-repeat: no-repeat;
   border-radius: 5px;
