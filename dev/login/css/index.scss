@@ -1,0 +1,27 @@
+@import "common/css/common";
+
+body {
+  background-color: #ececec;
+}
+
+div.index-main-container {
+  display: flex;
+  margin: 55px auto 0;
+  width: $main-width;
+  height: 330px;
+
+  div.main-container-sub {
+    margin: 5px 3px;
+  }
+
+  div.index-image-container {
+    flex-grow: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      opacity : 0.85;
+    }
+  }
+}

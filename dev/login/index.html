@@ -6,74 +6,16 @@
 </head>
 
 <body>
-<nav class="fixed-top navbar heya-navbar">
-  <div class="heya-navbar-container">
-    <a class="navbar-brand heya-navbar-brand" href="#" tips="hei">
-      <b>Heya</b> <i class="fa fa-leaf heya-logo"></i>
-    </a>
 
-    <form method="get" class="form-inline my-lg-0 heya-navbar-search" action="search">
-      <div class="input-group">
-        <input type="text" class="form-control heya-search-box" name="value" placeholder="Search">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary heya-search-btn" type="submit">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</nav>
+<nav-bar id="navbar" :search-box=true></nav-bar>
 
 <div class="index-main-container">
-  <div id="intro-container" class="main-container-sub" style="background-image: url(/img/social2.jpg)">
+  <div class="main-container-sub index-image-container">
+    <img src="/img/social2.jpg">
   </div>
-  <div id="login-container" class="main-container-sub">
-    <form id="login-form" method="post" action="login">
-      <h3 class="login-title">Welcome</h3>
-      <div class="alert alert-danger login-error-msg" role="alert"></div>
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><i class="fa fa-user"></i></span>
-        </div>
-        <input type="text" class="form-control" name="username" placeholder="Username">
-      </div>
-      <div class="input-group mb-1">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><i class="fa fa-unlock-alt"></i></span>
-        </div>
-        <input type="password" class="form-control" name="password" placeholder="Password">
-      </div>
-      <div class="form-check mb-3">
-        <label class="form-check-label login-check-label">
-          <input type="checkbox" class="form-check-input login-checkbox" name="rememberme" checked="true" disabled="">Remember me
-        </label>
-      </div>
-      <button type="submit" class="btn btn-success login-btn mb-3" disabled="">Log In</button>
-    </form>
-    <form action="signup.html">
-      <button class="btn btn-success login-btn mb-2">New User</button>
-    </form>
-  </div>
+  <login-box id="login-box"></login-box>
 </div>
 
-<div id="bottom-bar" class="bottom-bar">
-  <div class="bottom-container">
-    <div class="bottom-logo-container">
-      <b>Heya</b></br><i class="fa fa-leaf"></i>
-    </div>
-    <ul class="bottom-ul">
-      <li style="font-size: 15px; color: #444"><b>Share</b></li>
-      <li>Facebook</li>
-      <li>Weibo</a></li>
-    </ul>
-    <ul class="bottom-ul">
-      <li style="font-size: 15px; color: #444"><b>Contact</b></li>
-      <li>Author</li>
-      <li><a href="https://github.com/yuanhang3260/Heya" target="_blank">Github</a></li>
-    </ul>
-    <ul class="bottom-horizontal-placer-holder"></ul>
-  </div>
-</div>
+<foot id="foot"></foot>
 
 </html>

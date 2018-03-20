@@ -2,7 +2,6 @@
 
 $navbar-height: 35px;
 $navbar-bgcolor: #227535;
-$main-width: 960px;
 
 .heya-navbar {
   background-color: $navbar-bgcolor;
@@ -65,9 +64,12 @@ $main-width: 960px;
   height: $navbar-height - 4px;
   font-size: 14px;
   padding: 6px;
-  border-radius: 2px;
   border-right: 0px;
   background-color: #f5f5f5;
+
+  &:focus {
+    background-color: #fafafa;
+  };
 }
 
 .input-group .heya-search-box:focus {

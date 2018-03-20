@@ -37,7 +37,7 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       template: "index.html",
       filename: "index.html",
-      inject: "head",
+      inject: true,
     }),
   ],
 });

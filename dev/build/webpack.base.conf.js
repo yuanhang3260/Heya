@@ -1,8 +1,17 @@
 'use strict'
 const path = require('path')
-const webpack = require('webpack');
+const webpack = require('webpack')
+const vueLoaderConfig = require('./vue-loader.conf')
 
 module.exports = {
+  resolve: {
+    extensions: ['.js', '.vue', '.css', 'scss'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      'common': path.resolve(__dirname, '../', 'common'),
+      'login': path.resolve(__dirname, '../', 'login'),
+    }
+  },
   module: {
     rules: [
       {
@@ -19,6 +28,11 @@ module.exports = {
       },
       { test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         loader: 'url-loader?limit=20000'
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: vueLoaderConfig
       },
     ]
   },
