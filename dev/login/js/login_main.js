@@ -1,13 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import "common/css/font-awesome.5.0.6.min.js";
-import "login/css/index.scss";
+import "heya/common/css/font-awesome.5.0.6.min.js";
+import "heya/login/css/index.scss";
 
 import Vue from "vue";
 
-import Login from "./login.js";
-import LoginBox from "./login.vue";
-import NavBar from "common/js/navbar.vue";
-import Foot from "common/js/foot.vue";
+import LoginBox from "heya/login/js/login.vue";
+import NavBar from "heya/common/js/navbar.vue";
+import Foot from "heya/common/js/foot.vue";
 
 Vue.config.productionTip = false
 

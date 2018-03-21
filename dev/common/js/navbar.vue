@@ -37,5 +37,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "common/css/navbar.scss";
+@import "~heya/common/css/navbar.scss";
 </style>

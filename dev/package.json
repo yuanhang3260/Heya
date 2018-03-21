@@ -4,13 +4,16 @@
   "description": "Heya, Hey!",
   "scripts": {
     "dev-login": "webpack-dev-server --config build/webpack.login.conf.js --mode development",
-    "build-login": "webpack --config build/webpack.login.conf.js --mode production"
+    "build-login": "webpack --config build/webpack.login.conf.js --mode production",
+    "dev-signup": "webpack-dev-server --config build/webpack.signup.conf.js --mode development",
+    "build-signup": "webpack --config build/webpack.signup.conf.js --mode production"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.10",
     "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.6",
     "mini-css-extract-plugin": "^0.2.0",
     "node-sass": "^4.7.2",

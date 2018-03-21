@@ -3,7 +3,7 @@
 <div class="main-container-sub login-container">
   <form v-on:submit="doLogin" method="post" action="login">
     <h3 class="login-title">Welcome</h3>
-    <div v-if="errMsg" class="alert alert-danger login-error-msg" role="alert">{{errMsg}}</div>
+    <div v-show="errMsg" class="alert alert-danger login-error-msg" role="alert">{{errMsg}}</div>
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa fa-user"></i></span>
@@ -89,5 +89,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "login/css/login.scss";
+@import "~heya/login/css/login.scss";
 </style>

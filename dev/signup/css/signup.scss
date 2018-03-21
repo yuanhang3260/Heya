@@ -1,21 +1,13 @@
-@import "navbar";
-
-body {
-  background-color: #ececec;
-}
-
-.signup-page-main-container {
-  margin: 65px auto 0;
-  width: $main-width;
-  height: auto;
-}
-
 .signup-container {
   width: 550px;
   padding: 15px;
   background-color: #e2e2e2;
   border-radius: 5px;
   border: 1px solid transparent;
+
+  .login-title {
+    margin-bottom: 16px;
+  }
 }
 
 .heya-signup-input {
@@ -25,13 +17,11 @@ body {
 }
 
 .signup-input-check {
-  display: none;
   margin-left: 2px;
   color: green;
 }
 
 .signup-input-check-error {
-  display: none;
   margin-left: 2px;
   color: #d00;
 }

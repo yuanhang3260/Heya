@@ -5,11 +5,10 @@ const vueLoaderConfig = require('./vue-loader.conf')
 
 module.exports = {
   resolve: {
-    extensions: ['.js', '.vue', '.css', 'scss'],
+    extensions: ['.js', '.vue', '.css', '.scss'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      'common': path.resolve(__dirname, '../', 'common'),
-      'login': path.resolve(__dirname, '../', 'login'),
+      'heya': path.resolve(__dirname, '../'),
     }
   },
   module: {
