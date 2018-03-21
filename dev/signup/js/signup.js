@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 function checkUsername(allowEmpty) {
   let username = this.username;
   if (username) {
@@ -96,19 +98,22 @@ function restoreInput(name) {
 }
 
 function doSubmit() {
-  this.checkUsername();
-  this.checkEmail();
+  this.checkUsername(/*allow-empty=*/false);  
+  this.checkEmail(/*allow-empty=*/false);
 
   if (!this.password) {
     this.passwordValid = false;
+  } else if (!this.passwordConfirm) {
+    this.passwordMatchValid = false;
+  } else {
+    this.checkPasswordMatch();
   }
-  this.checkPasswordMatch();
 
   if (this.usernameValid && this.emailValid &&
       this.passwordValid && this.passwordMatchValid) {
-    console.log("submit");
-  } else {
-    console.log("abort");
+    this.signup();
+    //this.mode = "redirect";
+    //this.startRedirecting();
   }
 }
 
@@ -132,27 +137,47 @@ function signup() {
     // log data to the console so we can see.
     console.log(data);
 
-    this.disableSubmit = false;
+    me.disableSubmit = false;
     if (data.success) {
-      // form.find(".form-container").hide();
-      // form.find(".success-info-container").show();
-      // me.StartRedirecting();
+      me.mode = "redirect";
+      me.startRedirecting();
     } else {
-      // Show error message.
-      // form.find(".submit-error-msg-container").html(
-      //     "<i class=\"fa fa-times-circle\"></i> " + data.error);
-      // form.find(".submit-error-msg-container").show();
+      me.errMsg = data.error || "Signup failed";
     }
   }).fail(function(data) {
     me.disableSubmit = false;
-    me.errMsg = "Login error";
+    me.errMsg = "Signup error";
   });;
 };
+
+function startRedirecting() {
+  let count_sec = 5;
+
+  let me = this;
+  let startTime = (new Date()).getTime();
+  let remain_time_reader = window.setInterval(function() {
+    var remain =
+        count_sec - Math.floor(((new Date()).getTime() - startTime) / 1000);
+    if (remain >= 0 && this.countDown != remain) {
+      me.countDown = remain;
+    }
+  }, 200);
+
+  var timer = window.setTimeout(function() {
+    window.clearInterval(remain_time_reader);
+    window.location.assign("home");
+  }, count_sec * 1000);
+};
+
+function signupMode() {
+  return this.mode === "signup";
+}
 
 export default {
   computed: {
     emailTip: emailTip,
     passwordMatchTip: passwordMatchTip,
+    signupMode: signupMode,
   },
 
   methods: {
@@ -161,6 +186,8 @@ export default {
     checkPasswordMatch: checkPasswordMatch,
     restoreInput: restoreInput,
     doSubmit: doSubmit,
+    signup: signup,
+    startRedirecting: startRedirecting,
   }
 }
 

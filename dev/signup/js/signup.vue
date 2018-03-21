@@ -3,7 +3,7 @@
 <div class="signup-container">
   <h3 class="login-title">Create New Account</h3>
   <form method="post" action="signup">
-    <div class="form-container">
+    <div v-show="signupMode" class="form-container">
       <div class="form-group">
         <label>Username</label>
         <input v-model="username" v-on:focusout="checkUsername(true)" v-on:input="restoreInput('username')" v-bind:class="{'inputbox-error': !usernameValid}" class="form-control heya-signup-input" type="text" name="username"  maxlength="32" placeholder="username">
@@ -38,13 +38,13 @@
         </small>
       </div>
 
-      <button v-on:click="doSubmit" type="button" class="btn btn-success signup-btn mb-3">Submit</button>
-      <span class="submit-error-msg-container mb-3"></span>
+      <button v-on:click="doSubmit" v-bind:disabled="disableSubmit" type="button" class="btn btn-success signup-btn mb-3">Submit</button>
+      <span v-show="errMsg" class="submit-error-msg-container mb-3">{{errMsg}}</span>
     </div>
 
-    <div class="success-info-container">
+    <div v-show="!signupMode" class="success-info-container">
       <p class="success-title">New user is successfully created <i class="fa fa-smile-o new-user-smile"></i></p>
-      <p>Redirecting to <a href="home.jsp" class="home-link">Home</a> page in<span class="remain-time"> 5 </span>s</p>
+      <p>Redirecting to <a href="/home" class="home-link">Home</a> page in<span class="remain-time"> {{countDown}} </span>s</p>
     </div>
   </form>
 </div>
@@ -68,6 +68,8 @@ export default {
       passwordConfirm: null,
       passwordMatchValid: true,
       disableSubmit: false,
+      mode: "signup",
+      countDown: 5,
       errMsg: null,
     }
   },
