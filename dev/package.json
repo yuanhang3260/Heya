@@ -6,7 +6,9 @@
     "dev-login": "webpack-dev-server --config build/webpack.login.conf.js --mode development",
     "build-login": "webpack --config build/webpack.login.conf.js --mode production",
     "dev-signup": "webpack-dev-server --config build/webpack.signup.conf.js --mode development",
-    "build-signup": "webpack --config build/webpack.signup.conf.js --mode production"
+    "build-signup": "webpack --config build/webpack.signup.conf.js --mode production",
+    "dev-home": "webpack-dev-server --config build/webpack.home.conf.js --mode development",
+    "build-home": "webpack --config build/webpack.home.conf.js --mode production"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",
@@ -32,6 +34,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0",
     "jquery": "^3.3.1",
+    "string-format": "^0.5.0",
     "vue": "^2.5.16"
   },
   "author": "hangyuan",

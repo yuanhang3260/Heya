@@ -1,0 +1,18 @@
+@import "~heya/home/css/common.scss";
+
+body {
+  background-color: #f9fffa;
+}
+
+.home-main-container {
+  position: relative;
+  width: $main-width;
+  top: 55px;
+  height: 600px;
+  margin: 0 auto;
+}
+
+.home-left-bar {
+  position: fixed;
+  top: 55px;
+}

@@ -5,7 +5,7 @@ const kTitleLines = 2;
 const kHeaderHeightFactor = 0.45;
 const kImageSizeFactor = 0.65;
 
-const kLineHeightFactor = 0.4;
+const kLineHeightFactor = 0.32;
 
 function designLayout(width, height, title, image) {
   const header = title || image;

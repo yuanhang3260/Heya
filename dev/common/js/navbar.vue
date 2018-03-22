@@ -1,7 +1,7 @@
 <template>
 
 <nav class="fixed-top navbar heya-navbar">
-  <div class="heya-navbar-container">
+  <div class="heya-navbar-container" v-bind:style="mainWidth">
     <a class="navbar-brand heya-navbar-brand" href="#" tips="hei">
       <b>Heya</b> <i class="fa fa-leaf heya-logo"></i>
     </a>
@@ -28,9 +28,20 @@ export default {
       type: Boolean,
       default: true,
     },
+    "width": {
+      type: Number,
+      default: 960,
+    }
   },
   data () {
     return {}
+  },
+  computed: {
+    mainWidth: function() {
+      return {
+        "width": this.width + "px",
+      }
+    }
   },
   methods: {},
 };

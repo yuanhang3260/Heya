@@ -1,0 +1,68 @@
+@import "~heya/home/css/left.scss";
+
+.home-profile-detail-container {
+  width: $home-profile-container-width;
+  margin: 20px 5px 5px 5px;
+  padding: 10px 0;
+  background-color: #f9f9f9;
+}
+
+.profile-card-title {
+  margin: 3px 10px 10px 15px;
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.profile-edit-button {
+  font-weight: 450;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.user-profile-item {
+  margin: 3px 0px 3px 15px;
+  padding: 0;
+}
+
+.user-profile-icon {
+  vertical-align: middle;
+  margin: 0 5px 0 -1px;
+  color: #888;
+}
+
+.user-work-icon {
+  font-size: 18px;
+}
+
+.user-education-icon {
+  display: inline-block;
+  margin-left: -1px;
+  margin-right: 2px;
+}
+
+.user-live-icon {
+  margin: -1px 7px 0 4px;
+  font-size: 19px;
+}
+
+.user-hometown-icon {
+  margin: -1px 4px 0 1px;
+  font-size: 19px;
+}
+
+.user-profile-detail {
+  display: inline-block;
+  vertical-align: top;
+  width: 175px;
+  margin: 0;
+  padding: 0;
+  padding-top: 3px;
+  color: #222;
+  font-size: 13px;
+  font-family: arial;
+}
+
+.user-profile-link {
+  color: #285e98;
+}
+

@@ -57,7 +57,7 @@ export default {
     getContainerCss: function() {
       return {
         width: this.toPixel(this.width),
-        height: this.toPixel(this.totalHeight),
+        height: this.toPixel(this.height),
       }
     },
 
@@ -150,7 +150,7 @@ export default {
 }
 
 .profile-image {
-  background: linear-gradient(to right, #f2f2f2 25%, #e3e3e3 40%, #f2f2f2 50%);
+  background: linear-gradient(to right, #eaeaea 25%, #e1e1e1 40%, #eaeaea 50%);
 }
 
 .title-box {
@@ -167,7 +167,7 @@ export default {
   flex-grow: 1;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #f2f2f2 25%, #e1e1e1 40%, #f2f2f2 50%);
+  background: linear-gradient(to right, #eaeaea 25%, #e1e1e1 40%, #eaeaea 50%);
 }
 
 .content-box {
@@ -188,7 +188,7 @@ export default {
   flex-grow: 1;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #f3f3f3 25%, #e3e3e3 40%, #f3f3f3 50%);
+  background: linear-gradient(to right, #eaeaea 25%, #e1e1e1 40%, #eaeaea 50%);
 }
 
 .animated-background {
