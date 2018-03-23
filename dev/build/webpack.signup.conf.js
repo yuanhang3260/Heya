@@ -17,9 +17,9 @@ module.exports = merge(baseWebpackConfig, {
   },
 
   output: {
-    path: prodBase,
+    path: path.resolve(prodBase, "dist/"),
     filename: "js/[name].dist.js",
-    publicPath: "/",
+    publicPath: "dist/",
   },
 
   devtool: "source-map",
@@ -32,12 +32,4 @@ module.exports = merge(baseWebpackConfig, {
     host: "localhost",
     port: 9090,
   },
-
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "signup.html",
-      filename: "signup.html",
-      inject: true,
-    }),
-  ],
 });

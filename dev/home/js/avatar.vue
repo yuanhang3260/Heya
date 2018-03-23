@@ -2,7 +2,7 @@
 
 <div class="card home-profile-container">
   <div class="card-img-top cover-img-container">
-    <img class="cover-img" v-bind:src="coverImageURL"">
+    <img class="cover-img" v-bind:src="coverImageURL">
   </div>
   <div class="profile-img-container">
     <img class="profile-img" v-bind:src="profileImageURL" v-on:click="clickProfileImage">
