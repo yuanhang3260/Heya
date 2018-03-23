@@ -1,5 +1,6 @@
 import $ from "jquery";
 import utils from "heya/common/js/utils.js"
+import debug from "heya/common/js/debug.js"
 
 function loadUserInfo() {
   var formData = {
@@ -56,74 +57,6 @@ function googleMapURL(place) {
   return "https://www.google.com/maps/search/" + place;
 }
 
-function debugUserInfo() {
-  return {
-    work: [
-      {
-        "cid": 1,
-        "company": "Tintri",
-        "position": "Software Engineer Intern",
-        "year": {
-          "end": 2014,
-          "start": 2014
-        }
-      },
-      {
-        "cid": 2,
-        "company": "Bicasl, SJTU",
-        "position": "Research Assistant",
-        "year": {
-          "end": 2013,
-          "start": 2012
-        }
-      },
-      {
-        "cid": 3,
-        "company": "Google",
-        "position": "Software Engineer",
-        "year": {
-          "end": 2018,
-          "start": 2015
-        }
-      }
-    ],
-    education: [
-      {
-        "major": "Electrical Engineering",
-        "school": "Shanghai Jiao Tong University",
-        "sid": 2,
-        "year": {
-          "end": 2013,
-          "start": 2009
-        }
-      },
-      {
-        "major": "Computer Engineering",
-        "school": "Carnegie Mellon University",
-        "sid": 3,
-        "year": {
-          "end": 2015,
-          "start": 2013
-        }
-      }
-    ],
-    places: [
-      {
-        "current": false,
-        "hometown": true,
-        "pid": 3,
-        "place": "Haimen, Jiangsu Province, China"
-      },
-      {
-        "current": true,
-        "hometown": false,
-        "pid": 4,
-        "place": "Sunnyvale, CA"
-      }
-    ]
-  }
-}
-
 function created() {}
 
 function beforeMount() {
@@ -132,7 +65,7 @@ function beforeMount() {
       this.loadUserInfo();
     } else {
       this.loading = false;
-      this.refreshUserInfo(debugUserInfo());
+      this.refreshUserInfo(debug.userInfo());
     }
   }, 2000);
 }

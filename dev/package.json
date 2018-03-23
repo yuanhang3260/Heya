@@ -8,7 +8,9 @@
     "dev-signup": "webpack-dev-server --config build/webpack.signup.conf.js --mode development",
     "build-signup": "webpack --config build/webpack.signup.conf.js --mode production",
     "dev-home": "webpack-dev-server --config build/webpack.home.conf.js --mode development",
-    "build-home": "webpack --config build/webpack.home.conf.js --mode production"
+    "build-home": "webpack --config build/webpack.home.conf.js --mode production",
+    "dev-profile": "webpack-dev-server --config build/webpack.profile.conf.js --mode development",
+    "build-profile": "webpack --config build/webpack.profile.conf.js --mode production"
   },
   "devDependencies": {
     "babel-loader": "^7.1.4",

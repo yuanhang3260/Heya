@@ -34,7 +34,6 @@ define(["jquery", "profile-basic", "profile-education", "profile-work",
       // log data to the console so we can see.
       console.log(data);
       if (data.success) {
-        // TODO: Use me.panel.initUserInfo(data)
         me.panel["basic"].initUserInfo(data);
         me.panel["education"].initUserInfo(data);
         me.panel["work"].initUserInfo(data);

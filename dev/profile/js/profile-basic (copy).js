@@ -222,12 +222,6 @@ define(["jquery", "profile-edit", "profile-display"],
         me.showErrorMsg(data.reason);
       }
     });
-
-    // Local front end test.
-    // this.enableButtons();
-    // this.hideErrorMsg();
-    // this.hide();
-    // this.display.displayData(formData);
   }
 
   return {

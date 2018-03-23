@@ -7,13 +7,13 @@ const baseWebpackConfig = require("./webpack.base.conf");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 const prodBase = path.resolve(__dirname, "../../");
-const homeBase = path.resolve(__dirname, "../home");
+const profileBase = path.resolve(__dirname, "../profile");
 
 module.exports = merge(baseWebpackConfig, {
-  context: homeBase,
+  context: profileBase,
 
   entry: {
-    home: "./js/home_main.js",
+    profile: "./js/profile_main.js",
   },
 
   output: {
@@ -25,19 +25,11 @@ module.exports = merge(baseWebpackConfig, {
   devtool: "source-map",
 
   devServer: {
-    contentBase: homeBase,
+    contentBase: profileBase,
     historyApiFallback: true,
     inline: true,
     progress: true,
     host: "localhost",
     port: 9090,
   },
-
-  // plugins: [
-  //   new HtmlWebpackPlugin({
-  //     template: "home.html",
-  //     filename: "home.html",
-  //     inject: true,
-  //   }),
-  // ],
 });

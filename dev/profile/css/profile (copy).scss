@@ -1,39 +1,4 @@
-@import "common";
-@import "navbar";
-
 $border-color: #ccc;
-
-body {
-  background-color: #ececec;
-}
-
-.profile-main-container {
-  margin: 65px auto 0;
-  width: $main-width;
-  height: auto;
-}
-
-.profile-container {
-  display: flex;
-  flex-direction: column;
-
-  width: 750px;
-  border: 1px solid $border-color;
-}
-
-.overall-title {
-  height: 44px;
-  background-color: #ddd;
-  padding: 12px 0 10px 12px;
-
-  line-height: 20px;
-  font-size: 18px;
-}
-
-.overall-title > .profile-icon {
-  color: #666;
-  margin-right: 5px
-}
 
 .profile-view-container {
   flex-grow: 1;

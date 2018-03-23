@@ -1,0 +1,121 @@
+<template>
+
+<div class="subpanel profile-basic-panel">
+  <ul v-show="mode === 'display'" class="basic-info-display">
+    <li v-if="name" class="name-info">
+      <i class="basic-info-icon icon-name fa fa-user"></i>
+      <span>{{name}}</span>
+    </li>
+    <li v-if="email" class="email-info">
+      <i class="basic-info-icon icon-email fa fa-envelope"></i>
+      <span>{{email}}</span>
+    </li>
+    <li v-if="phone" class="phone-info">
+      <i class="basic-info-icon icon-phone fa fa-mobile"></i>
+      <span>{{phone}}</span>
+    </li>
+    <li v-if="birth" class="birth-info">
+      <i class="basic-info-icon icon-birth fa fa-birthday-cake"></i>
+      <span>{{birth}}</span>
+    </li>
+    <div class="edit-button" v-on:click="clickEdit">
+      <i class="fa fa-edit"></i>
+      <span>Edit profile basic info</span>
+    </div>
+  </ul>
+  <div v-show="mode === 'edit'" class="profile-info-edit basic-info-edit">
+    <form method="post">
+      <div class="form-group edit-name">
+        <label class="profile-edit-label">Name</label>
+        <input v-model.lazy="nameInput" type="text" name="name" class="form-control profile-edit-input">
+      </div>
+      <div class="form-group edit-birth">
+        <label class="profile-edit-label">Birth</label>
+        <select v-model.lazy="birthYearInput" class="form-control profile-edit-select" name="year">
+          <option val="--" v-bind:selected="!birthYearInput">--</option>
+          <option v-for="year in yearSelectOptions()" v-bind:selected="birthYearInput===year" val=year>{{year}}</option>
+        </select>
+        <select v-model.lazy="birthMonthInput" class="form-control profile-edit-select" name="month">
+          <option val="--" v-bind:selected="!birthMonthInput">--</option>
+          <option v-for="month in monthSelectOptions()" v-bind:selected="birthMonthInput===month" val=month>{{month}}</option>
+        </select>
+        <select v-model.lazy="birthDateInput" class="form-control profile-edit-select" name="date">
+          <option val="--" v-bind:selected="!birthDateInput">--</option>
+          <option v-for="date in dateSelectOptions()" v-bind:selected="birthDateInput===date" val=date>{{date}}</option>
+        </select>
+      </div>
+      <div class="form-group edit-email">
+        <label class="profile-edit-label">Email</label>
+        <input v-model.lazy="emailInput" type="text" name="email" class="form-control profile-edit-input">
+      </div>
+      <div class="form-group edit-phone">
+        <label class="profile-edit-label">Phone</label>
+        <input v-model.lazy="phoneInput" type="text" name="phone" class="form-control profile-edit-input">
+      </div>
+      <div class="button-box">
+        <button v-on:click="clickSave" type="button" class="btn btn-success save-btn">Save Changes</button>
+        <button v-on:click="mode='display'" type="button" class="btn btn-light cancel-btn">Cancel</button>
+      </div>
+      <div v-show="errMsg" class="alert alert-danger update-error-msg" role="alert">{{errMsg}}</div>
+    </form>
+  </div>
+</div>
+
+</template>
+
+<script>
+import profileBasic from "./profile-basic.js"
+
+export default {
+  name: "profile-basic",
+  components: {
+  },
+  props: {
+    uid: {
+      type: Number,
+      default: -1,
+    },
+    username: {
+      type: String,
+      default: "default",
+    },
+    basicInfo: {
+      type: Object,
+      default: function() { return {}; },
+    },
+    debug: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  data () {
+    return {
+      name: null,
+      nameInput: null,
+      email: null,
+      emailInput: null,
+      phone: null,
+      phoneInput: null,
+      birth: null,
+      birthYearInput: null,
+      birthMonthInput: null,
+      birthDateInput: null,
+      mode: "display",
+      disableButtom: false,
+      errMsg: null,
+    }
+  },
+  computed: profileBasic.computed,
+  watch: {
+    // Watch basicInfo propagated from parent, and update local data.
+    basicInfo: profileBasic.updateBasicInfo,
+  },
+  methods: profileBasic.methods,
+  beforeMount: profileBasic.beforeMount,
+}
+
+</script>
+
+<style scoped lang="scss">
+@import "~heya/profile/css/profile-basic.scss"
+</style>
