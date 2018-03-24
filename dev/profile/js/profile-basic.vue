@@ -32,16 +32,16 @@
       <div class="form-group edit-birth">
         <label class="profile-edit-label">Birth</label>
         <select v-model.lazy="birthYearInput" class="form-control profile-edit-select" name="year">
-          <option val="--" v-bind:selected="!birthYearInput">--</option>
-          <option v-for="year in yearSelectOptions()" v-bind:selected="birthYearInput===year" val=year>{{year}}</option>
+          <option val="--" :selected="!birthYearInput">--</option>
+          <option v-for="year in yearSelectOptions()" :selected="birthYearInput===year" val=year>{{year}}</option>
         </select>
         <select v-model.lazy="birthMonthInput" class="form-control profile-edit-select" name="month">
-          <option val="--" v-bind:selected="!birthMonthInput">--</option>
-          <option v-for="month in monthSelectOptions()" v-bind:selected="birthMonthInput===month" val=month>{{month}}</option>
+          <option val="--" :selected="!birthMonthInput">--</option>
+          <option v-for="month in monthSelectOptions()" :selected="birthMonthInput===month" val=month>{{month}}</option>
         </select>
         <select v-model.lazy="birthDateInput" class="form-control profile-edit-select" name="date">
-          <option val="--" v-bind:selected="!birthDateInput">--</option>
-          <option v-for="date in dateSelectOptions()" v-bind:selected="birthDateInput===date" val=date>{{date}}</option>
+          <option val="--" :selected="!birthDateInput">--</option>
+          <option v-for="date in dateSelectOptions()" :selected="birthDateInput===date" val=date>{{date}}</option>
         </select>
       </div>
       <div class="form-group edit-email">

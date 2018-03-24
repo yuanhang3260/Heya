@@ -23,9 +23,9 @@ function clickEdit() {
     this.birthMonthInput = +birth[1];
     this.birthDateInput = +birth[2];
   } else {
-    this.birthYearInput = null;
-    this.birthMonthInput = null;
-    this.birthDateInput = null;
+    this.birthYearInput = "--";
+    this.birthMonthInput = "--";
+    this.birthDateInput = "--";
   }
 
   this.mode = "edit";
@@ -35,11 +35,20 @@ function clickSave() {
   if (!this.debug) {
     updateBasicInfo();
   } else {
-    this.name = this.nameInput;
-    this.email = this.emailInput;
-    this.phone = this.phoneInput;
-    this.birth = utils.formatBirth(
+    if (this.name !== this.nameInput) {
+      this.name = this.nameInput;
+    }
+    if (this.email !== this.emailInput) {
+      this.email = this.emailInput;
+    }
+    if (this.phone !== this.phoneInput) {
+      this.phone = this.phoneInput;
+    }
+    let birth = utils.formatBirth(
         this.birthYearInput, this.birthMonthInput, this.birthDateInput);
+    if (this.birth != birth) {
+      this.birth = birth;
+    }
   }
 
   this.mode = "display";
