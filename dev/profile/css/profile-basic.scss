@@ -1,83 +1,85 @@
-div.profile-basic-panel {
-  padding: 15px 25px 0 25px;
+div.profile-panel {
+  div.profile-basic-panel {
+    padding: 15px 25px 0 25px;
 
-  ul.basic-info-display {
-    display: block;
-    margin: 0;
-    list-style: none;
+    ul.basic-info-display {
+      display: block;
+      margin: 0;
+      list-style: none;
 
-    li {
-      position: relative;
-      height: 35px;
-      line-height: 35px;
+      li {
+        position: relative;
+        height: 35px;
+        line-height: 35px;
 
-      span {
-        padding-left: 25px;
+        span {
+          padding-left: 25px;
+        }
+
+        .basic-info-icon {
+          position: absolute;
+          color : #aaa;
+        }
+
+        .icon-name {
+          top: 10px;
+          left: 1px;
+          font-size: 18px;
+        }
+
+        .icon-email {
+          top: 10px;
+          font-size: 15px;
+        }
+
+        .icon-phone {
+          top: 5px;
+          left: 2px;
+          font-size: 24px;
+        }
+
+        .icon-birth {
+          top: 10px;
+          font-size: 15px;
+        }
+
+        span {
+          font-size: 14px;
+          color: #333;
+        }
       }
 
-      .basic-info-icon {
-        position: absolute;
-        color : #aaa;
-      }
+      .edit-button {
+        position: relative;
+        margin: 10px 0 0 1px;
+        width: 150px;
+        color: #5e5590;
+        font-size: 13px;
 
-      .icon-name {
-        top: 10px;
-        left: 1px;
-        font-size: 18px;
-      }
+        i {
+          position: absolute;
+          top: 2px;
+          font-size: 15px;
+        }
 
-      .icon-email {
-        top: 10px;
-        font-size: 15px;
-      }
+        span {
+          padding-left: 20px;
+        }
 
-      .icon-phone {
-        top: 5px;
-        left: 2px;
-        font-size: 24px;
-      }
-
-      .icon-birth {
-        top: 10px;
-        font-size: 15px;
-      }
-
-      span {
-        font-size: 14px;
-        color: #333;
+        &:hover {
+          cursor: pointer;
+          color: #291b79;
+          text-decoration: underline;
+        };
       }
     }
 
-    .edit-button {
-      position: relative;
-      margin: 10px 0 0 1px;
-      width: 150px;
-      color: #5e5590;
-      font-size: 13px;
+    div.basic-info-edit {
+      font-size: 14px;
 
-      i {
-        position: absolute;
-        top: 2px;
-        font-size: 15px;
+      .button-box {
+        margin-left: 195px;
       }
-
-      span {
-        padding-left: 20px;
-      }
-
-      &:hover {
-        cursor: pointer;
-        color: #291b79;
-        text-decoration: underline;
-      };
     }
-  }
-
-  div.basic-info-edit {
-    font-size: 14px;
-
-    .button-box {
-      margin-left: 195px;
-    }
-  }
-}  /* profile-basic-panel */
+  }  /* profile-basic-panel */
+}

@@ -42,9 +42,9 @@ div.profile-menu {
 .profile-panel {
   flex-grow: 1;
 
-  div.subpanel {
+  .subpanel {
 
-    div.profile-info-display {
+    .profile-info-display {
       position: relative;
 
       .profile-info {
@@ -93,7 +93,7 @@ div.profile-menu {
       }
     } /* profile-info-display */
 
-    div.profile-info-edit {
+    .profile-info-edit {
       div.form-group {
         margin: 0 0 15px 0;
       }
@@ -165,31 +165,35 @@ div.profile-menu {
       }
     }  /* profile-info-edit */
 
-    div.profile-info-box {
+    .profile-info-box {
       border-bottom: 1px solid #d5d5d5;
       padding-bottom: 10px;
       margin-bottom: 13px;
     }  /* profile-info-box */
 
-    div.add-item-button {
+    .add-item-button {
+      position: relative;
       display: inline-block;
       margin-bottom: 15px;
 
-      color: #2d2d8e;
+      color: #5e5590;
 
       .add-item-icon {
-        margin-right: 1px;
-        vertical-align: middle;
+        position: absolute;
+        top: 4px;
+        left: 4px;
       }
 
       span.add-item-text {
+        margin-left: 4px;
+        padding-left: 19px;
         font-size: 13px;
         vertical-align: middle;
       }
 
       &:hover {
         cursor: pointer;
-        color: #18184e;
+        color: #291b79;
       };
     }  /* add-item-button */
   }  /* subpanel */

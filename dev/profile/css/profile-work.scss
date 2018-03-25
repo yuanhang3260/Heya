@@ -1,0 +1,44 @@
+div.profile-panel {
+  div.profile-work-panel {
+    padding: 20px 25px 5px 25px;
+
+    div.profile-info-display {
+      .profile-icon {
+        top: 0px;
+        left: 0px;
+        font-size: 34px;
+      }
+    }
+
+    div.profile-info-edit {
+      div.form-group {
+        margin: 0 0 5px 0;
+      }
+
+      div.edit-year {
+        margin-top: -2px;
+        margin-bottom: 8px;
+
+        .profile-edit-select {
+          width: 65px;
+          height: 25px;
+          margin: 0;
+          padding: 0 0 0 5px;
+        }
+
+        .year-to {
+          margin: 0 5px 0 5px;
+          font-size: 12px;
+        }
+      }
+
+      label.profile-edit-label {
+        width: 75px;
+      }
+
+      div.button-box {
+        left: 210px;
+      }
+    }
+  } /* profile-work-panel */
+}

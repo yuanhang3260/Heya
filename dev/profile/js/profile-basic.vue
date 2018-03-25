@@ -54,7 +54,7 @@
       </div>
       <div class="button-box">
         <button v-on:click="clickSave" type="button" class="btn btn-success save-btn">Save Changes</button>
-        <button v-on:click="mode='display'" type="button" class="btn btn-light cancel-btn">Cancel</button>
+        <button v-on:click="clickCancel" type="button" class="btn btn-light cancel-btn">Cancel</button>
       </div>
       <div v-show="errMsg" class="alert alert-danger update-error-msg" role="alert">{{errMsg}}</div>
     </form>
@@ -108,14 +108,24 @@ export default {
   computed: profileBasic.computed,
   watch: {
     // Watch basicInfo propagated from parent, and update local data.
-    basicInfo: profileBasic.updateBasicInfo,
+    basicInfo: {
+      handler: function() {
+        this.name = this.basicInfo.name;
+        this.email = this.basicInfo.email;
+        this.phone = this.basicInfo.phone;
+        this.birth = this.basicInfo.birth;
+      },
+    }
   },
   methods: profileBasic.methods,
-  beforeMount: profileBasic.beforeMount,
+  // beforeCreate: function() { console.log("basic beforeCreate"); },
+  // created: function() { console.log("basic created"); },
+  // beforeMount: function() { console.log("basic beforeMount"); },
+  // mounted: function() { console.log("basic mounted"); },
 }
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "~heya/profile/css/profile-basic.scss"
 </style>

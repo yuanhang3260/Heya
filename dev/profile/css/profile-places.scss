@@ -1,0 +1,78 @@
+div.profile-panel {
+    div.profile-places-panel {
+    padding: 20px 25px 0 25px;
+
+    .critical-place-title {
+      padding-bottom: 5px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #d5d5d5;
+      color: gray;
+    }
+
+    div.add-item-button {
+      margin-bottom: 5px;
+      margin-left: 5px;
+
+      span.add-item-text {
+        padding-left: 21px;
+      }
+    }
+
+    div.profile-info-box {
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }  /* profile-info-box */
+
+    div.profile-info-display {
+      .profile-info {
+        p.profile-detail {
+          margin: 0;
+          font-size: 12px;
+          color: #777;
+        }
+      }
+    }
+
+    div.current-live {
+      div.profile-info-display {
+        .profile-info {
+          position: relative;;
+          margin-left: 40px;
+          min-height: 34px;
+        }
+
+        .profile-icon {
+          top: 0px;
+          left: 5px;
+          font-size: 33px;
+        }
+      }
+    }
+
+    div.hometown {
+      div.profile-info-display {
+        .profile-info {
+          position: relative;;
+          margin-left: 41px;
+          min-height: 35px;
+        }
+
+        .profile-icon {
+          top: 0px;
+          left: 1px;
+          font-size: 30px;
+        }
+      }
+    }
+
+    div.profile-info-edit {
+      div.form-group {
+        margin: 0 0 5px 0;
+      }
+
+      label.profile-edit-label {
+        width: 45px;
+      }
+    }
+  } /* profile-places-panel */
+}

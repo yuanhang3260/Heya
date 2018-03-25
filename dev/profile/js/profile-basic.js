@@ -1,17 +1,7 @@
-import utils from "./utils.js"
+import $ from "jquery";
 
-function syncData() {
-  if (this.basicInfo) {
-    this.name = this.basicInfo.name;
-    this.email = this.basicInfo.email;
-    this.phone = this.basicInfo.phone;
-    this.birth = this.basicInfo.birth;
-  }
-}
-
-function beforeMount() {
-  this.syncData();
-}
+import utils from "./utils.js";
+import popups from "heya/common/js//popups.js";
 
 function clickEdit() {
   this.nameInput = this.name;
@@ -28,58 +18,61 @@ function clickEdit() {
     this.birthDateInput = "--";
   }
 
+  this.errMsg = null;
   this.mode = "edit";
 }
 
+function clickCancel() {
+  this.mode = "display";
+}
+
 function clickSave() {
+  if (!this.emailInput) {
+    this.errMsg = "Email is required";
+    return;
+  }
+
   if (!this.debug) {
-    updateBasicInfo();
+    this.updateBasicInfo();
   } else {
-    if (this.name !== this.nameInput) {
-      this.name = this.nameInput;
-    }
-    if (this.email !== this.emailInput) {
-      this.email = this.emailInput;
-    }
-    if (this.phone !== this.phoneInput) {
-      this.phone = this.phoneInput;
-    }
-    let birth = utils.formatBirth(
-        this.birthYearInput, this.birthMonthInput, this.birthDateInput);
-    if (this.birth != birth) {
-      this.birth = birth;
-    }
+    this.updateModelData();
   }
 
   this.mode = "display";
 }
 
+function updateModelData() {
+  if (this.name !== this.nameInput) {
+    this.name = this.nameInput;
+  }
+  if (this.email !== this.emailInput) {
+    this.email = this.emailInput;
+  }
+  if (this.phone !== this.phoneInput) {
+    this.phone = this.phoneInput;
+  }
+  let birth = utils.formatBirth(
+      this.birthYearInput, this.birthMonthInput, this.birthDateInput);
+  if (this.birth != birth) {
+    this.birth = birth;
+  }
+}
+
 function updateBasicInfo() {
   var reqData = {
-    "uid" : +$("body").attr("uid"),
-    "username" : $("body").attr("user"),
+    "uid" : this.uid,
+    "username" : this.username,
     "section": "basic",
     "action": "update",
+    "name": this.nameInput,
+    "email": this.emailInput,
+    "phone": this.phoneInput,
+    "birth": JSON.stringify({
+      year: this.birthYearInput,
+      month: this.birthMonthInput,
+      date: this.birthDateInput,
+    })
   };
-
-  // Add form data to http request data.
-  var formData = this.generateData();
-  for (let key in formData) {
-    let value = formData[key];
-    if (Object.prototype.toString.call(value) === "[object Object]") {
-      reqData[key] = JSON.stringify(formData[key]);
-    } else {
-      reqData[key] = value;
-    }
-  }
-
-  if (!formData.email) {
-    this.showErrorMsg("Email required");
-    return;
-  }
-
-  // Disable the buttons.
-  this.disableButtom = true;
 
   // Process the form.
   var me = this;
@@ -93,13 +86,10 @@ function updateBasicInfo() {
     // log data to the console so we can see.
     console.log(data);
 
-    me.disableButtom = false;
     if (data.success) {
-      // me.hideErrorMsg();
-      // me.hide();
-      // me.display.displayData(formData);
+      me.updateModelData();
     } else {
-      // me.showErrorMsg(data.reason);
+      popups.alert("Update failed");
     }
   });
 }
@@ -109,14 +99,13 @@ export default {
   },
 
   methods: {
-    syncData: syncData,
     clickEdit: clickEdit,
     clickSave: clickSave,
+    clickCancel: clickCancel,
     updateBasicInfo: updateBasicInfo,
+    updateModelData: updateModelData,
     yearSelectOptions: utils.yearSelectOptions,
     monthSelectOptions: utils.monthSelectOptions,
     dateSelectOptions: utils.dateSelectOptions,
   },
-
-  beforeMount: beforeMount,
 }

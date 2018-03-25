@@ -9,6 +9,16 @@ function sortByYearDesc(x, y) {
   return y_end - x_end;
 }
 
+function googleSearchURL(target) {
+  return "https://www.google.com/search?q=" + target;
+}
+
+function googleMapURL(place) {
+  return "https://www.google.com/maps/search/" + place;
+}
+
 export default {
   sortByYearDesc: sortByYearDesc,
+  googleSearchURL: googleSearchURL,
+  googleMapURL: googleMapURL,
 }

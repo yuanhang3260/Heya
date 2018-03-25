@@ -161,10 +161,12 @@ public class UserInfoServlet extends HttpServlet {
       JSONObject yearJSON = new JSONObject(year);
       try {
         startYear = new Integer(yearJSON.getInt("start"));
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      try {
         endYear = new Integer(yearJSON.getInt("end"));
       } catch (JSONException e) {
-        startYear = null;
-        endYear = null;
         e.printStackTrace();
       }
     }
@@ -235,9 +237,7 @@ public class UserInfoServlet extends HttpServlet {
       } catch (JSONException e) {}
       try {
         endYear = new Integer(yearJSON.getInt("end"));
-      } catch (JSONException e) {
-        json_obj.put("reason", "invalid company id");
-      }
+      } catch (JSONException e) {}
     }
 
     String action = request.getParameter("action");

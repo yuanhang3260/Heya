@@ -25,7 +25,7 @@ module.exports = merge(baseWebpackConfig, {
   devtool: "source-map",
 
   devServer: {
-    contentBase: prodBase,
+    contentBase: loginBase,
     historyApiFallback: true,
     inline: true,
     progress: true,

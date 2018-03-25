@@ -20,7 +20,10 @@
     </ul>
   </div>
   <div class="profile-panel">
-    <profile-basic v-show="basicSelected" :uid="uid" :username="username" :basicInfo="basicUserInfo" :debug=debug></profile-basic>
+    <profile-basic v-show="basicSelected" :uid="uid" :username="username" :basicInfo="userinfo" :debug=debug></profile-basic>
+    <profile-education v-show="educationSelected" :uid="uid" :username="username" :educationInfo="userinfo.education" :debug=debug></profile-education>
+    <profile-work v-show="workSelected" :uid="uid" :username="username" :workInfo="userinfo.work" :debug=debug></profile-work>
+    <profile-places v-show="placesSelected" :uid="uid" :username="username" :placesInfo="userinfo.places" :debug=debug></profile-places>
   </div>
 </div>
 
@@ -30,20 +33,26 @@
 import profile from "./profile.js";
 
 import profileBasic from "./profile-basic.vue";
+import profileEducation from "./profile-education.vue";
+import profileWork from "./profile-work.vue";
+import profilePlaces from "./profile-places.vue";
 
 export default {
   name: "profile",
   components: {
     profileBasic,
+    profileEducation,
+    profileWork,
+    profilePlaces,
   },
   props: {
     uid: {
       type: Number,
-      default: -1,
+      default: null,
     },
     username: {
       type: String,
-      default: "default",
+      default: null,
     },
     debug: {
       type: Boolean,
@@ -58,7 +67,10 @@ export default {
   },
   computed: profile.computed,
   methods: profile.methods,
-  beforeMount: profile.beforeMount,
+  // beforeCreate: function() { console.log("main beforeCreate"); },
+  // created: function() { console.log("main created"); },
+  // beforeMount: function() { console.log("main beforeMount"); },
+  mounted: profile.mounted,
 }
 
 </script>

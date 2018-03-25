@@ -1,3 +1,4 @@
+import $ from "jquery";
 import debug from "heya/common/js/debug.js";
 
 function loadUserInfo() {
@@ -17,14 +18,14 @@ function loadUserInfo() {
     // log data to the console so we can see.
     console.log(data);
     if (data.success) {
-
+      me.userinfo = data;
     }
   });
 };
 
-function beforeMount() {
+function init() {
   if (!this.debug) {
-    loadUserInfo();
+    this.loadUserInfo();
   } else {
     this.userinfo = debug.userInfo();
     console.log(this.userinfo);
@@ -51,15 +52,6 @@ function otherSelected() {
   return this.selected === "other";
 }
 
-function basicUserInfo() {
-  return {
-    name: this.userinfo.name,
-    email: this.userinfo.email,
-    phone: this.userinfo.phone,
-    birth: this.userinfo.birth,
-  }
-}
-
 export default {
   computed: {
     basicSelected: basicSelected,
@@ -67,12 +59,12 @@ export default {
     workSelected: workSelected,
     placesSelected: placesSelected,
     otherSelected: otherSelected,
-    basicUserInfo: basicUserInfo,
   },
 
   methods: {
     loadUserInfo: loadUserInfo,
+    init: init,
   },
 
-  beforeMount: beforeMount,
+  mounted: init,
 }

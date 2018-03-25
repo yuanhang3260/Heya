@@ -4,17 +4,17 @@ import ImageClipper from "heya/common/js/image-clipper.js";
 
 function profileImageURL() {
   if (!this.debug) {
-    return format("/profileimage?uid={0}&type=profile", this.uid);
+    return format("profileimage?uid={0}&type=profile", this.uid);
   } else {
-    return "/img/profile.jpg";
+    return "img/profile.jpg";
   }
 }
 
 function coverImageURL() {
   if (!this.debug) {
-    return format("/profileimage?uid={0}&type=cover", this.uid);
+    return format("profileimage?uid={0}&type=cover", this.uid);
   } else {
-    return "/img/cover.jpg";
+    return "img/cover.jpg";
   }
 }
 

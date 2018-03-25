@@ -19,7 +19,8 @@ function loadUserInfo() {
     // log data to the console so we can see.
     console.log(data);
     if (data.success) {
-
+      me.loading = false;
+      me.refreshUserInfo(data);
     }
   });
 };
@@ -42,19 +43,11 @@ function isCurrentYear(year) {
 }
 
 function workVerb(year) {
-  return (isCurrentYear(year) ? "Works" : "Worked") + " at";
+  return ((year && isCurrentYear(year.end)) ? "Works" : "Worked") + " at";
 }
 
 function studyVerb(year) {
-  return (isCurrentYear(year) ? "Studies" : "Studied") + " at";
-}
-
-function googleSearchURL(target) {
-  return "https://www.google.com/search?q=" + target;
-}
-
-function googleMapURL(place) {
-  return "https://www.google.com/maps/search/" + place;
+  return ((year && isCurrentYear(year.end)) ? "Studies" : "Studied") + " at";
 }
 
 function created() {}
@@ -67,7 +60,7 @@ function beforeMount() {
       this.loading = false;
       this.refreshUserInfo(debug.userInfo());
     }
-  }, 2000);
+  }, 500);
 }
 
 export default {
@@ -77,8 +70,8 @@ export default {
     refreshUserInfo: refreshUserInfo,
     workVerb: workVerb,
     studyVerb: studyVerb,
-    googleSearchURL: googleSearchURL,
-    googleMapURL: googleMapURL,
+    googleSearchURL: utils.googleSearchURL,
+    googleMapURL: utils.googleMapURL,
   },
   created: created,
   beforeMount: beforeMount,
