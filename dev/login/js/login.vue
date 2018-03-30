@@ -24,9 +24,9 @@
     </div>
     <button v-bind:disabled="buttonDisabled" type="submit" class="btn btn-success login-btn mb-3">Log In</button>
   </form>
-  <form action="signup.html">
-    <button class="btn btn-success login-btn mb-2">New User</button>
-  </form>
+  <a href="signup.html">
+    <button type="button" class="btn btn-success login-btn mb-2">New User</button>
+  </a>
 </div>
 
 </template>
@@ -77,7 +77,7 @@ export default {
           window.location.assign("home");
         } else {
           // Show error message.
-          me.this.errMsg = data.error;
+          me.errMsg = data.error;
         }
       }).fail(function(data) {
         me.disableSubmit = false;

@@ -7,34 +7,22 @@
   <display-name>Heya</display-name>
   <description>Heya Configuration</description>
 
-  <servlet>
-    <servlet-name>HelloWorld</servlet-name>
-    <servlet-class>servlet.HelloServlet</servlet-class>
-  </servlet>
+  <!-- Filters -->
+  <filter>
+    <filter-name>UserLoginFilter</filter-name>
+    <filter-class>heya.filter.UserLoginFilter</filter-class>
+  </filter>
 
+  <!-- Filter Mappings -->
+  <filter-mapping>
+    <filter-name>UserLoginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!--  Define Servlets -->
   <servlet>
     <servlet-name>Signup</servlet-name>
     <servlet-class>servlet.SignupServlet</servlet-class>
-
-    <init-param>
-      <param-name>requireSSL</param-name>
-      <param-value>false</param-value>
-    </init-param>
-        
-    <init-param>
-      <param-name>dataDirectory</param-name>
-      <param-value>/home/hy/WebStorage/Heya/</param-value>
-    </init-param>
-
-    <init-param>
-      <param-name>jdbcDriverName</param-name> 
-      <param-value>com.mysql.jdbc.Driver</param-value>
-    </init-param>
-    
-    <init-param>
-      <param-name>jdbcURL</param-name> 
-      <param-value>jdbc:mysql:///Heya</param-value>
-    </init-param>
   </servlet>
 
   <servlet>
@@ -53,16 +41,6 @@
   </servlet>
 
   <servlet>
-    <servlet-name>Image</servlet-name>
-    <servlet-class>servlet.ImageServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>StaticFile</servlet-name>
-    <servlet-class>servlet.FileServlet</servlet-class>
-  </servlet>
-
-  <servlet>
     <servlet-name>UserInfo</servlet-name>
     <servlet-class>servlet.UserInfoServlet</servlet-class>
   </servlet>
@@ -76,14 +54,13 @@
       <file-size-threshold>5242880</file-size-threshold>
     </multipart-config>
   </servlet>
-    
 
-  <!-- SERVLETS MAPPINGS -->
-  <servlet-mapping>
-    <servlet-name>HelloWorld</servlet-name>
-    <url-pattern>/sayhello</url-pattern>
-  </servlet-mapping>
+  <servlet>
+    <servlet-name>StaticFile</servlet-name>
+    <servlet-class>servlet.FileServlet</servlet-class>
+  </servlet>
 
+  <!-- Servlet Mappsing -->
   <servlet-mapping>
     <servlet-name>Signup</servlet-name>
     <url-pattern>/signup</url-pattern>
@@ -105,11 +82,6 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>Image</servlet-name>
-    <url-pattern>/image</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
     <servlet-name>StaticFile</servlet-name>
     <url-pattern>/data/*</url-pattern>
   </servlet-mapping>
@@ -117,10 +89,6 @@
   <servlet-mapping>
     <servlet-name>UserInfo</servlet-name>
     <url-pattern>/getuserinfo</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>UserInfo</servlet-name>
     <url-pattern>/updateuserinfo</url-pattern>
   </servlet-mapping>
 
@@ -134,11 +102,14 @@
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
-  <login-config>
-    <auth-method>BASIC</auth-method>
-  </login-config>
+  <!-- App Context -->
+  <context-param>
+    <description>app root</description> 
+    <param-name>app-root</param-name> 
+    <param-value>/Heya</param-value>
+  </context-param>
 
-  <context-param> 
+  <context-param>
     <description>Location to store files</description> 
     <param-name>data-storage</param-name> 
     <param-value>/home/hy/WebStorage/Heya/</param-value> 
