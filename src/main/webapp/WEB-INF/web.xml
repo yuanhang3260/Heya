@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app version="3.0"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+  <display-name>Heya</display-name>
+  <description>Heya Configuration</description>
+
+  <!-- Filters -->
+  <filter>
+    <filter-name>UserLoginFilter</filter-name>
+    <filter-class>filter.UserLoginFilter</filter-class>
+  </filter>
+
+  <!-- Filter Mappings -->
+  <filter-mapping>
+    <filter-name>UserLoginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!--  Define Servlets -->
+  <servlet>
+    <servlet-name>Signup</servlet-name>
+    <servlet-class>servlet.SignupServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Home</servlet-name>
+    <servlet-class>servlet.HomeServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Profile</servlet-name>
+    <servlet-class>servlet.ProfileServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>servlet.LoginServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>UserInfo</servlet-name>
+    <servlet-class>servlet.UserInfoServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ProfileImage</servlet-name>
+    <servlet-class>servlet.ProfileImageServlet</servlet-class>
+    <multipart-config>
+      <max-file-size>10485760</max-file-size>
+      <max-request-size>20971520</max-request-size>
+      <file-size-threshold>5242880</file-size-threshold>
+    </multipart-config>
+  </servlet>
+
+  <servlet>
+    <servlet-name>StaticFile</servlet-name>
+    <servlet-class>servlet.FileServlet</servlet-class>
+  </servlet>
+
+  <!-- Servlet Mappsing -->
+  <servlet-mapping>
+    <servlet-name>Signup</servlet-name>
+    <url-pattern>/signup</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Home</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Profile</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>StaticFile</servlet-name>
+    <url-pattern>/data/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UserInfo</servlet-name>
+    <url-pattern>/getuserinfo</url-pattern>
+    <url-pattern>/updateuserinfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ProfileImage</servlet-name>
+    <url-pattern>/profileimage</url-pattern>
+  </servlet-mapping>
+
+  <!-- CONFIG -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <!-- App Context -->
+  <context-param>
+    <description>app root</description> 
+    <param-name>app-root</param-name> 
+    <param-value>/Heya</param-value>
+  </context-param>
+
+  <context-param>
+    <description>Location to store files</description> 
+    <param-name>data-storage</param-name> 
+    <param-value>/home/hy/WebStorage/Heya/</param-value> 
+  </context-param>
+</web-app>
