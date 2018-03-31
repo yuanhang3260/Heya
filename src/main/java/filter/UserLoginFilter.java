@@ -14,6 +14,7 @@ public class UserLoginFilter implements Filter {
     "/login",
     "/signup.html",
     "/signup",
+    "/test.html",
     "/heyatest"
   ));
 

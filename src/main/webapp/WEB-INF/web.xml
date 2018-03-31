@@ -21,6 +21,16 @@
 
   <!--  Define Servlets -->
   <servlet>
+    <servlet-name>springDispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring/springmvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
     <servlet-name>Signup</servlet-name>
     <servlet-class>servlet.SignupServlet</servlet-class>
   </servlet>
@@ -61,6 +71,11 @@
   </servlet>
 
   <!-- Servlet Mappsing -->
+  <servlet-mapping>
+    <servlet-name>springDispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>Signup</servlet-name>
     <url-pattern>/signup</url-pattern>
