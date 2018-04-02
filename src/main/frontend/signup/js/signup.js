@@ -119,20 +119,20 @@ function doSubmit() {
 
 function signup() {
   let formData = {
-      "username" : this.username,
-      "email" : this.email,
-      "password" : this.password,
+    "username" : this.username,
+    "email" : this.email,
+    "password" : this.password,
   };
 
   this.disableSubmit = true;
 
   let me = this;
   $.ajax({
-      type : "POST",
-      url : "signup",
-      data : formData,
-      dataType : "json",
-      encode : true,
+    type : "POST",
+    url : "signup/new",
+    data : formData,
+    dataType : "json",
+    encode : true,
   }).done(function(data) {
     // log data to the console so we can see.
     console.log(data);

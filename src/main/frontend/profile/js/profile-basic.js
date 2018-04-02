@@ -60,9 +60,6 @@ function updateModelData() {
 
 function updateBasicInfo() {
   var reqData = {
-    "uid" : this.uid,
-    "username" : this.username,
-    "section": "basic",
     "action": "update",
     "name": this.nameInput,
     "email": this.emailInput,
@@ -78,7 +75,7 @@ function updateBasicInfo() {
   var me = this;
   $.ajax({
     type : "POST",
-    url : "updateuserinfo",
+    url : "userinfo/" + me.username + "/basic",
     data : reqData,
     dataType : "json",
     encode : true,

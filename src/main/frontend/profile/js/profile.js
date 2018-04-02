@@ -2,23 +2,17 @@ import $ from "jquery";
 import debug from "heya/common/js/debug.js";
 
 function loadUserInfo() {
-  var formData = {
-    "uid": this.uid,
-    "username": this.username,
-  };
-
   var me = this;
   $.ajax({
       type : "GET",
-      url : "getuserinfo",
-      data : formData,
+      url : "userinfo/" + me.username,
       dataType : "json",
       encode : true,
   }).done(function(data) {
     // log data to the console so we can see.
     console.log(data);
     if (data.success) {
-      me.userinfo = data;
+      me.userinfo = data.result;
     }
   });
 };

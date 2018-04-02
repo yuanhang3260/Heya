@@ -44,33 +44,30 @@ function updateModelData(education) {
 
 function updateSchoolInfo(education) {
   // Send AJAX to update school info.
-  var reqData = {
-    "uid" : this.uid,
-    "username" : this.username,
-    "section": "education",
-    "action": "update",
-    "sid": education.sid,
+  var formData = {
+    "_method": "PUT",
   };
-
   if (education.school) {
-    reqData["school"] = education.school;
+    formData["school"] = education.school;
   }
   if (education.major) {
-    reqData["major"] = education.major;
+    formData["major"] = education.major;
   }
-  if (education.year && (education.year.start || education.year.end)) {
-    reqData["year"] = JSON.stringify({
-      start: education.year.start,
-      end: education.year.end,
-    });
+  if (education.year) {
+    if (education.year.start && !isNaN(education.year.start)) {
+      formData["startYear"] = education.year.start;
+    }
+    if (education.year.end && !isNaN(education.year.end)) {
+      formData["endYear"] = education.year.end;
+    }
   }
 
   // Process the form.
   var me = this;
   $.ajax({
     type : "POST",
-    url : "updateuserinfo",
-    data : reqData,
+    url : "userinfo/" + me.username + "/education/" + this.sid,
+    data : formData,
     dataType : "json",
     encode : true,
   }).done(function(data) {
@@ -102,22 +99,15 @@ function deleteSchool() {
 }
 
 function doDeleteSchool() {
-  var reqData = {
-    "uid" : this.uid,
-    "username" : this.username,
-    "section": "education",
-    "action": "delete",
-    "sid": this.sid,
+  var formData = {
+    "_method": "DELETE",  // Restful API for spring backend
   };
 
-  console.log(reqData);
-
-  // Process the form.
   var me = this;
   $.ajax({
     type : "POST",
-    url : "updateuserinfo",
-    data : reqData,
+    url : "userinfo/" + me.username + "/education/" + this.sid,
+    data: formData,
     dataType : "json",
     encode : true,
   }).done(function(data) {

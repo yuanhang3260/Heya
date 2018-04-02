@@ -9,7 +9,7 @@
       <p class="profile-detail">
         <span v-if="hasValidYearInfo">Class of</span>
         <span v-if="hasValidYearInfo" class="year-info"> {{yearEnd}}</span>
-        <span v-if="hasValidYearInfo"> - </span>
+        <span v-if="hasValidYearInfo && major"> - </span>
         <span v-if="major" class="major-info">{{major}}</span>
       </p>
     </div>

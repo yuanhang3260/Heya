@@ -48,33 +48,31 @@ function updateModelData(work) {
 
 function updateCompanyInfo(work) {
   // Send AJAX to update company info.
-  var reqData = {
-    "uid" : this.uid,
-    "username" : this.username,
-    "section": "work",
-    "action": "update",
-    "cid": work.cid,
+  var formData = {
+    "_method": "PUT",
   };
 
   if (work.company) {
-    reqData["company"] = work.company;
+    formData["company"] = work.company;
   }
   if (work.position) {
-    reqData["position"] = work.position;
+    formData["position"] = work.position;
   }
-  if (work.year && (work.year.start || work.year.end)) {
-    reqData["year"] = JSON.stringify({
-      start: work.year.start,
-      end: work.year.end,
-    });
+  if (work.year) {
+    if (work.year.start && !isNaN(work.year.start)) {
+      formData["startYear"] = work.year.start;
+    }
+    if (work.year.end && !isNaN(work.year.end)) {
+      formData["endYear"] = work.year.end;
+    }
   }
 
   // Process the form.
   var me = this;
   $.ajax({
     type : "POST",
-    url : "updateuserinfo",
-    data : reqData,
+    url : "userinfo/" + me.username + "/work/" + this.cid,
+    data : formData,
     dataType : "json",
     encode : true,
   }).done(function(data) {
@@ -106,22 +104,18 @@ function deleteCompany() {
 }
 
 function doDeleteCompany() {
-  var reqData = {
-    "uid" : this.uid,
-    "username" : this.username,
-    "section": "work",
-    "action": "delete",
-    "cid": this.cid,
+  var formData = {
+    "_method": "DELETE",  // Restful API for spring backend
   };
 
-  console.log(reqData);
+  console.log(formData);
 
   // Process the form.
   var me = this;
   $.ajax({
     type : "POST",
-    url : "updateuserinfo",
-    data : reqData,
+    url : "userinfo/" + me.username + "/work/" + this.cid,
+    data : formData,
     dataType : "json",
     encode : true,
   }).done(function(data) {

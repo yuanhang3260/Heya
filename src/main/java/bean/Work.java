@@ -161,28 +161,28 @@ public class Work {
     this.cid = cid;
   }
 
-  public String getcompany() {
+  public String getCompany() {
     return this.company;
   }
   public void setCompany(String company) {
     this.company = company;
   }
 
-  public String getposition() {
+  public String getPosition() {
     return this.position;
   }
   public void setPosition(String position) {
     this.position = position;
   }
 
-  public int getStartYear() {
+  public Integer getStartYear() {
     return this.startYear;
   }
   public void setStartYear(Integer year) {
     this.startYear = year;
   }
 
-  public int getEndYear() {
+  public Integer getEndYear() {
     return this.endYear;
   }
   public void setEndYear(Integer year) {

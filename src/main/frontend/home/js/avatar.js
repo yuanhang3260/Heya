@@ -1,10 +1,9 @@
 import $ from "jquery";
-import format from "string-format";
 import ImageClipper from "heya/common/js/image-clipper.js";
 
 function profileImageURL() {
   if (!this.debug) {
-    return format("profileimage?uid={0}&type=profile", this.uid);
+    return "profileimage/profile/" + this.uid;
   } else {
     return "dist/img/profile.jpg";
   }
@@ -12,7 +11,7 @@ function profileImageURL() {
 
 function coverImageURL() {
   if (!this.debug) {
-    return format("profileimage?uid={0}&type=cover", this.uid);
+    return "profileimage/cover/" + this.uid;
   } else {
     return "dist/img/cover.jpg";
   }
@@ -34,15 +33,12 @@ function clickProfileImage() {
 
 function updateProfileImage(filename, blob) {
   var formData = new FormData();
-  formData.append("uid", this.uid);
-  formData.append("action", "update");
-  formData.append("type", "profile");
   formData.append("filename", filename);
   formData.append("imagedata", blob);
 
   $.ajax({
     type: "POST",
-    url: "profileimage",
+    url: "profileimage/profile/" + this.uid,
     data: formData,
     processData: false,
     contentType: false,

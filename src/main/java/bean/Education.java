@@ -176,14 +176,14 @@ public class Education {
     this.major = major;
   }
 
-  public int getStartYear() {
+  public Integer getStartYear() {
     return this.startYear;
   }
   public void setStartYear(Integer year) {
     this.startYear = year;
   }
 
-  public int getEndYear() {
+  public Integer getEndYear() {
     return this.endYear;
   }
   public void setEndYear(Integer year) {

@@ -8,14 +8,19 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class UserLoginFilter implements Filter {
+  private static final Set<String> ALLOWED_URIS_STATIC =
+      new HashSet<>(Arrays.asList(
+        "/",
+        "/index.html",
+        "/signup.html",
+        "/test.html"
+      ));
+
   private static final Set<String> ALLOWED_URIS = new HashSet<>(Arrays.asList(
-    "/",
-    "/index.html",
-    "/login",
-    "/signup.html",
-    "/signup",
-    "/test.html",
-    "/heyatest"
+      "/login",
+      "/signup",
+      "/dist",
+      "/heyatest"
   ));
 
   @Override
@@ -30,7 +35,7 @@ public class UserLoginFilter implements Filter {
       uri = uri.substring(appRoot.length());
     }
 
-    if (ALLOWED_URIS.contains(uri) || uri.startsWith("/dist")) {
+    if (allowURI(uri)) {
       chain.doFilter(request, response);
       return;
     }
@@ -44,6 +49,18 @@ public class UserLoginFilter implements Filter {
     }
 
     chain.doFilter(request, response);
+  }
+
+  private boolean allowURI(String uri) {
+    for (String allow : ALLOWED_URIS) {
+      if (uri.startsWith(allow)) {
+        return true;
+      }
+    }
+    if (ALLOWED_URIS_STATIC.contains(uri)) {
+      return true;
+    }
+    return false;
   }
 
   @Override

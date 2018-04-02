@@ -1,7 +1,7 @@
 <template>
 
 <div class="subpanel profile-work-panel">
-  <profile-work-box v-for="work in workInfo" :key="work.cid" :uid="uid" :username="username" :initData="work" :debug="debug" v-on:delete-company="handleDeleteCompany"></profile-work-box>
+  <profile-work-box v-for="work in sortedCompanies" :key="work.cid" :uid="uid" :username="username" :initData="work" :debug="debug" v-on:delete-company="handleDeleteCompany"></profile-work-box>
 
   <div v-show="!addingNew" class="add-new-item">
     <div v-on:click="addingNew=true" class="add-item-button">
@@ -50,6 +50,7 @@ export default {
     }
   },
 
+  computed: profileWork.computed, 
   methods: profileWork.methods,
 }
 

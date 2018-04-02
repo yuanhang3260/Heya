@@ -3,16 +3,11 @@ import utils from "heya/common/js/utils.js"
 import debug from "heya/common/js/debug.js"
 
 function loadUserInfo() {
-  var formData = {
-    "uid" : this.uid,
-  };
-
   // Process the form.
   var me = this;
   $.ajax({
       type: "GET",
-      url: "getuserinfo",
-      data: formData,
+      url: "userinfo/" + me.username,
       dataType: "json",
       encode: true,
   }).done(function(data) {
@@ -20,7 +15,7 @@ function loadUserInfo() {
     console.log(data);
     if (data.success) {
       me.loading = false;
-      me.refreshUserInfo(data);
+      me.refreshUserInfo(data.result);
     }
   });
 };

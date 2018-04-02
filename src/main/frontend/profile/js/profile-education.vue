@@ -1,7 +1,7 @@
 <template>
 
 <div class="subpanel profile-education-panel">
-  <profile-education-box v-for="education in educationInfo" :key="education.sid" :uid="uid" :username="username" :initData="education" :debug="debug" v-on:delete-school="handleDeleteSchool"></profile-education-box>
+  <profile-education-box v-for="education in sortedSchools" :key="education.sid" :uid="uid" :username="username" :initData="education" :debug="debug" v-on:delete-school="handleDeleteSchool"></profile-education-box>
 
   <div v-show="!addingNew" class="add-new-item">
     <div v-on:click="addingNew=true" class="add-item-button">
@@ -50,6 +50,7 @@ export default {
     }
   },
 
+  computed: profileEducation.computed,
   methods: profileEducation.methods,
 }
 

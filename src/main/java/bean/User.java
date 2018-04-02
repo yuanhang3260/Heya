@@ -83,6 +83,47 @@ public class User {
     }
   }
 
+  public static User GetUserByUid(int uid) {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rset = null;
+    try {
+      conn = DBManager.getDBConnection();
+      conn.setAutoCommit(false);
+
+      String sqlStr = "SELECT * from Users where uid = ?";
+      stmt = conn.prepareStatement(sqlStr);
+      stmt.setInt(1, uid);
+  
+      rset = stmt.executeQuery();
+      if (rset.next()) {
+        User user = new User();
+        user.setUid(rset.getInt("uid"));
+        user.setUsername(rset.getString("username"));
+        user.setEmail(rset.getString("email"));
+        user.setPassword(rset.getString("password"));
+        return user;
+      } else {
+        return null;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return null;
+    } finally {
+      try {
+        if (rset != null) {
+          rset.close();
+        }
+        if (stmt != null) {
+          stmt.close();
+        }
+      }
+      catch (SQLException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
   public boolean getUserDetailInfo() {
     Connection conn = null;
     PreparedStatement stmt = null;
@@ -302,6 +343,11 @@ public class User {
   }
 
   // ----------------------------------------------------------------------- //
+  public int addSchoolInfo(Education education) {
+    return addSchoolInfo(education.getSchool(), education.getMajor(),
+                         education.getStartYear(), education.getEndYear());
+  }
+
   public int addSchoolInfo(String school, String major,
                            Integer startYear, Integer endYear) {
     if (this.education == null) {
@@ -357,6 +403,12 @@ public class User {
         ex.printStackTrace();
       }
     }
+  }
+
+  public boolean updateSchoolInfo(Integer sid, Education education) {
+    return updateSchoolInfo(sid,
+                            education.getSchool(), education.getMajor(),
+                            education.getStartYear(), education.getEndYear());
   }
 
   public boolean updateSchoolInfo(int sid, String school, String major,
@@ -481,6 +533,11 @@ public class User {
   }
 
   // ----------------------------------------------------------------------- //
+  public int addCompanyInfo(Work work) {
+    return addCompanyInfo(work.getCompany(), work.getPosition(),
+                          work.getStartYear(), work.getEndYear());
+  }
+
   public int addCompanyInfo(String company, String position,
                             Integer startYear, Integer endYear) {
     if (this.work == null) {
@@ -536,6 +593,11 @@ public class User {
         ex.printStackTrace();
       }
     }
+  }
+
+  public boolean updateCompanyInfo(int cid, Work work) {
+    return updateCompanyInfo(cid, work.getCompany(), work.getPosition(),
+                                  work.getStartYear(), work.getEndYear());
   }
 
   public boolean updateCompanyInfo(int cid, String company, String position,
@@ -660,6 +722,11 @@ public class User {
   }
 
   // ----------------------------------------------------------------------- //
+  public int addPlaceInfo(Place place) {
+    return addPlaceInfo(place.getPlace(),
+                        place.getCurrent(), place.getHometown());
+  }
+
   public int addPlaceInfo(String place, boolean current, boolean hometown) {
     if (this.places == null) {
       this.places = new ArrayList<Place>();
@@ -713,6 +780,11 @@ public class User {
         ex.printStackTrace();
       }
     }
+  }
+
+  public boolean updatePlaceInfo(int pid, Place place) {
+    return updatePlaceInfo(pid, place.getPlace(),
+                           place.getCurrent(), place.getHometown());
   }
 
   public boolean updatePlaceInfo(int pid, String place,
@@ -883,7 +955,7 @@ public class User {
     return this.uid;
   }
 
-  public void setUid(int id) {
+  public void setUid(int uid) {
     this.uid = uid;
   }
 

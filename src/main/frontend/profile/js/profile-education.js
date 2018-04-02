@@ -1,4 +1,5 @@
 import $ from "jquery";
+import utils from "heya/common/js/utils.js"
 
 function handleDeleteSchool(payload) {
   let index = -1;
@@ -26,32 +27,28 @@ function addNewSchool(education) {
   }
 
   // Send AJAX to update school info.
-  var reqData = {
-    "uid" : this.uid,
-    "username" : this.username,
-    "section": "education",
-    "action": "add",
-  };
-
+  var formData = {};
   if (education.school) {
-    reqData["school"] = education.school;
+    formData["school"] = education.school;
   }
   if (education.major) {
-    reqData["major"] = education.major;
+    formData["major"] = education.major;
   }
-  if (education.year && (education.year.start || education.year.end)) {
-    reqData["year"] = JSON.stringify({
-      start: education.year.start,
-      end: education.year.end,
-    });
+  if (education.year) {
+    if (education.year.start && !isNaN(education.year.start)) {
+      formData["startYear"] = education.year.start;
+    }
+    if (education.year.end && !isNaN(education.year.end)) {
+      formData["endYear"] = education.year.end;
+    }
   }
 
   // Process the form.
   var me = this;
   $.ajax({
     type : "POST",
-    url : "updateuserinfo",
-    data : reqData,
+    url : "userinfo/" + me.username + "/education",
+    data : formData,
     dataType : "json",
     encode : true,
   }).done(function(data) {
@@ -59,16 +56,26 @@ function addNewSchool(education) {
     console.log(data);
 
     if (data.success) {
-      education.sid = data.schoolId;
+      education.sid = data.result.schoolId;
       me.educationInfo.push(education);
     } else {
       popups.alert("Update failed");
     }
     me.addingNew = false;
+  }).fail(function() {
+    popups.alert("Update failed");
   });
 }
 
+function sortedSchools() {
+  return this.educationInfo.sort(utils.sortByYearDesc);
+}
+
 export default {
+  computed: {
+    sortedSchools,
+  },
+
   methods: {
     handleDeleteSchool: handleDeleteSchool,
     cancelEdit: cancelEdit,

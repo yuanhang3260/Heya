@@ -1,4 +1,5 @@
 import $ from "jquery";
+import utils from "heya/common/js/utils.js"
 
 function handleDeleteCompany(payload) {
   let index = -1;
@@ -26,34 +27,28 @@ function addNewCompany(work) {
   }
 
   // Send AJAX to update company info.
-  var reqData = {
-    "uid" : this.uid,
-    "username" : this.username,
-    "section": "work",
-    "action": "add",
-  };
-
+  var formData = {};
   if (work.company) {
-    reqData["company"] = work.company;
+    formData["company"] = work.company;
   }
   if (work.position) {
-    reqData["position"] = work.position;
+    formData["position"] = work.position;
   }
-  if (work.year && (work.year.start || work.year.end)) {
-    reqData["year"] = JSON.stringify({
-      start: work.year.start,
-      end: work.year.end,
-    });
+  if (work.year) {
+    if (work.year.start && !isNaN(work.year.start)) {
+      formData["startYear"] = work.year.start;
+    }
+    if (work.year.end && !isNaN(work.year.end)) {
+      formData["endYear"] = work.year.end;
+    }
   }
-
-  console.log(reqData);
 
   // Process the form.
   var me = this;
   $.ajax({
     type : "POST",
-    url : "updateuserinfo",
-    data : reqData,
+    url : "userinfo/" + me.username + "/work",
+    data : formData,
     dataType : "json",
     encode : true,
   }).done(function(data) {
@@ -70,7 +65,15 @@ function addNewCompany(work) {
   });
 }
 
+function sortedCompanies() {
+  return this.workInfo.sort(utils.sortByYearDesc);
+}
+
 export default {
+  computed: {
+    sortedCompanies,
+  },
+
   methods: {
     handleDeleteCompany: handleDeleteCompany,
     cancelEdit: cancelEdit,
