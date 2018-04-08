@@ -78,4 +78,15 @@
     <param-name>data-storage</param-name> 
     <param-value>/home/hy/WebStorage/Heya/</param-value> 
   </context-param>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring/applicationContext.xml</param-value>
+  </context-param>
+
+  <!-- Listeners -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
 </web-app>
