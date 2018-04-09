@@ -56,7 +56,7 @@ function addNewCompany(work) {
     console.log(data);
 
     if (data.success) {
-      work.cid = data.companyId;
+      work.cid = data.result.companyId;
       me.workInfo.push(work);
     } else {
       popups.alert("Update failed");

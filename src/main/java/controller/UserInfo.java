@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import java.util.GregorianCalendar;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,11 +23,15 @@ import bean.Education;
 import bean.Place;
 import bean.Work;
 import bean.User;
+import dao.UserDAO;
 import util.JsonUtils;
 
 @Controller
 @RequestMapping("/userinfo/{username}")
 public class UserInfo {
+
+  @Autowired
+  UserDAO userDAO;
 
   /**
    *  GET userinfo handler.
@@ -39,11 +44,11 @@ public class UserInfo {
     if (username == null) {
       user = (User)session.getAttribute("user");
     } else {
-      user = User.GetUserByUsername(username);
+      user = this.userDAO.GetUserByUsername(username);
     }
 
     if (user != null) {
-      user.getUserDetailInfo();
+      this.userDAO.getUserDetailInfo(user);
       JsonUtils.WriteJSONResponse(response, user.toJSONObject());
     } else {
       JsonUtils.WriteJSONResponse(response, false, "Could not get user");
@@ -60,22 +65,18 @@ public class UserInfo {
   }
 
   @RequestMapping(value="/basic", method=RequestMethod.POST)
-  public void basicUserInfo(HttpServletRequest request,
-                            HttpServletResponse response,
-                            HttpSession session,
-                            @PathVariable("username") String username,
-                            @RequestParam("name") String name,
-                            @RequestParam("email") String email,
-                            @RequestParam("phone") String phone,
-                            @RequestParam("birth") JSONObject birthJSON) {
+  public void basicUserInfo(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      HttpSession session,
+      @PathVariable("username") String username,
+      @RequestParam(value="email", required=true) String email,
+      @RequestParam(value="name", required=false) String name,
+      @RequestParam(value="phone", required=false) String phone,
+      @RequestParam(value="birth", required=false) JSONObject birthJSON) {
     User user = getAuthorizedUser(session, username);
     if (user == null) {
       JsonUtils.WriteJSONResponse(response, false, "permission denied");
-      return;
-    }
-
-    if (email == null) {
-      JsonUtils.WriteJSONResponse(response, false, "email is required");
       return;
     }
 
@@ -90,7 +91,8 @@ public class UserInfo {
       }
     }
 
-    if (user.updateUserBasicInfo(name, email, phone, birth)) {
+    if (this.userDAO.updateUserBasicInfo(
+          user.getUid(), name, email, phone, birth)) {
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false, "server data update error");
@@ -114,7 +116,7 @@ public class UserInfo {
     }
 
     Map<String, Object> result = new HashMap<String, Object>();
-    int sid = user.addSchoolInfo(education);
+    int sid = this.userDAO.addSchoolInfo(user, education);
     if (sid >= 0) {
       result.put("schoolId", (Integer)sid);
       JsonUtils.WriteJSONResponse(response, result);
@@ -145,7 +147,7 @@ public class UserInfo {
       return;
     }
 
-    if (user.updateSchoolInfo(sid, education)) {
+    if (this.userDAO.updateSchoolInfo(user, sid, education)) {
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false,
@@ -169,7 +171,7 @@ public class UserInfo {
       return;
     }
 
-    if (user.deleteSchoolInfo(sid)) {
+    if (this.userDAO.deleteSchoolInfo(user, sid)) {
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false, "Failed to delete school");
@@ -193,7 +195,7 @@ public class UserInfo {
     }
 
     Map<String, Object> result = new HashMap<String, Object>();
-    int cid = user.addCompanyInfo(work);
+    int cid = this.userDAO.addCompanyInfo(user, work);
     if (cid >= 0) {
       result.put("companyId", (Integer)cid);
       JsonUtils.WriteJSONResponse(response, result);
@@ -224,7 +226,7 @@ public class UserInfo {
       return;
     }
 
-    if (user.updateCompanyInfo(cid, work)) {
+    if (this.userDAO.updateCompanyInfo(user, cid, work)) {
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false,
@@ -248,7 +250,7 @@ public class UserInfo {
       return;
     }
 
-    if (user.deleteCompanyInfo(cid)) {
+    if (this.userDAO.deleteCompanyInfo(user, cid)) {
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false, "Failed to delete company");
@@ -272,7 +274,7 @@ public class UserInfo {
     }
 
     Map<String, Object> result = new HashMap<String, Object>();
-    int pid = user.addPlaceInfo(place);
+    int pid = this.userDAO.addPlaceInfo(user, place);
     if (pid >= 0) {
       result.put("placeId", (Integer)pid);
       JsonUtils.WriteJSONResponse(response, result);
@@ -303,7 +305,7 @@ public class UserInfo {
       return;
     }
 
-    if (user.updatePlaceInfo(pid, place)) {
+    if (this.userDAO.updatePlaceInfo(user, pid, place)) {
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false,
@@ -327,7 +329,7 @@ public class UserInfo {
       return;
     }
 
-    if (user.deletePlaceInfo(pid)) {
+    if (this.userDAO.deletePlaceInfo(user, pid)) {
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false, "Failed to delete place");

@@ -21,8 +21,12 @@ function loadUserInfo() {
 };
 
 function refreshUserInfo(info) {
-  this.work = info.work.sort(utils.sortByYearDesc);
-  this.education = info.education.sort(utils.sortByYearDesc);
+  if (info.work) {
+    this.work = info.work.sort(utils.sortByYearDesc);
+  }
+  if (info.education) {
+    this.education = info.education.sort(utils.sortByYearDesc);
+  }
   for (let place of info.places) {
     if (place.current) {
       this.live = place;

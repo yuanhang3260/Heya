@@ -14,20 +14,23 @@
   User user;
   String username = request.getParameter("username");
   int uid;
-  if (username == null) {
-    user = viewer;
-    username = viewer_username;
-    uid = viewer_uid;
-  } else {
-    user = User.GetUserByUsername(username);
-    if (user != null) {
-      uid = user.getUid();
-    } else {
-      user = viewer;
-      username = viewer_username;
-      uid = viewer_uid;
-    }
-  }
+  user = viewer;
+  username = viewer_username;
+  uid = viewer_uid;
+  // if (username == null) {
+  //   user = viewer;
+  //   username = viewer_username;
+  //   uid = viewer_uid;
+  // } else {
+  //   user = User.GetUserByUsername(username);
+  //   if (user != null) {
+  //     uid = user.getUid();
+  //   } else {
+  //     user = viewer;
+  //     username = viewer_username;
+  //     uid = viewer_uid;
+  //   }
+  // }
 %>
 
 <html lang="en">

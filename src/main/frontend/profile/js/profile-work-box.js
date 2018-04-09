@@ -112,6 +112,7 @@ function doDeleteCompany() {
 
   // Process the form.
   var me = this;
+  console.log(this.cid);
   $.ajax({
     type : "POST",
     url : "userinfo/" + me.username + "/work/" + this.cid,

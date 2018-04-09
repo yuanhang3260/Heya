@@ -3,18 +3,24 @@ package controller;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import application.SpringUtils;
 import bean.User;
+import dao.UserDAO;
 import util.JsonUtils;
 
 @Controller
 public class Signup {
   private static final String CREATE_USER_ERROR =
       "Server error, failed to create new user";
+
+  @Autowired
+  UserDAO userDAO;
 
   @RequestMapping(value="/signup/new", method=RequestMethod.POST)
   public void SignupHandler(HttpServletRequest request,
@@ -23,13 +29,13 @@ public class Signup {
     boolean success = false;
     String err = null;
 
-    if (User.GetUserByUsername(user.getUsername()) != null) {
+    if (this.userDAO.GetUserByUsername(user.getUsername()) != null) {
       err = "Username already used";
       JsonUtils.WriteJSONResponse(response, success, err);
       return;
     }
 
-    int uid = User.getNextUid();
+    int uid = this.userDAO.getNextUid();
     if (uid < 0) {
       err = CREATE_USER_ERROR;
       JsonUtils.WriteJSONResponse(response, success, err);
@@ -37,14 +43,14 @@ public class Signup {
     }
 
     // TODO: Encrypt password!
-    // TODO: Rollback on fail?
-    if (User.addNewUser(uid, user.getUsername(),
-                        user.getEmail(), user.getPassword()) &&
-        createUserDataDirectory(request, uid)) {
+    if (createUserDataDirectory(request, uid) &&
+        this.userDAO.addNewUser(uid, user.getUsername(),
+                                user.getEmail(), user.getPassword())) {
       // Create new user successfully. Create session and return.
       request.getSession().setAttribute("user", user);
       success = true;
     } else {
+      // TODO: Rollback the user directory on fail?
       err = CREATE_USER_ERROR;
     }
 
