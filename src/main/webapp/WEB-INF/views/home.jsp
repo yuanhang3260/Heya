@@ -5,29 +5,32 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%
-  // Get Viewer from session (current active user).
+// Get Viewer from session (current active user).
   User viewer = (User)session.getAttribute("user");
   String viewer_username = viewer.getUsername();
-  int viewer_uid = viewer.getUid();
+  String viewer_uid = viewer.getUid();
 
   // Find user of this page (true owner). If not specified, then user is viewer.
   User user;
   String username = request.getParameter("username");
-  int uid;
-  if (username == null) {
-    user = viewer;
-    username = viewer_username;
-    uid = viewer_uid;
-  } else {
-    user = User.GetUserByUsername(username);
-    if (user != null) {
-      uid = user.getUid();
-    } else {
-      user = viewer;
-      username = viewer_username;
-      uid = viewer_uid;
-    }
-  }
+  String uid;
+  user = viewer;
+  username = viewer_username;
+  uid = viewer_uid;
+  // if (username == null) {
+  //   user = viewer;
+  //   username = viewer_username;
+  //   uid = viewer_uid;
+  // } else {
+  //   user = User.GetUserByUsername(username);
+  //   if (user != null) {
+  //     uid = user.getUid();
+  //   } else {
+  //     user = viewer;
+  //     username = viewer_username;
+  //     uid = viewer_uid;
+  //   }
+  // }
 %>
 
 <html lang="en">
@@ -41,8 +44,8 @@
 
 <div class="home-main-container">
   <div class="home-left-bar">
-    <avatar id="avatar" :uid=<%= uid %> :username="'<%= username %>'"></avatar>
-    <user-info id="userinfo" :uid=<%= uid %> :username="'<%= username %>'"></user-info>
+    <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'"></avatar>
+    <user-info id="userinfo" :uid="'<%= uid %>'" :username="'<%= username %>'"></user-info>
   </div>
 </div>
 

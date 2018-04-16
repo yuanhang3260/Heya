@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="bean">
+  <class name="User" table="User" dynamic-update="true">
+    <id name="uid" column="uid" type="string">
+      <generator class="uuid"></generator>
+    </id>
+    <property name="username" column="username" type="string" not-null="true" update="false"/>
+    <property name="email" column="email" type="string" not-null="true" />
+    <property name="password" column="password" type="string" not-null="true" />
+    <property name="name" column="name" type="string" />
+    <property name="birth" column="birth" type="date" />
+    <property name="sex" column="sex">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">bean.User$Sex</param>
+        <param name="useNamed">true</param>
+      </type>
+    </property>
+    <property name="phone" column="phone" type="string" />
+    <property name="links" column="links" type="string" />
+    <property name="relationship" column="relationship" type="string" />
+
+<!--     <set name="education" table="UserSchool" cascade="save-update" lazy="false">
+      <key column="fuid" />
+      <many-to-many column="fsid" class="Education"/>
+    </set> -->
+
+    <set name="userEducation" cascade="all" lazy="false">
+      <key column="fuid" />
+      <one-to-many class="UserEducation" />
+    </set>
+  </class>
+</hibernate-mapping>

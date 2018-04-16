@@ -27,12 +27,14 @@ function refreshUserInfo(info) {
   if (info.education) {
     this.education = info.education.sort(utils.sortByYearDesc);
   }
-  for (let place of info.places) {
-    if (place.current) {
-      this.live = place;
-    }
-    if (place.hometown) {
-      this.hometown = place;
+  if (info.places) {
+    for (let place of info.places) {
+      if (place.current) {
+        this.live = place;
+      }
+      if (place.hometown) {
+        this.hometown = place;
+      }
     }
   }
 }

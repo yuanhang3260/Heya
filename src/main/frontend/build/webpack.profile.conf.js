@@ -22,7 +22,7 @@ module.exports = merge(baseWebpackConfig, {
     publicPath: "dist/",
   },
 
-  devtool: "source-map",
+  devtool: "eval-source-map",
 
   devServer: {
     contentBase: profileBase,

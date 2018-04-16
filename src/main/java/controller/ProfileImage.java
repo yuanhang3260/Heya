@@ -32,7 +32,7 @@ public class ProfileImage {
   @RequestMapping(value="", method=RequestMethod.GET)
   public void getProfileImage(HttpServletRequest request,
                               HttpServletResponse response,
-                              @PathVariable("uid") Integer uid,
+                              @PathVariable("uid") String uid,
                               @PathVariable("type") String type)
       throws IOException, ServletException {
     if (uid == null || type == null) {
@@ -44,12 +44,12 @@ public class ProfileImage {
     String baseDir = context.getInitParameter("data-storage");
     if (type.equals("profile")) {
       String path =
-        Paths.get(baseDir, "user/", uid.toString(), "/profile.jpg").toString();
+        Paths.get(baseDir, "user/", uid, "/profile.jpg").toString();
       File file = new File(path);
       String imgLocation;
       if (file.exists()) {
         imgLocation =
-          Paths.get("/data", "user", uid.toString(), "profile.jpg").toString();
+          Paths.get("/data", "user", uid, "profile.jpg").toString();
       } else {
         imgLocation = Paths.get(
             "/data", "user", "default", "profile.jpg").toString();
@@ -58,12 +58,12 @@ public class ProfileImage {
       request.getRequestDispatcher(imgLocation).forward(request, response);
     } else if (type.equals("cover")) {
       String path = Paths.get(
-          baseDir, "user/", uid.toString(), "/cover.jpg").toString();
+          baseDir, "user/", uid, "/cover.jpg").toString();
       File file = new File(path);
       String imgLocation;
       if (file.exists()) {
         imgLocation =
-            Paths.get("/data", "user", uid.toString(), "cover.jpg").toString();
+            Paths.get("/data", "user", uid, "cover.jpg").toString();
       } else {
         imgLocation = Paths.get(
             "/data", "user", "default", "cover.jpg").toString();
@@ -79,7 +79,7 @@ public class ProfileImage {
   public void updateProfileImage(
       HttpServletRequest request,
       HttpServletResponse response,
-      @PathVariable("uid") Integer uid,
+      @PathVariable("uid") String uid,
       @PathVariable("type") String type,
       @RequestHeader("Content-Type") String contentType)
       throws IOException, ServletException {
@@ -111,7 +111,7 @@ public class ProfileImage {
                                 success ? null : "Update profile image failed");
   }
 
-  private boolean UpdateProfileImageFile(int uid, Part part)
+  private boolean UpdateProfileImageFile(String uid, Part part)
       throws IOException {
     String cd = part.getHeader("Content-Disposition");
 
@@ -132,8 +132,7 @@ public class ProfileImage {
     FileOutputStream fos = null;
     try {
       String imageFile = Paths.get(
-          "/home/hy/WebStorage/Heya",
-          "user", Integer.toString(uid),  "profile.jpg").toString();
+          "/home/hy/WebStorage/Heya", "user", uid, "profile.jpg").toString();
       fos = new FileOutputStream(imageFile);
       int b = 0;
       while((b = is.read()) != -1) {

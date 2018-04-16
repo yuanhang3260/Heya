@@ -34,8 +34,6 @@ public class Login {
       if (!user.getPassword().equals(password)) {
         err = "user/password mismatch";
       } else {
-        this.userDAO.getUserDetailInfo(user);
-
         // Login successfully, create session and return.
         HttpSession session = request.getSession(false);
         if (session != null) {

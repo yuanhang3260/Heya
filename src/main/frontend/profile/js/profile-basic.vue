@@ -72,8 +72,8 @@ export default {
   },
   props: {
     uid: {
-      type: Number,
-      default: -1,
+      type: String,
+      default: null,
     },
     username: {
       type: String,

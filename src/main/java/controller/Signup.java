@@ -3,6 +3,7 @@ package controller;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,18 +36,12 @@ public class Signup {
       return;
     }
 
-    int uid = this.userDAO.getNextUid();
-    if (uid < 0) {
-      err = CREATE_USER_ERROR;
-      JsonUtils.WriteJSONResponse(response, success, err);
-      return;
-    }
-
     // TODO: Encrypt password!
-    if (createUserDataDirectory(request, uid) &&
-        this.userDAO.addNewUser(uid, user.getUsername(),
-                                user.getEmail(), user.getPassword())) {
-      // Create new user successfully. Create session and return.
+    String uid = this.userDAO.addNewUser(user.getUsername(),
+                                         user.getEmail(), user.getPassword());
+    System.out.println("UID = " + uid);
+    if (uid != null) {
+      createUserDataDirectory(request, uid);
       request.getSession().setAttribute("user", user);
       success = true;
     } else {
@@ -58,10 +53,11 @@ public class Signup {
     return;
   }
 
-  private boolean createUserDataDirectory(HttpServletRequest request, int uid) {
+  private boolean createUserDataDirectory(HttpServletRequest request,
+                                          String uid) {
     ServletContext context = request.getServletContext();
     String baseDir = context.getInitParameter("data-storage");
-    File theDir = new File(baseDir + "user/" + Integer.toString(uid));
+    File theDir = new File(baseDir + "user/" + uid);
     if (!theDir.exists()) {
       try{
         if (!theDir.mkdirs()) {

@@ -41,7 +41,7 @@ export default {
   },
   props: {
     sid: {  // school id
-      type: Number,
+      type: String,
       default: null,
     },
     type: {

@@ -60,7 +60,6 @@ function updateModelData() {
 
 function updateBasicInfo() {
   var reqData = {
-    "action": "update",
     "name": this.nameInput,
     "email": this.emailInput,
     "phone": this.phoneInput,
