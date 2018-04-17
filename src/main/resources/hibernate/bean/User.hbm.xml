@@ -32,5 +32,13 @@
       <key column="fuid" />
       <one-to-many class="UserEducation" />
     </set>
+    <set name="userWork" cascade="all" lazy="false">
+      <key column="fuid" />
+      <one-to-many class="UserWork" />
+    </set>
+    <set name="userPlaces" cascade="all" lazy="false">
+      <key column="fuid" />
+      <one-to-many class="UserPlace" />
+    </set>
   </class>
 </hibernate-mapping>

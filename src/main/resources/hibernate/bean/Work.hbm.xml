@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="bean">
+  <class name="Work" table="Company" dynamic-update="true">
+    <id name="cid" column="cid" type="string">
+      <generator class="assigned"></generator>
+    </id>
+    <property name="company" column="name" type="string" not-null="true" update="false"/>
+  </class>
+</hibernate-mapping>

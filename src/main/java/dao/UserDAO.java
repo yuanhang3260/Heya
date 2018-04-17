@@ -26,6 +26,8 @@ import bean.Work;
 import bean.Place;
 import bean.User;
 import bean.UserEducation;
+import bean.UserPlace;
+import bean.UserWork;
 import util.UuidUtils;
 
 @Repository("UserDAO")
@@ -153,211 +155,164 @@ public class UserDAO {
     return true;
   }
 
-  // // ------------------------------- Work ---------------------------------- //
-  // public int addCompanyInfo(User user, Work newCompany) {
-  //   if (user == null || newCompany == null) {
-  //     return -1;
-  //   }
+  // ----------------------------- Work ------------------------------- //
+  public String addUserWorkInfo(User user,
+                                     UserWork newUserWork) {
+    if (user == null || newUserWork == null) {
+      return null;
+    }
 
-  //   ArrayList<Work> work = user.getWork();
-  //   if (work == null) {
-  //     work = new ArrayList<Work>();
-  //     user.setWork(work);
-  //   }
+    Work work = newUserWork.getWork();
 
-  //   int cid = 0;
-  //   if (!work.isEmpty()) {
-  //     cid = work.get(work.size() - 1).getCid() + 1;
-  //   }
-  //   newCompany.setCid(cid);
+    Query query = getSession().createQuery(" from Work where name = ?");
+    query.setString(0, work.getCompany());
+    Work result = (Work)query.uniqueResult();
+    if (result == null) {
+      // Add new company.
+      work.setCid(UuidUtils.compressedUuid());
+      getSession().save(work);
+    } else {
+      newUserWork.setWork(result);
+    }
 
-  //   JSONArray array = Work.toJSONArray(work);
-  //   array.put(newCompany.toJSONObject());
+    user.getUserWork().add(newUserWork);
+    getSession().update(user);
+    return newUserWork.getWork().getCid();
+  }
 
-  //   String sql = "UPDATE UserDetail set work = ? WHERE uid = ?";
-  //   System.out.println("work: " + array);
+  public boolean updateUserWorkInfo(
+      User user, String cid, UserWork newUserWork) {
+    if (user == null || cid == null || newUserWork == null) {
+      return false;
+    }
 
-  //   try {
-  //     this.jdbcTemplate.update(sql, array.toString(2), user.getUid());
-  //     work.add(newCompany);
-  //     return cid;
-  //   } catch (Exception e) {
-  //     return -1;
-  //   }
-  // }
+    Work work = newUserWork.getWork();
 
-  // public boolean updateCompanyInfo(User user, int cid, Work company) {
-  //   if (user == null || cid < 0 || company == null) {
-  //     return false;
-  //   }
+    Set<UserWork> allUserWork = user.getUserWork();
+    for (UserWork ue : allUserWork) {
+      Work e = ue.getWork();
+      if (e.getCid().equals(cid)) {
+        if (!e.getCompany().equals(work.getCompany())) {
+          // Company name changed. Look up from table Company by name.
+          Query query =
+              getSession().createQuery(" from Work where name = ?");
+          query.setString(0, work.getCompany());
+          Work result = (Work)query.uniqueResult();
+          if (result == null) {
+            // New company.
+            work.setCid(UuidUtils.compressedUuid());
+            getSession().save(work);
+            result = work;
+          }
+          // update UserWork relation table.
+          ue.mergeFrom(newUserWork);
+          ue.setWork(result);
+          getSession().update(ue);
+        } else {
+          ue.mergeFrom(newUserWork);
+          getSession().update(ue);
+        }
+        break;
+      }
+    }
+    return true;
+  }
 
-  //   ArrayList<Work> work = user.getWork();
-  //   if (work.isEmpty()) {
-  //     return false;
-  //   }
+  public boolean deleteUserWorkInfo(User user, String cid) {
+    if (user == null || cid == null) {
+      return false;
+    }
 
-  //   int index = -1;
-  //   for (index = 0; index < work.size(); index++) {
-  //     if (work.get(index).getCid() == cid) {
-  //       break;
-  //     }
-  //   }
+    Set<UserWork> allUserWork = user.getUserWork();
+    for (UserWork ue : allUserWork) {
+      if (ue.getWork().getCid().equals(cid)) {
+        allUserWork.remove(ue);
+        getSession().update(user);
+        getSession().delete(ue);
+        break;
+      }
+    }
+    return true;
+  }
 
-  //   if (index < 0 || index == work.size()) {
-  //     return false;
-  //   }
+  // ----------------------------- Place ------------------------------- //
+  public String addUserPlaceInfo(User user,
+                                 UserPlace newUserPlace) {
+    if (user == null || newUserPlace == null) {
+      return null;
+    }
 
-  //   Work copy = new Work(work.get(index));
-  //   work.set(index, company);
+    Place place = newUserPlace.getPlace();
 
-  //   JSONArray array = Work.toJSONArray(work);
+    Query query = getSession().createQuery(" from Place where name = ?");
+    query.setString(0, place.getName());
+    Place result = (Place)query.uniqueResult();
+    if (result == null) {
+      // Add new company.
+      place.setPid(UuidUtils.compressedUuid());
+      getSession().save(place);
+    } else {
+      newUserPlace.setPlace(result);
+    }
 
-  //   String sql = "UPDATE UserDetail set work = ? WHERE uid = ?";
-  //   try {
-  //     this.jdbcTemplate.update(sql, array.toString(2), user.getUid());
-  //     return true;
-  //   } catch (Exception e) {
-  //     // Rollback local work info.
-  //     work.set(index, copy);
-  //     return false;
-  //   }
-  // }
-  // public boolean deleteCompanyInfo(User user, int cid) {
-  //   if (user == null || cid < 0) {
-  //     return false;
-  //   }
+    user.getUserPlaces().add(newUserPlace);
+    // TODO: Update user or update UserPlace?
+    getSession().update(user);
+    return newUserPlace.getPlace().getPid();
+  }
 
-  //   ArrayList<Work> work = user.getWork();
-  //   if (work.isEmpty()) {
-  //     return false;
-  //   }
+  public boolean updateUserPlaceInfo(
+      User user, String pid, UserPlace newUserPlace) {
+    if (user == null || pid == null || newUserPlace == null) {
+      return false;
+    }
 
-  //   int index = -1;
-  //   for (index = 0; index < work.size(); index++) {
-  //     if (work.get(index).getCid() == cid) {
-  //       break;
-  //     }
-  //   }
+    Place place = newUserPlace.getPlace();
 
-  //   if (index < 0 || index == work.size()) {
-  //     return false;
-  //   }
+    Set<UserPlace> allUserPlaces = user.getUserPlaces();
+    for (UserPlace up : allUserPlaces) {
+      Place e = up.getPlace();
+      if (e.getPid().equals(pid)) {
+        if (!e.getName().equals(place.getName())) {
+          // Name name changed. Look up from table Name by name.
+          Query query =
+              getSession().createQuery(" from Place where name = ?");
+          query.setString(0, place.getName());
+          Place result = (Place)query.uniqueResult();
+          if (result == null) {
+            // New company.
+            place.setPid(UuidUtils.compressedUuid());
+            getSession().save(place);
+            result = place;
+          }
+          // update UserPlace relation table.
+          up.mergeFrom(newUserPlace);
+          up.setPlace(result);
+          getSession().update(up);
+        } else {
+          up.mergeFrom(newUserPlace);
+          getSession().update(up);
+        }
+        break;
+      }
+    }
+    return true;
+  }
 
-  //   Work removed = work.remove(index);
-  //   JSONArray array = Work.toJSONArray(work);
+  public boolean deleteUserPlaceInfo(User user, String pid) {
+    if (user == null || pid == null) {
+      return false;
+    }
 
-  //   String sql = "UPDATE UserDetail set work = ? WHERE uid = ?";
-  //   try {
-  //     this.jdbcTemplate.update(sql, array.toString(2), user.getUid());
-  //     return true;
-  //   } catch (Exception e) {
-  //     // Rollback local work info.
-  //     work.add(index, removed);
-  //     return false;
-  //   }
-  // }
-
-  // // ------------------------------ Places --------------------------------- //
-  // public int addPlaceInfo(User user, Place newPlace) {
-  //   if (user == null || newPlace == null) {
-  //     return -1;
-  //   }
-
-  //   ArrayList<Place> places = user.getPlaces();
-  //   if (places == null) {
-  //     places = new ArrayList<Place>();
-  //     user.setPlaces(places);
-  //   }
-
-  //   int Pid = 0;
-  //   if (!places.isEmpty()) {
-  //     Pid = places.get(places.size() - 1).getPid() + 1;
-  //   }
-  //   newPlace.setPid(Pid);
-
-  //   JSONArray array = Place.toJSONArray(places);
-  //   array.put(newPlace.toJSONObject());
-
-  //   String sql = "UPDATE UserDetail set places = ? WHERE uid = ?";
-  //   // System.out.println("places: " + array);
-
-  //   try {
-  //     this.jdbcTemplate.update(sql, array.toString(2), user.getUid());
-  //     places.add(newPlace);
-  //     return Pid;
-  //   } catch (Exception e) {
-  //     return -1;
-  //   }
-  // }
-
-  // public boolean updatePlaceInfo(User user, int pid, Place Place) {
-  //   if (user == null || pid < 0 || Place == null) {
-  //     return false;
-  //   }
-
-  //   ArrayList<Place> places = user.getPlaces();
-  //   if (places.isEmpty()) {
-  //     return false;
-  //   }
-
-  //   int index = -1;
-  //   for (index = 0; index < places.size(); index++) {
-  //     if (places.get(index).getPid() == pid) {
-  //       break;
-  //     }
-  //   }
-
-  //   if (index < 0 || index == places.size()) {
-  //     return false;
-  //   }
-
-  //   Place copy = new Place(places.get(index));
-  //   places.set(index, Place);
-
-  //   JSONArray array = Place.toJSONArray(places);
-
-  //   String sql = "UPDATE UserDetail set places = ? WHERE uid = ?";
-  //   try {
-  //     this.jdbcTemplate.update(sql, array.toString(2), user.getUid());
-  //     return true;
-  //   } catch (Exception e) {
-  //     // Rollback local Place info.
-  //     places.set(index, copy);
-  //     return false;
-  //   }
-  // }
-  // public boolean deletePlaceInfo(User user, int pid) {
-  //   if (user == null || pid < 0) {
-  //     return false;
-  //   }
-
-  //   ArrayList<Place> places = user.getPlaces();
-  //   if (places.isEmpty()) {
-  //     return false;
-  //   }
-
-  //   int index = -1;
-  //   for (index = 0; index < places.size(); index++) {
-  //     if (places.get(index).getPid() == pid) {
-  //       break;
-  //     }
-  //   }
-
-  //   if (index < 0 || index == places.size()) {
-  //     return false;
-  //   }
-
-  //   Place removed = places.remove(index);
-  //   JSONArray array = Place.toJSONArray(places);
-
-  //   String sql = "UPDATE UserDetail set places = ? WHERE uid = ?";
-  //   try {
-  //     this.jdbcTemplate.update(sql, array.toString(2), user.getUid());
-  //     return true;
-  //   } catch (Exception e) {
-  //     // Rollback local Place info.
-  //     places.add(index, removed);
-  //     return false;
-  //   }
-  // }
+    Set<UserPlace> allUserPlaces = user.getUserPlaces();
+    for (UserPlace up : allUserPlaces) {
+      if (up.getPlace().getPid().equals(pid)) {
+        allUserPlaces.remove(up);
+        getSession().update(user);
+        getSession().delete(up);
+        break;
+      }
+    }
+    return true;
+  }
 }

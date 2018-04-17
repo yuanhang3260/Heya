@@ -7,12 +7,12 @@ import popups from "heya/common/js/popups.js"
 function init() {
   if (this.initData) {
     this.pid = this.initData.pid;
-    this.place = this.initData.place;
+    this.name = this.initData.name;
   }
 }
 
 function clickEdit() {
-  this.placeInput = this.place;
+  this.nameInput = this.name;
   this.mode = "edit";
 }
 
@@ -21,7 +21,7 @@ function clickCancel() {
 }
 
 function clickSave() {
-  if (!this.placeInput) {
+  if (!this.nameInput) {
     popups.alert("Place cannot be empty");
     return;
   }
@@ -41,11 +41,11 @@ function clickSave() {
 
 function updateModelData(pid) {
   if (this.place) {
-    this.place = this.placeInput;
+    this.name = this.nameInput;
   } else {
     // Add new place.
     this.pid = pid;
-    this.place = this.placeInput;
+    this.name = this.nameInput;
   }
 }
 
@@ -53,7 +53,7 @@ function addPlaceInfo() {
   // Send AJAX to update place info.
   var formData = {
     "_method": "POST",
-    "place": this.placeInput,
+    "name": this.nameInput,
     "current": this.type === "current",
     "hometown": this.type === "hometown",
   };
@@ -82,7 +82,7 @@ function updatePlaceInfo() {
   // Send AJAX to update place info.
   var formData = {
     "_method": "PUT",
-    "place": this.placeInput,
+    "name": this.nameInput,
     "current": this.type === "current",
     "hometown": this.type === "hometown",
   };
@@ -110,12 +110,12 @@ function updatePlaceInfo() {
 function clickDelete() {
   let me = this;
   popups.confirm({
-    message: "Are you sure to delete place " + this.place + "?",
+    message: "Are you sure to delete place " + this.name + "?",
     task: function() {
       if (!me.debug) {
         me.doDeletePlace();
       } else {
-        me.place = null;
+        me.name = null;
         me.pid = null;
         me.mode = "display";
       }
@@ -140,7 +140,7 @@ function doDeletePlace() {
     // log data to the console so we can see.
     console.log(data);
     if (data.success) {
-      me.place = null;
+      me.name = null;
       me.pid = null;
       me.mode = "display";
     } else {

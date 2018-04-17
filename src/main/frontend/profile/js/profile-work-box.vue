@@ -8,7 +8,7 @@
       <a :href="googleSearchURL(company)" class="profile-name company-info" target="_blank">{{company}}</a>
       <p class="profile-detail">
         <span v-if="position" class="position-info">{{position}}</span>
-        <span v-if="position"> - </span>
+        <span v-if="position && (hasStartYear || hasEndYear)"> - </span>
         <span v-if="hasStartYear"> from </span>
         <span v-if="hasStartYear" class="start-year"> {{yearStart}}</span>
         <span v-if="hasEndYear"> to </span>

@@ -22,3 +22,24 @@ CREATE TABLE UserSchool (
   FOREIGN KEY (fuid) REFERENCES User(uid),
   FOREIGN KEY (fsid) REFERENCES School(sid)
 );
+
+CREATE TABLE UserCompany (
+  uwid VARCHAR(128) NOT NULL PRIMARY KEY,
+  fuid VARCHAR(128),
+  fcid VARCHAR(128),
+  position VARCHAR(256),
+  startYear int,
+  endYear int,
+  FOREIGN KEY (fuid) REFERENCES User(uid),
+  FOREIGN KEY (fcid) REFERENCES Company(cid)
+);
+
+CREATE TABLE UserPlace (
+  upid VARCHAR(128) NOT NULL PRIMARY KEY,
+  fuid VARCHAR(128),
+  fpid VARCHAR(128),
+  current BOOLEAN DEFAULT false,
+  hometown BOOLEAN DEFAULT false,
+  FOREIGN KEY (fuid) REFERENCES User(uid),
+  FOREIGN KEY (fpid) REFERENCES Place(pid)
+);

@@ -13,5 +13,9 @@
     <mapping resource="hibernate/bean/User.hbm.xml"/>
     <mapping resource="hibernate/bean/Education.hbm.xml"/>
     <mapping resource="hibernate/bean/UserEducation.hbm.xml"/>
+    <mapping resource="hibernate/bean/Work.hbm.xml"/>
+    <mapping resource="hibernate/bean/UserWork.hbm.xml"/>
+    <mapping resource="hibernate/bean/Place.hbm.xml"/>
+    <mapping resource="hibernate/bean/UserPlace.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

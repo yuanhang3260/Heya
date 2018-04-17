@@ -24,6 +24,8 @@ import bean.Place;
 import bean.Work;
 import bean.User;
 import bean.UserEducation;
+import bean.UserPlace;
+import bean.UserWork;
 import dao.UserDAO;
 import util.JsonUtils;
 
@@ -99,7 +101,7 @@ public class UserInfo {
     }
   }
 
-  // ----------------------------------------------------------------------- //
+  // ----------------------------- Education ------------------------------- //
   @RequestMapping(value="/education", method=RequestMethod.POST)
   public void addNewUserEducation(HttpServletResponse response,
                                   HttpSession session,
@@ -166,10 +168,10 @@ public class UserInfo {
   }
 
   @RequestMapping(value="/education/{sid}", method=RequestMethod.DELETE)
-  public void deleteSchool(HttpServletResponse response,
-                           HttpSession session,
-                           @PathVariable("username") String username,
-                           @PathVariable("sid") String sid) {
+  public void deleteUserEducation(HttpServletResponse response,
+                                  HttpSession session,
+                                  @PathVariable("username") String username,
+                                  @PathVariable("sid") String sid) {
     if (sid == null) {
       JsonUtils.WriteJSONResponse(response, false, "invalid sid " + sid);
       return;
@@ -188,161 +190,181 @@ public class UserInfo {
     }
   }
 
-  // @RequestMapping(value="/work", method=RequestMethod.POST)
-  // public void addNewWork(HttpServletResponse response,
-  //                        HttpSession session,
-  //                        @PathVariable("username") String username,
-  //                        Work work) {
-  //   User user = getAuthorizedUser(session, username);
-  //   if (user == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "permission denied");
-  //     return;
-  //   }
+  // -------------------------------- Work -------------------------------- //
+  @RequestMapping(value="/work", method=RequestMethod.POST)
+  public void addNewUserWork(HttpServletResponse response,
+                             HttpSession session,
+                             @PathVariable("username") String username,
+                             Work work,
+                             UserWork userWork) {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
 
-  //   if (work.getCompany() == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "company is required");
-  //     return;
-  //   }
+    if (work.getCompany() == null) {
+      JsonUtils.WriteJSONResponse(response, false, "company is required");
+      return;
+    }
 
-  //   Map<String, Object> result = new HashMap<String, Object>();
-  //   int cid = this.userDAO.addCompanyInfo(user, work);
-  //   if (cid >= 0) {
-  //     result.put("companyId", (Integer)cid);
-  //     JsonUtils.WriteJSONResponse(response, result);
-  //   } else {
-  //     JsonUtils.WriteJSONResponse(response, false, "Failed to add company");
-  //   }
-  // }
+    userWork.setWork(work);
+    userWork.setUser(user);
 
-  // @RequestMapping(value="/work/{cid}", method=RequestMethod.PUT)
-  // public void updateWork(HttpServletResponse response,
-  //                        HttpSession session,
-  //                        @PathVariable("username") String username,
-  //                        @PathVariable("cid") Integer cid,
-  //                        Work work) {
-  //   if (cid == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "invalid cid " + cid);
-  //     return;
-  //   }
+    Map<String, Object> result = new HashMap<String, Object>();
+    String cid = this.userDAO.addUserWorkInfo(user, userWork);
+    if (cid != null) {
+      result.put("companyId", (String)cid);
+      JsonUtils.WriteJSONResponse(response, result);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to add company");
+    }
+  }
 
-  //   User user = getAuthorizedUser(session, username);
-  //   if (user == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "permission denied");
-  //     return;
-  //   }
+  @RequestMapping(value="/work/{cid}", method=RequestMethod.PUT)
+  public void updateUserWork(HttpServletResponse response,
+                                  HttpSession session,
+                                  @PathVariable("username") String username,
+                                  @PathVariable("cid") String cid,
+                                  Work work,
+                                  UserWork userWork) {
+    if (cid == null) {
+      JsonUtils.WriteJSONResponse(response, false, "invalid cid " + cid);
+      return;
+    }
 
-  //   if (work.getCompany() == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "company is required");
-  //     return;
-  //   }
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
 
-  //   if (this.userDAO.updateCompanyInfo(user, cid, work)) {
-  //     JsonUtils.WriteJSONResponse(response, true, null);
-  //   } else {
-  //     JsonUtils.WriteJSONResponse(response, false,
-  //                                 "Failed to update company info");
-  //   }
-  // }
+    if (work.getCompany() == null) {
+      JsonUtils.WriteJSONResponse(response, false, "company is required");
+      return;
+    }
 
-  // @RequestMapping(value="/work/{cid}", method=RequestMethod.DELETE)
-  // public void deleteCompany(HttpServletResponse response,
-  //                           HttpSession session,
-  //                           @PathVariable("username") String username,
-  //                           @PathVariable("cid") Integer cid) {
-  //   if (cid == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "invalid cid " + cid);
-  //     return;
-  //   }
+    work.setCid(cid);
+    userWork.setWork(work);
+    userWork.setUser(user);
 
-  //   User user = getAuthorizedUser(session, username);
-  //   if (user == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "permission denied");
-  //     return;
-  //   }
+    if (this.userDAO.updateUserWorkInfo(user, cid, userWork)) {
+      JsonUtils.WriteJSONResponse(response, true, null);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false,
+                                  "Failed to update company info");
+    }
+  }
 
-  //   if (this.userDAO.deleteCompanyInfo(user, cid)) {
-  //     JsonUtils.WriteJSONResponse(response, true, null);
-  //   } else {
-  //     JsonUtils.WriteJSONResponse(response, false, "Failed to delete company");
-  //   }
-  // }
+  @RequestMapping(value="/work/{cid}", method=RequestMethod.DELETE)
+  public void deleteUserWorkI(HttpServletResponse response,
+                              HttpSession session,
+                              @PathVariable("username") String username,
+                              @PathVariable("cid") String cid) {
+    if (cid == null) {
+      JsonUtils.WriteJSONResponse(response, false, "invalid cid " + cid);
+      return;
+    }
 
-  // @RequestMapping(value="/places", method=RequestMethod.POST)
-  // public void addPlace(HttpServletResponse response,
-  //                      HttpSession session,
-  //                      @PathVariable("username") String username,
-  //                      Place place) {
-  //   User user = getAuthorizedUser(session, username);
-  //   if (user == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "permission denied");
-  //     return;
-  //   }
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
 
-  //   if (place.getPlace() == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "place is required");
-  //     return;
-  //   }
+    if (this.userDAO.deleteUserWorkInfo(user, cid)) {
+      JsonUtils.WriteJSONResponse(response, true, null);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to delete company");
+    }
+  }
 
-  //   Map<String, Object> result = new HashMap<String, Object>();
-  //   int pid = this.userDAO.addPlaceInfo(user, place);
-  //   if (pid >= 0) {
-  //     result.put("placeId", (Integer)pid);
-  //     JsonUtils.WriteJSONResponse(response, result);
-  //   } else {
-  //     JsonUtils.WriteJSONResponse(response, false, "Failed to add company");
-  //   }
-  // }
+  // ------------------------------- Place -------------------------------- //
+  @RequestMapping(value="/places", method=RequestMethod.POST)
+  public void addNewUserPlace(HttpServletResponse response,
+                              HttpSession session,
+                              @PathVariable("username") String username,
+                              Place place,
+                              UserPlace userPlace) {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
 
-  // @RequestMapping(value="/places/{pid}", method=RequestMethod.PUT)
-  // public void updatePlace(HttpServletResponse response,
-  //                         HttpSession session,
-  //                         @PathVariable("username") String username,
-  //                         @PathVariable("pid") Integer pid,
-  //                         Place place) {
-  //   if (pid == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "invalid pid " + pid);
-  //     return;
-  //   }
+    if (place.getName() == null) {
+      JsonUtils.WriteJSONResponse(response, false, "place name is required");
+      return;
+    }
 
-  //   User user = getAuthorizedUser(session, username);
-  //   if (user == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "permission denied");
-  //     return;
-  //   }
+    userPlace.setPlace(place);
+    userPlace.setUser(user);
 
-  //   if (place.getPlace() == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "place is required");
-  //     return;
-  //   }
+    Map<String, Object> result = new HashMap<String, Object>();
+    String pid = this.userDAO.addUserPlaceInfo(user, userPlace);
+    if (pid != null) {
+      result.put("placeId", (String)pid);
+      JsonUtils.WriteJSONResponse(response, result);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to add place");
+    }
+  }
 
-  //   if (this.userDAO.updatePlaceInfo(user, pid, place)) {
-  //     JsonUtils.WriteJSONResponse(response, true, null);
-  //   } else {
-  //     JsonUtils.WriteJSONResponse(response, false,
-  //                                 "Failed to update Place info");
-  //   }
-  // }
+  @RequestMapping(value="/places/{pid}", method=RequestMethod.PUT)
+  public void updateUserPlace(HttpServletResponse response,
+                              HttpSession session,
+                              @PathVariable("username") String username,
+                              @PathVariable("pid") String pid,
+                              Place place,
+                              UserPlace userPlace) {
+    if (pid == null) {
+      JsonUtils.WriteJSONResponse(response, false, "invalid pid " + pid);
+      return;
+    }
 
-  // @RequestMapping(value="/places/{pid}", method=RequestMethod.DELETE)
-  // public void deletePlace(HttpServletResponse response,
-  //                         HttpSession session,
-  //                         @PathVariable("username") String username,
-  //                         @PathVariable("pid") Integer pid) {
-  //   if (pid == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "invalid pid " + pid);
-  //     return;
-  //   }
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
 
-  //   User user = getAuthorizedUser(session, username);
-  //   if (user == null) {
-  //     JsonUtils.WriteJSONResponse(response, false, "permission denied");
-  //     return;
-  //   }
+    if (place.getName() == null) {
+      JsonUtils.WriteJSONResponse(response, false, "place is required");
+      return;
+    }
 
-  //   if (this.userDAO.deletePlaceInfo(user, pid)) {
-  //     JsonUtils.WriteJSONResponse(response, true, null);
-  //   } else {
-  //     JsonUtils.WriteJSONResponse(response, false, "Failed to delete place");
-  //   }
-  // }
+    place.setPid(pid);
+    userPlace.setPlace(place);
+    userPlace.setUser(user);
+
+    if (this.userDAO.updateUserPlaceInfo(user, pid, userPlace)) {
+      JsonUtils.WriteJSONResponse(response, true, null);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false,
+                                  "Failed to update place info");
+    }
+  }
+
+  @RequestMapping(value="/places/{pid}", method=RequestMethod.DELETE)
+  public void deleteUserPlaceInfo(HttpServletResponse response,
+                                  HttpSession session,
+                                  @PathVariable("username") String username,
+                                  @PathVariable("pid") String pid) {
+    if (pid == null) {
+      JsonUtils.WriteJSONResponse(response, false, "invalid pid " + pid);
+      return;
+    }
+
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
+
+    if (this.userDAO.deleteUserPlaceInfo(user, pid)) {
+      JsonUtils.WriteJSONResponse(response, true, null);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to delete place");
+    }
+  }
 }

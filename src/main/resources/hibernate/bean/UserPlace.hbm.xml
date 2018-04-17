@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="bean">
+  <class name="UserPlace" table="UserPlace" dynamic-update="true">
+    <id name="upid" column="upid" type="string">
+      <generator class="uuid"></generator>
+    </id>
+    <property name="current" column="current" type="boolean" />
+    <property name="hometown" column="hometown" type="boolean" />
+
+    <many-to-one name="user" class="User" column="fuid" />
+    <many-to-one name="place" class="Place" column="fpid" lazy="false"/>
+  </class>
+</hibernate-mapping>

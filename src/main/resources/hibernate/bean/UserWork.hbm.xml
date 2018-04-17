@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="bean">
+  <class name="UserWork" table="UserCompany" dynamic-update="true">
+    <id name="uwid" column="uwid" type="string">
+      <generator class="uuid"></generator>
+    </id>
+    <property name="position" column="position" type="string" />
+    <property name="startYear" column="startYear" type="int" />
+    <property name="endYear" column="endYear" type="int" />
+
+    <many-to-one name="user" class="User" column="fuid" />
+    <many-to-one name="work" class="Work" column="fcid" lazy="false"/>
+  </class>
+</hibernate-mapping>

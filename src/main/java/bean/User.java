@@ -22,6 +22,8 @@ import bean.Education;
 import bean.Work;
 import bean.Place;
 import bean.UserEducation;
+import bean.UserPlace;
+import bean.UserWork;
 
 public class User {
   public enum Sex {
@@ -41,8 +43,8 @@ public class User {
   private String phone;
   private String links;
   private Set<UserEducation> userEducation;
-  // private Set<Work> work;
-  // private Set<Place> places;
+  private Set<UserWork> userWork;
+  private Set<UserPlace> userPlaces;
 
   public void mergeFrom(User user) {
     if (user.getUsername() != null) {
@@ -66,12 +68,12 @@ public class User {
     if (user.getUserEducation() != null) {
       this.userEducation = user.getUserEducation();
     }
-    // if (user.getWork() != null) {
-    //   this.work = user.getWork();
-    // }
-    // if (user.getPlaces() != null) {
-    //   this.places = user.getPlaces();
-    // }
+    if (user.getUserWork() != null) {
+      this.userWork = user.getUserWork();
+    }
+    if (user.getUserPlaces() != null) {
+      this.userPlaces = user.getUserPlaces();
+    }
     if (user.getRelationship() != null) {
       this.relationship = user.getRelationship();
     }
@@ -115,12 +117,12 @@ public class User {
       if (userEducation != null) {
         json_obj.put("education", UserEducation.toJSONArray(userEducation));
       }
-      // if (work != null) {
-      //   json_obj.put("work", Work.toJSONArray(work));
-      // }
-      // if (places != null) {
-      //   json_obj.put("places", Place.toJSONArray(places));
-      // }
+      if (userWork != null) {
+        json_obj.put("work", UserWork.toJSONArray(userWork));
+      }
+      if (userPlaces != null) {
+        json_obj.put("places", UserPlace.toJSONArray(userPlaces));
+      }
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -219,79 +221,25 @@ public class User {
     this.userEducation = userEducation;
   }
 
-  // public void addEducation(Education education) {
-  //   this.education.add(education);
-  // }
+  public Set<UserWork> getUserWork() {
+    if (this.userWork == null) {
+      this.userWork = new HashSet<UserWork>();
+    }
+    return this.userWork;
+  }
 
-  // public void updateEducation(Education education) {
-  //   for (int i = 0; i < this.education.size(); i++) {
-  //     if (this.education.get(i).getSid() == education.getSid()) {
-  //       this.education.set(i, education);
-  //     }
-  //   }
-  // }
+  public void setUserWork(Set<UserWork> userWork) {
+    this.userWork = userWork;
+  }
 
-  // public void deleteEducation(int sid) {
-  //   for (int i = 0; i < this.education.size(); i++) {
-  //     if (this.education.get(i).getSid() == sid) {
-  //       this.education.remove(i);
-  //     }
-  //   }
-  // }
+  public Set<UserPlace> getUserPlaces() {
+    if (this.userPlaces == null) {
+      this.userPlaces = new HashSet<UserPlace>();
+    }
+    return this.userPlaces;
+  }
 
-  // public Set<Work> getWork() {
-  //   return this.work;
-  // }
-
-  // public void setWork(Set<Work> work) {
-  //   this.work = work;
-  // }
-
-  // public void addWork(Work work) {
-  //   this.work.add(work);
-  // }
-
-  // public void updateWork(Work work) {
-  //   for (int i = 0; i < this.work.size(); i++) {
-  //     if (this.work.get(i).getCid() == work.getCid()) {
-  //       this.work.set(i, work);
-  //     }
-  //   }
-  // }
-
-  // public void deleteWork(int id) {
-  //   for (int i = 0; i < this.work.size(); i++) {
-  //     if (this.work.get(i).getCid() == id) {
-  //       this.work.remove(i);
-  //     }
-  //   }
-  // }
-
-  // public ArrayList<Place> getPlaces() {
-  //   return this.places;
-  // }
-
-  // public void setPlaces(ArrayList<Place> places) {
-  //   this.places = places;
-  // }
-
-  // public void addPlace(Place place) {
-  //   this.places.add(place);
-  // }
-
-  // public void updatePlace(Place place) {
-  //   for (int i = 0; i < this.places.size(); i++) {
-  //     if (this.places.get(i).getPid() == place.getPid()) {
-  //       this.places.set(i, place);
-  //     }
-  //   }
-  // }
-
-  // public void deletePlace(int pid) {
-  //   for (int i = 0; i < this.places.size(); i++) {
-  //     if (this.places.get(i).getPid() == pid) {
-  //       this.places.remove(i);
-  //     }
-  //   }
-  // }
+  public void setUserPlaces(Set<UserPlace> userPlaces) {
+    this.userPlaces = userPlaces;
+  }
 }

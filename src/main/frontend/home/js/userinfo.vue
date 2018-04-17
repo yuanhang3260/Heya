@@ -25,7 +25,7 @@
     <i class="user-profile-icon user-live-icon fa fa-map-marker"></i>
     <p class="user-profile-detail">
       <span>Lives in</span>
-      <a v-bind:href="googleMapURL(live.place)" class="user-profile-link" target="_blank">{{live.place}}</a>
+      <a v-bind:href="googleMapURL(live.place)" class="user-profile-link" target="_blank">{{live.name}}</a>
     </p>
   </div>
 
@@ -33,7 +33,7 @@
     <i class="user-profile-icon user-hometown-icon fa fa-home"></i>
     <p class="user-profile-detail">
       <span>From</span>
-      <a v-bind:href="googleMapURL(hometown.place)" class="user-profile-link" target="_blank">{{hometown.place}}</a>
+      <a v-bind:href="googleMapURL(hometown.place)" class="user-profile-link" target="_blank">{{hometown.name}}</a>
     </p>
   </div>
 </div>

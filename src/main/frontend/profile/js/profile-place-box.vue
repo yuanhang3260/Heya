@@ -1,7 +1,7 @@
 <template>
 
 <div class="profile-info-box" v-bind:class="{'hometown': type==='hometown', 'current-live': type==='current'}">
-  <div v-show="!place && mode==='display'" v-on:click="clickEdit" class="add-item-button">
+  <div v-show="!name && mode==='display'" v-on:click="clickEdit" class="add-item-button">
     <i class="fa fa-plus-square add-item-icon"></i>
     <span v-if="type==='current'" class="add-item-text">Add current live</span>
     <span v-if="type==='hometown'" class="add-item-text">Add hometown</span>
@@ -10,7 +10,7 @@
     <form method="post">
       <div class="form-group edit-place">
         <label class="profile-edit-label">Place</label>
-        <input v-model="placeInput" type="text" name="place" class="form-control profile-edit-input">
+        <input v-model="nameInput" type="text" name="name" class="form-control profile-edit-input">
       </div>
       <div class="button-box">
         <button v-on:click="clickSave" type="button" class="btn btn-success save-btn">Save Changes</button>
@@ -19,9 +19,9 @@
       <div v-show="errMsg" class="alert alert-danger update-error-msg" role="alert">{{errMsg}}</div>
     </form>
   </div>
-  <div v-show="place && mode==='display'" class="profile-info-display">
+  <div v-show="name && mode==='display'" class="profile-info-display">
     <div class="profile-info">
-      <a :href="googleMapURL(place)" class="profile-name place-info" target="_blank">{{place}}</a>
+      <a :href="googleMapURL(name)" class="profile-name place-info" target="_blank">{{name}}</a>
       <p v-if="type==='current'" class="profile-detail">curent living</p>
       <p v-if="type==='hometown'" class="profile-detail">hometown</p>
     </div>
@@ -69,8 +69,8 @@ export default {
     return {
       mode: "display",
       pid: null,
-      place: null,
-      placeInput: null,
+      name: null,
+      nameInput: null,
       errMsg: null,
     }
   },
@@ -78,7 +78,7 @@ export default {
   watch: {
     initData: function() {
       if (this.initData) {
-        this.place = this.initData.place;
+        this.name = this.initData.name;
         this.pid = this.initData.pid;
       }
     }
