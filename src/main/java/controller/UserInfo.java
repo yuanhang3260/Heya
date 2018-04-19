@@ -159,8 +159,11 @@ public class UserInfo {
     userEducation.setEducation(education);
     userEducation.setUser(user);
 
-    if (this.userDAO.updateUserEducationInfo(user, sid, userEducation)) {
-      JsonUtils.WriteJSONResponse(response, true, null);
+    Map<String, Object> result = new HashMap<String, Object>();
+    sid = this.userDAO.updateUserEducationInfo(user, sid, userEducation);
+    if (sid != null) {
+      result.put("schoolId", (String)sid);
+      JsonUtils.WriteJSONResponse(response, result);
     } else {
       JsonUtils.WriteJSONResponse(response, false,
                                   "Failed to update school info");
@@ -223,11 +226,11 @@ public class UserInfo {
 
   @RequestMapping(value="/work/{cid}", method=RequestMethod.PUT)
   public void updateUserWork(HttpServletResponse response,
-                                  HttpSession session,
-                                  @PathVariable("username") String username,
-                                  @PathVariable("cid") String cid,
-                                  Work work,
-                                  UserWork userWork) {
+                             HttpSession session,
+                             @PathVariable("username") String username,
+                             @PathVariable("cid") String cid,
+                             Work work,
+                             UserWork userWork) {
     if (cid == null) {
       JsonUtils.WriteJSONResponse(response, false, "invalid cid " + cid);
       return;
@@ -248,8 +251,11 @@ public class UserInfo {
     userWork.setWork(work);
     userWork.setUser(user);
 
-    if (this.userDAO.updateUserWorkInfo(user, cid, userWork)) {
-      JsonUtils.WriteJSONResponse(response, true, null);
+    Map<String, Object> result = new HashMap<String, Object>();
+    cid = this.userDAO.updateUserWorkInfo(user, cid, userWork);
+    if (cid != null) {
+      result.put("companyId", (String)cid);
+      JsonUtils.WriteJSONResponse(response, result);
     } else {
       JsonUtils.WriteJSONResponse(response, false,
                                   "Failed to update company info");
@@ -337,8 +343,11 @@ public class UserInfo {
     userPlace.setPlace(place);
     userPlace.setUser(user);
 
-    if (this.userDAO.updateUserPlaceInfo(user, pid, userPlace)) {
-      JsonUtils.WriteJSONResponse(response, true, null);
+    Map<String, Object> result = new HashMap<String, Object>();
+    pid = this.userDAO.updateUserPlaceInfo(user, pid, userPlace);
+    if (pid != null) {
+      result.put("placeId", (String)pid);
+      JsonUtils.WriteJSONResponse(response, result);
     } else {
       JsonUtils.WriteJSONResponse(response, false,
                                   "Failed to update place info");

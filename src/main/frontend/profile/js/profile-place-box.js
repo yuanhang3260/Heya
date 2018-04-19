@@ -71,7 +71,7 @@ function addPlaceInfo() {
     console.log(data);
 
     if (data.success) {
-      me.updateModelData(data.result.placeId);
+      me.updateModelData(data.result["placeId"]);
     } else {
       popups.alert("Update failed");
     }
@@ -101,6 +101,7 @@ function updatePlaceInfo() {
 
     if (data.success) {
       me.updateModelData();
+      me.pid = data.result["placeId"];
     } else {
       popups.alert("Update failed");
     }

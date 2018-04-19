@@ -5,6 +5,8 @@
 
 <hibernate-mapping package="bean">
   <class name="User" table="User" dynamic-update="true">
+    <cache usage="read-write"></cache>
+
     <id name="uid" column="uid" type="string">
       <generator class="uuid"></generator>
     </id>

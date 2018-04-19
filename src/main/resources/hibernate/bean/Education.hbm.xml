@@ -5,6 +5,8 @@
 
 <hibernate-mapping package="bean">
   <class name="Education" table="School" dynamic-update="true">
+    <cache usage="read-write"></cache>
+
     <id name="sid" column="sid" type="string">
       <generator class="assigned"></generator>
     </id>

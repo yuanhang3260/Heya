@@ -81,6 +81,7 @@ function updateCompanyInfo(work) {
 
     if (data.success) {
       me.updateModelData(work);
+      me.cid = data.result["companyId"];
     } else {
       popups.alert("Update failed");
     }

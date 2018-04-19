@@ -43,6 +43,7 @@ public class UserDAO {
   public User GetUserByUsername(String username) {
     Query query = getSession().createQuery(" from User where username = ?");
     query.setString(0, username);
+    // query.setCacheable(true);
     return (User)query.uniqueResult();
   }
 
@@ -86,6 +87,7 @@ public class UserDAO {
 
     Query query = getSession().createQuery(" from Education where name = ?");
     query.setString(0, education.getSchool());
+    query.setCacheable(true);
     Education result = (Education)query.uniqueResult();
     if (result == null) {
       // Add new school.
@@ -100,15 +102,16 @@ public class UserDAO {
     return newUserEducation.getEducation().getSid();
   }
 
-  public boolean updateUserEducationInfo(
+  public String updateUserEducationInfo(
       User user, String sid, UserEducation newUserEducation) {
     if (user == null || sid == null || newUserEducation == null) {
-      return false;
+      return null;
     }
 
     Education education = newUserEducation.getEducation();
 
     Set<UserEducation> allUserEducation = user.getUserEducation();
+    String updatedSid = sid;
     for (UserEducation ue : allUserEducation) {
       Education e = ue.getEducation();
       if (e.getSid().equals(sid)) {
@@ -117,6 +120,7 @@ public class UserDAO {
           Query query =
               getSession().createQuery(" from Education where name = ?");
           query.setString(0, education.getSchool());
+          query.setCacheable(true);
           Education result = (Education)query.uniqueResult();
           if (result == null) {
             // New school.
@@ -124,6 +128,8 @@ public class UserDAO {
             getSession().save(education);
             result = education;
           }
+          updatedSid = result.getSid();
+
           // update UserEducation relation table.
           ue.mergeFrom(newUserEducation);
           ue.setEducation(result);
@@ -135,7 +141,7 @@ public class UserDAO {
         break;
       }
     }
-    return true;
+    return updatedSid;
   }
 
   public boolean deleteUserEducationInfo(User user, String sid) {
@@ -166,6 +172,7 @@ public class UserDAO {
 
     Query query = getSession().createQuery(" from Work where name = ?");
     query.setString(0, work.getCompany());
+    query.setCacheable(true);
     Work result = (Work)query.uniqueResult();
     if (result == null) {
       // Add new company.
@@ -180,15 +187,16 @@ public class UserDAO {
     return newUserWork.getWork().getCid();
   }
 
-  public boolean updateUserWorkInfo(
+  public String updateUserWorkInfo(
       User user, String cid, UserWork newUserWork) {
     if (user == null || cid == null || newUserWork == null) {
-      return false;
+      return null;
     }
 
     Work work = newUserWork.getWork();
 
     Set<UserWork> allUserWork = user.getUserWork();
+    String updatedCid = cid;
     for (UserWork ue : allUserWork) {
       Work e = ue.getWork();
       if (e.getCid().equals(cid)) {
@@ -197,6 +205,7 @@ public class UserDAO {
           Query query =
               getSession().createQuery(" from Work where name = ?");
           query.setString(0, work.getCompany());
+          query.setCacheable(true);
           Work result = (Work)query.uniqueResult();
           if (result == null) {
             // New company.
@@ -204,6 +213,8 @@ public class UserDAO {
             getSession().save(work);
             result = work;
           }
+          updatedCid = result.getCid();
+
           // update UserWork relation table.
           ue.mergeFrom(newUserWork);
           ue.setWork(result);
@@ -215,7 +226,7 @@ public class UserDAO {
         break;
       }
     }
-    return true;
+    return updatedCid;
   }
 
   public boolean deleteUserWorkInfo(User user, String cid) {
@@ -246,6 +257,7 @@ public class UserDAO {
 
     Query query = getSession().createQuery(" from Place where name = ?");
     query.setString(0, place.getName());
+    query.setCacheable(true);
     Place result = (Place)query.uniqueResult();
     if (result == null) {
       // Add new company.
@@ -261,15 +273,16 @@ public class UserDAO {
     return newUserPlace.getPlace().getPid();
   }
 
-  public boolean updateUserPlaceInfo(
+  public String updateUserPlaceInfo(
       User user, String pid, UserPlace newUserPlace) {
     if (user == null || pid == null || newUserPlace == null) {
-      return false;
+      return null;
     }
 
     Place place = newUserPlace.getPlace();
 
     Set<UserPlace> allUserPlaces = user.getUserPlaces();
+    String updatedPid = pid;
     for (UserPlace up : allUserPlaces) {
       Place e = up.getPlace();
       if (e.getPid().equals(pid)) {
@@ -278,6 +291,7 @@ public class UserDAO {
           Query query =
               getSession().createQuery(" from Place where name = ?");
           query.setString(0, place.getName());
+          query.setCacheable(true);
           Place result = (Place)query.uniqueResult();
           if (result == null) {
             // New company.
@@ -285,6 +299,8 @@ public class UserDAO {
             getSession().save(place);
             result = place;
           }
+          updatedPid = result.getPid();
+
           // update UserPlace relation table.
           up.mergeFrom(newUserPlace);
           up.setPlace(result);
@@ -296,7 +312,7 @@ public class UserDAO {
         break;
       }
     }
-    return true;
+    return updatedPid;
   }
 
   public boolean deleteUserPlaceInfo(User user, String pid) {

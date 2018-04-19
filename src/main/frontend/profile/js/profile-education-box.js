@@ -76,6 +76,7 @@ function updateSchoolInfo(education) {
 
     if (data.success) {
       me.updateModelData(education);
+      me.sid = data.result["schoolId"];
     } else {
       popups.alert("Update failed");
     }
