@@ -58,13 +58,13 @@ function userInfo() {
         "current": false,
         "hometown": true,
         "pid": 3,
-        "place": "Haimen, Jiangsu Province, China"
+        "name": "Haimen, Jiangsu Province, China"
       },
       {
         "current": true,
         "hometown": false,
         "pid": 4,
-        "place": "Sunnyvale, CA"
+        "name": "Sunnyvale, CA"
       }
     ]
   }

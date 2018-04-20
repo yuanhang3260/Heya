@@ -6,6 +6,7 @@ import Vue from "vue";
 
 import NavBar from "heya/common/js/navbar.vue";
 import Avatar from "heya/home/js/avatar.vue";
+import Poster from "heya/home/js/poster.vue";
 import UserInfo from "heya/home/js/userinfo.vue";
 
 Vue.config.productionTip = false
@@ -28,5 +29,12 @@ new Vue({
   el: "#userinfo",
   components: {
     UserInfo,
+  }
+});
+
+new Vue({
+  el: "#poster",
+  components: {
+    Poster,
   }
 });

@@ -25,10 +25,12 @@
     <property name="links" column="links" type="string" />
     <property name="relationship" column="relationship" type="string" />
 
-<!--     <set name="education" table="UserSchool" cascade="save-update" lazy="false">
+    <!--     
+    <set name="education" table="UserSchool" cascade="save-update" lazy="false">
       <key column="fuid" />
       <many-to-many column="fsid" class="Education"/>
-    </set> -->
+    </set>
+     -->
 
     <set name="userEducation" cascade="all" lazy="false">
       <key column="fuid" />

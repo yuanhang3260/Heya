@@ -5,32 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%
-// Get Viewer from session (current active user).
-  User viewer = (User)session.getAttribute("user");
-  String viewer_username = viewer.getUsername();
-  String viewer_uid = viewer.getUid();
+  String uid = (String)request.getAttribute("uid");
+  String username = (String)request.getAttribute("username");
 
-  // Find user of this page (true owner). If not specified, then user is viewer.
-  User user;
-  String username = request.getParameter("username");
-  String uid;
-  user = viewer;
-  username = viewer_username;
-  uid = viewer_uid;
-  // if (username == null) {
-  //   user = viewer;
-  //   username = viewer_username;
-  //   uid = viewer_uid;
-  // } else {
-  //   user = User.GetUserByUsername(username);
-  //   if (user != null) {
-  //     uid = user.getUid();
-  //   } else {
-  //     user = viewer;
-  //     username = viewer_username;
-  //     uid = viewer_uid;
-  //   }
-  // }
+  String viewerUid = (String)request.getAttribute("viewerUid");
+  String viewerUsername = (String)request.getAttribute("viewerUsername");
 %>
 
 <html lang="en">
@@ -39,7 +18,7 @@
   <title>Heya</title>
 </head>
 
-<body uid="<%= uid %>" user="<%= username %>" viewer_id="<%= viewer_uid %>" viewer="<%= viewer_username %>" >
+<body uid="<%= uid %>" user="<%= username %>" viewer_id="<%= viewerUid %>" viewer="<%= viewerUsername %>" >
 <nav-bar id="navbar" :search-box=true :width=1250></nav-bar>
 
 <div class="home-main-container">

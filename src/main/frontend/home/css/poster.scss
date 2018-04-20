@@ -1,0 +1,61 @@
+@import "~heya/home/css/common.scss";
+
+::placeholder {
+  color: #bbb;
+}
+
+div.poster-container {
+  padding: 10px;
+
+  .poster-text-area {
+    height: 70px;
+    resize: none;
+    margin-bottom: 10px;
+    padding: 5px 7px;
+    font-size: 14px;
+
+
+    border: 1px solid #f0f0f0;
+    border-radius: 1px;
+
+    &:focus {
+      border: 1px solid #e5e5e5;
+      outline: none !important;
+    };
+  }
+
+  .bottom-container {
+    position: relative;
+
+    .post-button {
+      position: absolute;
+      right: 0px;
+      width: 70px;
+      height: 25px;
+
+      font-size: 14px;
+      color: white;
+    }
+
+    .edit-button {
+      width: 70px;
+      height: 25px;
+
+      font-size: 14px;
+      color: #333;
+      background-color: #f5f5f5;
+
+      i {
+        color: #4242a0;
+      }
+
+      &:hover {
+        background-color: #e0e0e0;
+      };
+    }
+
+    .edit-button-selected {
+      background-color: #e0e0e0;
+    }
+  }
+}

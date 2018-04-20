@@ -1,4 +1,5 @@
 @import "~heya/home/css/common.scss";
+@import "~heya/home/css/left.scss";
 
 body {
   background-color: #f9fffa;
@@ -14,5 +15,11 @@ body {
 
 .home-left-bar {
   position: fixed;
-  top: 55px;
+}
+
+.post-main-container {
+  position: relative;
+  left: $home-profile-container-width + 25px;
+  width: $post-area-width;
+  padding: 5px 0;
 }

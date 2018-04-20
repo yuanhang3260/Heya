@@ -43,9 +43,10 @@ public class UserInfo {
   public void getUserInfo(HttpServletResponse response,
                           HttpSession session,
                           @PathVariable("username") String username) {
-    User user;
-    if (username == null) {
-      user = (User)session.getAttribute("user");
+    User user;  // owner
+    User viewer = (User)session.getAttribute("user");
+    if (username.equals(viewer.getUsername())) {
+      user = viewer;
     } else {
       user = this.userDAO.GetUserByUsername(username);
     }
