@@ -8,7 +8,7 @@ div.image-clipboard {
   height: 70px;
   margin-right: 5px;
 
-  border: 1px solid #eee;
+  border: 2px dashed #eee;
   border-radius: 3px;
 
   label.add-button {
@@ -33,9 +33,33 @@ div.image-clipboard {
     };
   }
 
-  img.image-preview {
+  div.preivew-image-container {
+    position: relative;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+
+    img.image-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    i.delete-button {
+      display: none;
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      color: #e01d1d;
+      background-color: white;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    &:hover {
+      i.delete-button {
+        display: block;
+      }
+    };
   }
 }

@@ -3,42 +3,56 @@ import utils from "heya/common/js/utils.js"
 
 const maxImageSize = 5 * 1024 * 1024;
 
-function addImage(event) {
+function addImages(event) {
   let input = event.target;
   if (!input.files) {
     return;
   }
 
-  let file = input.files[0];
-  console.log(file.name);
-
-  if (file.size > maxImageSize) {
-    popups.alert(
-      "Image size over limit " + utils.friendlyFileSize(maxImageSize));
-    input.value = null;
-    return;
+  for (let file of input.files) {
+    if (file.size > maxImageSize) {
+      popups.alert(
+        "Some image size over limit " + utils.friendlyFileSize(maxImageSize));
+      input.value = null;
+      return;
+    }
   }
 
-  let me = this;
+  this.$emit("new-images-added", {
+    files: input.files,
+  });
 
-  let reader = new FileReader();
-  reader.onload = function() {
-    me.imageSrc = reader.result;
-    setTimeout(function() {
-      me.mode = "imageLoaded";
-    }, 200);
-  };
+  input.value = null;
+  return;
+}
 
-  this.mode = "loading";
-  reader.readAsDataURL(file);
+function deleteImage() {
+  this.$emit("delete-image", {
+    id: this.id,
+  });
+}
+
+function imageToAdd() {
+  return !this.name && !this.url;
+}
+
+function imageLoaded() {
+  return this.url;
+}
+
+function imageLoading() {
+  return this.name && !this.url;
 }
 
 export default {
   computed: {
-
+    imageToAdd: imageToAdd,
+    imageLoading: imageLoading,
+    imageLoaded: imageLoaded,
   },
 
   methods: {
-    addImage: addImage,
+    addImages: addImages,
+    deleteImage: deleteImage,
   }
 }

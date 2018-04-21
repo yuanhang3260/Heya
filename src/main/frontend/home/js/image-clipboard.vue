@@ -1,13 +1,16 @@
 <template>
 
 <div class="image-clipboard">
-  <label v-show="mode === 'add'" class="add-button">
+  <label v-if="imageToAdd" class="add-button">
     <i class="fa fa-plus"></i>
-    <input v-on:change="addImage" type="file" />
+    <input v-on:change="addImages" multiple="multiple" type="file" />
   </label>
 
-  <img v-show="mode === 'imageLoaded'" v-bind:src="imageSrc" class="image-preview" />
-  <load-animation v-if="mode === 'loading'" :width="40" :height="40" :color="'lightgray'"></load-animation>
+  <div v-if="imageLoaded" class="preivew-image-container">
+    <img v-bind:src="url" class="image-preview">
+    <i v-on:click="deleteImage" class="fa fa-minus-circle delete-button"></i>
+  </div>
+  <load-animation v-if="imageLoading" :width="40" :height="40" :color="'lightgray'"></load-animation>
 </div>
 
 </template>
@@ -22,16 +25,21 @@ export default {
     loadAnimation,
   },
   props: {
-    debug: {
-      type: Boolean,
-      default: false,
-    }
+    id: {
+      type: String,
+      default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
+    url: {
+      type: String,
+      default: null,
+    },
   },
   data () {
     return {
-      mode: "add",
-      imageLoaded: false,
-      imageSrc: null,
     }
   },
   computed: poster.computed,
