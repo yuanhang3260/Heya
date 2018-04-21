@@ -1,0 +1,41 @@
+@import "~heya/home/css/common.scss";
+
+div.image-clipboard {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 70px;
+  height: 70px;
+  margin-right: 5px;
+
+  border: 1px solid #eee;
+  border-radius: 3px;
+
+  label.add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    i {
+      color: #ddd;
+      font-size: 17px;
+    }
+
+    input {
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #fdfdfd;
+    };
+  }
+
+  img.image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

@@ -17,8 +17,19 @@ function googleMapURL(place) {
   return "https://www.google.com/maps/search/" + place;
 }
 
+function friendlyFileSize(byteSize) {
+  if (byteSize < 1024) {
+    return byteSize + " B";
+  } else if (byteSize < 1048576) {
+    return (byteSize / 1024).toFixed(1) + " KB";
+  } else {
+    return (byteSize / 1048576).toFixed(1) + " MB";
+  }
+}
+
 export default {
   sortByYearDesc: sortByYearDesc,
   googleSearchURL: googleSearchURL,
   googleMapURL: googleMapURL,
+  friendlyFileSize: friendlyFileSize,
 }

@@ -1,7 +1,15 @@
-import $ from "jquery";
 
 function postButtomDisabled() {
   return !this.postTextInput;
+}
+
+function clickEditButton(item) {
+  if (item === this.editorSelected) {
+    this.editorSelected = null;
+    return;
+  } else {
+    this.editorSelected = item;
+  }
 }
 
 export default {
@@ -10,5 +18,6 @@ export default {
   },
 
   methods: {
+    clickEditButton: clickEditButton,
   }
 }

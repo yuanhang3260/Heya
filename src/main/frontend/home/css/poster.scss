@@ -7,7 +7,7 @@
 div.poster-container {
   padding: 10px;
 
-  .poster-text-area {
+  textarea.poster-text-area {
     height: 70px;
     resize: none;
     margin-bottom: 10px;
@@ -24,7 +24,19 @@ div.poster-container {
     };
   }
 
-  .bottom-container {
+  div.editors-container {
+    margin-bottom: 10px;
+
+    div.editor-panel {
+
+    }
+
+    div.image-editor-panel {
+      display: flex;
+    }
+  }
+
+  div.bottom-container {
     position: relative;
 
     .post-button {
@@ -32,6 +44,7 @@ div.poster-container {
       right: 0px;
       width: 70px;
       height: 25px;
+      padding: 0;
 
       font-size: 14px;
       color: white;
@@ -39,7 +52,8 @@ div.poster-container {
 
     .edit-button {
       width: 70px;
-      height: 25px;
+      height: 26px;
+      padding: 0;
 
       font-size: 14px;
       color: #333;
