@@ -27,9 +27,40 @@ function friendlyFileSize(byteSize) {
   }
 }
 
+const monthNames = [
+  "January", "February", "March",
+  "April", "May", "June", "July",
+  "August", "September", "October",
+  "November", "December",
+];
+
+function formatDate(date) {
+  console.log(date);
+  let day = date.getDate();
+  let monthIndex = date.getMonth();
+  let year = date.getFullYear();
+
+  let result = monthNames[monthIndex] + " " + day;
+  if ((new Date()).getFullYear != year) {
+    result += " " + year;
+  }
+  return result + " at " + formatHourMinute(date.getHours(), date.getMinutes());
+}
+
+function formatHourMinute(hours, minutes) {
+  if (hours > 12) {
+    return (hours - 12) + ":" + minutes + "pm";
+  } else if (hours === 12) {
+    return "12:" + minutes + "pm";
+  } else {
+    return hours + ":" + minutes + "am";
+  }
+}
+
 export default {
   sortByYearDesc: sortByYearDesc,
   googleSearchURL: googleSearchURL,
   googleMapURL: googleMapURL,
   friendlyFileSize: friendlyFileSize,
+  formatDate: formatDate,
 }

@@ -25,6 +25,7 @@ function loadImages(payload) {
 
   let me = this;
 
+  this.allImagesLoaded = false;
   for (let file of files) {
     this.images.push({
       id: uuid(),
@@ -67,12 +68,13 @@ function deleteImage(payload) {
 
 function doPost() {
   var formData = new FormData();
-  formData.append("postText", this.postTextInput);
+  if (this.postTextInput) {
+    formData.append("postText", this.postTextInput);
+  }
+
   for (let image of this.images) {
     var ext = (image.url.split(";")[0]).split(":")[1]
     var blob = b64ToBlob(image.url.split(",")[1], ext);
-    console.log(ext);
-    console.log("image-" + image.id);
     formData.append("image-" + image.id, blob);
   }
 

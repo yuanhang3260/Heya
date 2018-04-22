@@ -7,6 +7,7 @@ import Vue from "vue";
 import NavBar from "heya/common/js/navbar.vue";
 import Avatar from "heya/home/js/avatar.vue";
 import Poster from "heya/home/js/poster.vue";
+import PostBoard from "heya/home/js/post-board.vue";
 import UserInfo from "heya/home/js/userinfo.vue";
 
 Vue.config.productionTip = false
@@ -38,3 +39,11 @@ new Vue({
     Poster,
   }
 });
+
+new Vue({
+  el: "#post-board",
+  components: {
+    PostBoard,
+  }
+});
+

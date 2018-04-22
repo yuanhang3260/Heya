@@ -1,0 +1,90 @@
+@import "~heya/home/css/common.scss";
+
+div.heya-post {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fcfcfc;
+
+  div.post-header {
+    position: relative;
+
+    img.post-owner-avatar {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+
+      border-radius: 100%;
+      object-fit: cover;
+    }
+
+    div.header-title {
+      position: relative;
+      left: 50px;
+
+      p {
+        margin: 0;
+      }
+
+      p.post-owner {
+        color: #262698;
+        font-weight: 550;
+      }
+
+      p.post-time {
+        font-size: 12px;
+        color: #777;
+      }
+    }
+
+    i.delete-post-button {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 11px;
+      color: #888888;
+      cursor: pointer;
+    }
+
+    &:hover {
+      i.delete-post-button {
+        display: block;
+      }
+    };
+  }
+
+  div.post-content {
+    margin: 7px 3px 0 3px;
+
+    p {
+      margin: 0;
+      font-size: 15px;
+    }
+  }
+
+  div.post-gallery {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 6px;
+
+    div.post-gallery-row {
+      height: 150px;
+      display: flex;
+
+      div.post-image-container {
+        flex-grow: 1;
+        width: 100%;
+        height: 100%;
+        border: 3px solid #fcfcfc;
+
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          opacity: 0.95;
+        }
+      }
+    }
+  }
+}

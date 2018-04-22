@@ -39,6 +39,14 @@ export default {
     imageClipboard,
   },
   props: {
+    uid: {
+      type: String,
+      default: null,
+    },
+    username: {
+      type: String,
+      default: null,
+    },
     debug: {
       type: Boolean,
       default: false,

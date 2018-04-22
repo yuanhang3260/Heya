@@ -8,7 +8,7 @@ div.image-clipboard {
   height: 70px;
   margin-right: 5px;
 
-  border: 2px dashed #eee;
+  border: 2px dashed #e0e0e0;
   border-radius: 3px;
 
   label.add-button {
@@ -17,6 +17,7 @@ div.image-clipboard {
     align-items: center;
     width: 100%;
     height: 100%;
+    background-color: white;
 
     i {
       color: #ddd;
@@ -29,7 +30,6 @@ div.image-clipboard {
 
     &:hover {
       cursor: pointer;
-      background-color: #fdfdfd;
     };
   }
 

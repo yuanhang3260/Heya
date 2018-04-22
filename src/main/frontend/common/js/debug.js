@@ -70,6 +70,70 @@ function userInfo() {
   }
 }
 
+function posts() {
+  return [
+    {
+      id: "abc123",
+      username: "snoopy",
+      time: new Date("April 21, 2018 15:45:00"),
+      avatar: "dist/img/profile.jpg",
+      content: "Hi I'm Snoopy - smart dog, cute dog.",
+      images: [
+        {
+          url: "dist/post-images/snoopy1.png"
+        },
+        {
+          url: "dist/post-images/snoopy2.jpg"
+        },
+        {
+          url: "dist/post-images/snoopy3.jpg"
+        },
+        {
+          url: "dist/post-images/snoopy4.jpg"
+        },
+        {
+          url: "dist/post-images/snoopy5.png"
+        },
+      ],
+    },
+
+    {
+      id: "xyz07",
+      username: "snoopy",
+      time: new Date("April 20, 2018 10:20:00"),
+      avatar: "dist/img/profile.jpg",
+      content: "Wow ~",
+      images: [
+        {
+          url: "dist/post-images/beauty1.jpg"
+        },
+        {
+          url: "dist/post-images/beauty2.jpg"
+        },
+        {
+          url: "dist/post-images/beauty3.jpg"
+        },
+        {
+          url: "dist/post-images/beauty4.jpg"
+        },
+        {
+          url: "dist/post-images/beauty5.jpg"
+        },
+        {
+          url: "dist/post-images/beauty6.jpg"
+        },
+        {
+          url: "dist/post-images/beauty7.jpg"
+        },
+        {
+          url: "dist/post-images/beauty8.jpg"
+        },
+      ],
+    },
+  ];
+}
+
 export default {
   userInfo: userInfo,
+  posts: posts,
 }
