@@ -83,8 +83,13 @@ div.heya-post {
           width: 100%;
           object-fit: cover;
           opacity: 0.95;
+          cursor: pointer;
         }
       }
+    }
+
+    div.singleImageRow {
+      height: 350px;
     }
   }
 }

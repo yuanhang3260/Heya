@@ -8,6 +8,13 @@ function postCreateDate() {
   return utils.formatDate(this.post.time);
 }
 
+function viewImage(index) {
+  this.$emit("view-post-images", {
+    postId: this.post.id,
+    imageIndex: index,
+  });
+}
+
 export default {
   computed: {
     imageRows: imageRows,
@@ -15,5 +22,6 @@ export default {
   },
 
   methods: {
+    viewImage: viewImage,
   }
 }

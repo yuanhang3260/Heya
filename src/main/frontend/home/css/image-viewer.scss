@@ -1,0 +1,67 @@
+@import "~heya/home/css/common.scss";
+
+div.heya-image-viewer {
+  .modal-dialog {
+    max-width: 900px;
+    height: 90%;
+
+    .modal-content {
+      height: 100%;
+
+      .modal-body {
+        display: flex;
+        height: 100%;
+        padding: 0;
+
+        div.image-container {
+          flex-grow: 1;
+          height: 100%;
+          width: 100%;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            max-width: 100%;
+            max-height: 100%;
+          }
+        }
+
+        div.image-viewer-sidebar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          height: 100%;
+          width: 60px;
+
+          background-color: #f9f9f9;
+          cursor: pointer;
+
+          i.image-viewer-angle {
+            font-size: 40px;
+            color: #b3b3cc;
+          }
+
+          &:hover {
+            background-color: #f3f3f3;
+            i.image-viewer-angle {
+              color: #9393ac;
+            }
+          }
+        }
+
+        div.image-viewer-sidebar-left {
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+
+        div.image-viewer-sidebar-right {
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+      }
+    }
+  }
+}

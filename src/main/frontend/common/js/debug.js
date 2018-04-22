@@ -123,12 +123,33 @@ function posts() {
           url: "dist/post-images/beauty6.jpg"
         },
         {
-          url: "dist/post-images/beauty7.jpg"
-        },
-        {
           url: "dist/post-images/beauty8.jpg"
         },
+        {
+          url: "dist/post-images/beauty7.jpg"
+        },
       ],
+    },
+
+    {
+      id: "mno135",
+      username: "snoopy",
+      time: new Date("April 17, 2018 12:35:00"),
+      avatar: "dist/img/profile.jpg",
+      content: "This is my buddy panda, big panda ~",
+      images: [
+        {
+          url: "dist/post-images/panda.jpg"
+        },
+      ],
+    },
+
+    {
+      id: "tyu_789",
+      username: "snoopy",
+      time: new Date("April 12, 2018 11:40:00"),
+      avatar: "dist/img/profile.jpg",
+      content: "Sleeping ~~~",
     },
   ];
 }

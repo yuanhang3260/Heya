@@ -1,6 +1,10 @@
 <template>
 
 <div class="card poster-container">
+  <div class="poster-header">
+    <i class="fa fa-edit" />
+    <span>Make Post</span>
+  </div>
   <textarea v-model="postTextInput" class="poster-text-area" placeholder="Share your minds"></textarea>
 
   <div v-show="editorSelected" class="editors-container">

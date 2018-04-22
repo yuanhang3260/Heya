@@ -1,4 +1,5 @@
-import debug from "heya/common/js/debug.js"
+import $ from "jquery";
+import debug from "heya/common/js/debug.js";
 
 function beforeMount() {
   this.getPosts();
@@ -17,6 +18,23 @@ function loadPosts() {
   return [];
 }
 
+const imageViewerElementId = "post-image-viewer";
+
+function viewPostImages(payload) {
+  for (let post of this.posts) {
+    if (post.id === payload.postId) {
+      this.imagesToView = post.images;
+      this.imageViewIndex = payload.imageIndex;
+
+      // Unforturnately, we have to use jquery to modal the image viewer,
+      // and given focus to dialog body.
+      $("#" + imageViewerElementId).modal("show");
+      $("#" + imageViewerElementId).find(".modal-body").focus();
+      break;
+    }
+  }
+}
+
 export default {
   computed: {
   },
@@ -24,7 +42,9 @@ export default {
   methods: {
     getPosts: getPosts,
     loadPosts: loadPosts,
+    viewPostImages: viewPostImages,
   },
 
   beforeMount: beforeMount,
+  imageViewerElementId: imageViewerElementId,
 }

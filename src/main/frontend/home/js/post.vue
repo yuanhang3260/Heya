@@ -14,10 +14,10 @@
     <p>{{post.content}}</p>
   </div>
 
-  <div class="post-gallery">
-    <div v-for="index in imageRows" class="post-gallery-row">
-      <div v-for="image in post.images.slice(index * 3, index * 3 + 3)" class="post-image-container">
-        <img v-bind:src="image.url">
+  <div v-if="post.images && post.images.length > 0" class="post-gallery">
+    <div v-for="row in imageRows" class="post-gallery-row" :class="{singleImageRow: post.images.length === 1}">
+      <div v-for="(image, column) in post.images.slice(row * 3, Math.min(row * 3 + 3, post.images.length))" class="post-image-container">
+        <img v-bind:src="image.url" v-on:click="viewImage(row * 3 + column)">
       </div>
     </div>
   </div>

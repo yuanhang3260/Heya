@@ -41,7 +41,7 @@ function formatDate(date) {
   let year = date.getFullYear();
 
   let result = monthNames[monthIndex] + " " + day;
-  if ((new Date()).getFullYear != year) {
+  if ((new Date()).getFullYear() !== year) {
     result += " " + year;
   }
   return result + " at " + formatHourMinute(date.getHours(), date.getMinutes());

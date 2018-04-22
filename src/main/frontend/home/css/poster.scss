@@ -9,6 +9,24 @@ div.poster-container {
   margin-bottom: $card-gap-width;
   background-color: #fcfcfc;
 
+  div.poster-header {
+    position: relative;
+    margin-bottom: 4px;
+
+    i {
+      position: absolute;
+      left: 2px;
+      top: 5px;
+      color: darkblue;
+    }
+
+    span {
+      position: relative;
+      left: 22px;
+      font-size: 13px;
+    }
+  }
+
   textarea.poster-text-area {
     height: 70px;
     resize: none;
@@ -58,7 +76,7 @@ div.poster-container {
 
       font-size: 14px;
       color: #333;
-      background-color: #f9f9f9;
+      background-color: #fcfcfc;
 
       i {
         color: #4242a0;
