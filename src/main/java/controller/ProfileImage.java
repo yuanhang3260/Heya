@@ -83,7 +83,6 @@ public class ProfileImage {
       @PathVariable("type") String type,
       @RequestHeader("Content-Type") String contentType)
       throws IOException, ServletException {
-
     if (uid == null || type == null) {
       JsonUtils.WriteJSONResponse(response, false, "Invalid request");
       return;
@@ -95,12 +94,15 @@ public class ProfileImage {
       return;
     }
 
+    ServletContext context = request.getServletContext();
+    String baseDir = context.getInitParameter("data-storage");
+
     // Process image data.
     Collection<Part> parts = request.getParts();
     boolean success = false;
     for (Part part : parts) {
       if (part.getName().equals("imagedata")){
-        if (UpdateProfileImageFile(uid, part)) {
+        if (UpdateProfileImageFile(uid, part, baseDir)) {
           success = true;
           break;
         }
@@ -111,10 +113,8 @@ public class ProfileImage {
                                 success ? null : "Update profile image failed");
   }
 
-  private boolean UpdateProfileImageFile(String uid, Part part)
+  private boolean UpdateProfileImageFile(String uid, Part part, String baseDir)
       throws IOException {
-    String cd = part.getHeader("Content-Disposition");
-
     String type = part.getHeader("Content-Type");
     String[] re = type.split("/");
     if (re.length != 2) {
@@ -132,7 +132,7 @@ public class ProfileImage {
     FileOutputStream fos = null;
     try {
       String imageFile = Paths.get(
-          "/home/hy/WebStorage/Heya", "user", uid, "profile.jpg").toString();
+          baseDir, "user", uid, "profile.jpg").toString();
       fos = new FileOutputStream(imageFile);
       int b = 0;
       while((b = is.read()) != -1) {

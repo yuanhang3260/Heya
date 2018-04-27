@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="bean">
+  <class name="UserPost" table="UserPost" dynamic-update="true">
+    <id name="upid" column="upid" type="string">
+      <generator class="uuid"></generator>
+    </id>
+
+    <many-to-one name="user" class="User" column="fuid" />
+    <many-to-one name="post" class="Post" column="fpid" lazy="false"/>
+  </class>
+</hibernate-mapping>

@@ -27,7 +27,7 @@ function viewPostImages(payload) {
       this.imageViewIndex = payload.imageIndex;
 
       // Unforturnately, we have to use jquery to modal the image viewer,
-      // and given focus to dialog body.
+      // and give focus to dialog body.
       $("#" + imageViewerElementId).modal("show");
       $("#" + imageViewerElementId).find(".modal-body").focus();
       break;

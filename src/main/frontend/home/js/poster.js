@@ -69,7 +69,7 @@ function deleteImage(payload) {
 function doPost() {
   var formData = new FormData();
   if (this.postTextInput) {
-    formData.append("postText", this.postTextInput);
+    formData.append("content", this.postTextInput);
   }
 
   for (let image of this.images) {

@@ -123,10 +123,10 @@ function posts() {
           url: "dist/post-images/beauty6.jpg"
         },
         {
-          url: "dist/post-images/beauty8.jpg"
+          url: "dist/post-images/beauty7.jpg"
         },
         {
-          url: "dist/post-images/beauty7.jpg"
+          url: "dist/post-images/beauty8.jpg"
         },
       ],
     },
@@ -136,7 +136,7 @@ function posts() {
       username: "snoopy",
       time: new Date("April 17, 2018 12:35:00"),
       avatar: "dist/img/profile.jpg",
-      content: "This is my buddy panda, big panda ~",
+      content: "This is my buddy big bear ~",
       images: [
         {
           url: "dist/post-images/panda.jpg"
