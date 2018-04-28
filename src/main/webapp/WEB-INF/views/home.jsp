@@ -26,6 +26,11 @@
     <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'"></avatar>
     <user-info id="userinfo" :uid="'<%= uid %>'" :username="'<%= username %>'"></user-info>
   </div>
+
+  <div class="post-main-container">
+    <poster id="poster" :uid="'<%= uid %>'" :username="'<%= username %>'" :debug=false></poster>
+    <post-board id="post-board" :uid="'<%= uid %>'" :username="'<%= username %>'" :debug=false></post-board>
+  </div>
 </div>
 
 <script type="text/javascript" src="dist/js/home.dist.js"></script></body>

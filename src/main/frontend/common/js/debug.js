@@ -73,7 +73,7 @@ function userInfo() {
 function posts() {
   return [
     {
-      id: "abc123",
+      pid: "abc123",
       username: "snoopy",
       time: new Date("April 21, 2018 15:45:00"),
       avatar: "dist/img/profile.jpg",
@@ -98,7 +98,7 @@ function posts() {
     },
 
     {
-      id: "xyz07",
+      pid: "xyz07",
       username: "snoopy",
       time: new Date("April 20, 2018 10:20:00"),
       avatar: "dist/img/profile.jpg",
@@ -132,7 +132,7 @@ function posts() {
     },
 
     {
-      id: "mno135",
+      pid: "mno135",
       username: "snoopy",
       time: new Date("April 17, 2018 12:35:00"),
       avatar: "dist/img/profile.jpg",
@@ -145,7 +145,7 @@ function posts() {
     },
 
     {
-      id: "tyu_789",
+      pid: "tyu_789",
       username: "snoopy",
       time: new Date("April 12, 2018 11:40:00"),
       avatar: "dist/img/profile.jpg",

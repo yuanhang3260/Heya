@@ -5,12 +5,12 @@ function imageRows() {
 }
 
 function postCreateDate() {
-  return utils.formatDate(this.post.time);
+  return utils.formatDate(new Date(this.post.time));
 }
 
 function viewImage(index) {
   this.$emit("view-post-images", {
-    postId: this.post.id,
+    postId: this.post.pid,
     imageIndex: index,
   });
 }

@@ -1,5 +1,6 @@
 import $ from "jquery";
 import debug from "heya/common/js/debug.js";
+import common from "./common.js";
 
 function beforeMount() {
   this.getPosts();
@@ -14,15 +15,28 @@ function getPosts() {
 }
 
 function loadPosts() {
-  // TODO: load posts from backend.
-  return [];
+  var me = this;
+  $.ajax({
+    type: "GET",
+    url: "post/" + this.username + "/all",
+    dataType: "json",
+    encode: true,
+  }).done(function(data) {
+    console.log(data);
+    if (data.success) {
+      for (let post of data.result.posts) {
+        common.generatePost(post, me.uid, me.username);
+      }
+      me.posts = data.result.posts;
+    }
+  });
 }
 
 const imageViewerElementId = "post-image-viewer";
 
 function viewPostImages(payload) {
   for (let post of this.posts) {
-    if (post.id === payload.postId) {
+    if (post.pid === payload.postId) {
       this.imagesToView = post.images;
       this.imageViewIndex = payload.imageIndex;
 
@@ -33,6 +47,13 @@ function viewPostImages(payload) {
       break;
     }
   }
+}
+
+function created() {
+  let me = this;
+  this.$bus.on("add-new-post", function(payload) {
+    me.posts.unshift(payload.post);
+  });
 }
 
 export default {
@@ -46,5 +67,6 @@ export default {
   },
 
   beforeMount: beforeMount,
+  created: created,
   imageViewerElementId: imageViewerElementId,
 }

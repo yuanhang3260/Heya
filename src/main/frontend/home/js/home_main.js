@@ -3,6 +3,9 @@ import "heya/common/css/font-awesome.min.css";
 import "heya/home/css/home.scss";
 
 import Vue from "vue";
+import VueBus from "vue-bus";
+
+Vue.use(VueBus);
 
 import NavBar from "heya/common/js/navbar.vue";
 import Avatar from "heya/home/js/avatar.vue";

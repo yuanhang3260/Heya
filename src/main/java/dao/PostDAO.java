@@ -35,33 +35,19 @@ public class PostDAO {
     return sessionFactory.getCurrentSession();
   }
 
-  public String addNewPost(String uid, Post post) {
-    post.setPid(UuidUtils.compressedUuid());
-    return post.getPid();
+  public List<Post> getPosts(String uid) {
+    Query query = getSession().createQuery(" from Post where uid = ?");
+    query.setString(0, uid);
+    return query.list();
   }
 
-  // public String addUserEducationInfo(User user,
-  //                                    UserEducation newUserEducation) {
-  //   if (user == null || newUserEducation == null) {
-  //     return null;
-  //   }
+  public String addNewPost(String uid, Post post) {
+    // Generate complete Post object.
+    post.setPid(UuidUtils.compressedUuid());
+    post.setUid(uid);
+    post.setCreateTime(new Date());
 
-  //   Education education = newUserEducation.getEducation();
-
-  //   Query query = getSession().createQuery(" from Education where name = ?");
-  //   query.setString(0, education.getSchool());
-  //   query.setCacheable(true);
-  //   Education result = (Education)query.uniqueResult();
-  //   if (result == null) {
-  //     // Add new school.
-  //     education.setSid(UuidUtils.compressedUuid());
-  //     getSession().save(education);
-  //   } else {
-  //     newUserEducation.setEducation(result);
-  //   }
-
-  //   user.getUserEducation().add(newUserEducation);
-  //   getSession().update(user);
-  //   return newUserEducation.getEducation().getSid();
-  // }
+    getSession().save(post);
+    return post.getPid();
+  }
 }

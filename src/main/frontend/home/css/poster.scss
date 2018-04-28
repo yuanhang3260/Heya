@@ -91,4 +91,17 @@ div.poster-container {
       background-color: #e0e0e0;
     }
   }
+
+  div.cover-layer {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(10, 10, 10, 0.1);
+  }
 }

@@ -1,4 +1,5 @@
 import $ from "jquery";
+import common from "./common.js";
 import b64ToBlob from "b64-to-blob"
 import popups from "heya/common/js/popups.js"
 import uuid from "uuid/v1";
@@ -78,15 +79,33 @@ function doPost() {
     formData.append("image-" + image.id, blob);
   }
 
+  this.submitting = true;
+
+  let me = this;
   $.ajax({
     type: "POST",
-    url: "post/",
+    url: "post/" + this.username,
     data: formData,
     processData: false,
     contentType: false,
   }).done(function(data) {
     // log data to the console so we can see.
     console.log(data);
+    if (data.success) {
+      let post = data.result.post;
+      common.generatePost(post, me.uid, me.username);
+      me.$bus.emit("add-new-post", {
+        post: post,
+      });
+
+      // TODO: remove the delay.
+      window.setTimeout(function() {
+        me.postTextInput = null;
+        me.images = [];
+        me.editorSelected = null;
+        me.submitting = false;
+      }, 300);
+    }
   });
 }
 

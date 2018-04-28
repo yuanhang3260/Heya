@@ -27,11 +27,12 @@ public class Post {
     try {
       json_obj.put("uid", uid);
       json_obj.put("pid", pid);
+      json_obj.put("time", createTime);
       if (this.content != null) {
         json_obj.put("content", this.content);
       }
       JSONArray array = new JSONArray();
-      for (String pic: getPicturesAsList()) {
+      for (String pic : getPicturesAsList()) {
         array.put(pic);
       }
       json_obj.put("pictures", array);
@@ -39,6 +40,14 @@ public class Post {
       e.printStackTrace();
     }
     return json_obj;
+  }
+
+  public static JSONArray toJSONOArray(List<Post> posts) {
+    JSONArray array = new JSONArray();
+    for (Post post : posts) {
+      array.put(post.toJSONObject());
+    }
+    return array;
   }
 
   public String getPid() {
@@ -76,12 +85,14 @@ public class Post {
     this.pictures = pictures;
   }
   public void setPicturesFromList(List<String> pictures) {
-    this.pictures = String.join(",\n", pictures);
+    this.pictures = String.join(",", pictures);
   }
   public List<String> getPicturesAsList() {
     List<String> result = new ArrayList<String>();
-    for (String pic: this.pictures.split(",\n")) {
-      result.add(pic);
+    if (!this.pictures.isEmpty()) {
+      for (String pic: this.pictures.split(",")) {
+        result.add(pic);
+      }
     }
     return result;
   }

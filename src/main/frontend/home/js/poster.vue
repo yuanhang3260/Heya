@@ -29,6 +29,10 @@
     </button>
     <button v-on:click="doPost" type="button" class="btn btn-success post-button" v-bind:disabled="!enablePostButtom">Go !</button>
   </div>
+
+  <div v-show="submitting" class="cover-layer">
+    <load-animation :width="60" :height="60" :color="'#4bd64b'"></load-animation>
+  </div>
 </div>
 
 </template>
@@ -36,10 +40,12 @@
 <script>
 import poster from "./poster.js"
 import imageClipboard from "./image-clipboard.vue"
+import loadAnimation from "heya/common/js/load-animation.vue"
 
 export default {
   name: "poster",
   components: {
+    loadAnimation,
     imageClipboard,
   },
   props: {
@@ -66,6 +72,7 @@ export default {
       editorSelected: null,
       images: [],
       allImagesLoaded: false,
+      submitting: false,
     }
   },
   computed: poster.computed,

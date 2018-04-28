@@ -23,9 +23,10 @@ import bean.Post;
 import bean.User;
 import dao.PostDAO;
 import util.JsonUtils;
+import util.UuidUtils;
 
 @Controller
-@RequestMapping("/post/{username}/")
+@RequestMapping("/post/{username}")
 public class HeyaPost {
 
   @Autowired
@@ -38,6 +39,27 @@ public class HeyaPost {
       return user;
     }
     return null;
+  }
+
+  @RequestMapping(value="/all", method=RequestMethod.GET)
+  public void getPosts(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      HttpSession session,
+      @PathVariable("username") String username) {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
+    String uid = user.getUid();
+
+    // Query db to get posts of this user.
+    List<Post> posts = this.postDAO.getPosts(uid);
+
+    Map<String, Object> result = new HashMap<String, Object>();
+    result.put("posts", Post.toJSONOArray(posts));
+    JsonUtils.WriteJSONResponse(response, result);
   }
 
   @RequestMapping(value="", method=RequestMethod.POST)
@@ -83,8 +105,6 @@ public class HeyaPost {
 
     // Add new post to database.
     Post post = new Post();
-    post.setUid(uid);
-    post.setCreateTime(new Date());
     post.setContent(content);
     post.setPicturesFromList(pictures);
 
@@ -128,7 +148,7 @@ public class HeyaPost {
     String ext = re[1];
 
     // image file name.
-    String filename = part.getName().substring(6) + "." + ext;
+    String filename = UuidUtils.compressedUuid() + "." + ext;
 
     FileOutputStream fos = null;
     try {

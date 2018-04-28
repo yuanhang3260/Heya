@@ -4,5 +4,5 @@ CREATE TABLE Post (
   CreateTime DATE NOT NULL,
   Content VARCHAR(1024),
   Pictures VARCHAR(1024),
-  FOREIGN KEY (fuid) REFERENCES User(uid),
+  FOREIGN KEY (fuid) REFERENCES User(uid)
 );

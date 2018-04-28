@@ -1,7 +1,7 @@
 <template>
 
 <div class="heya-post-board">
-  <post v-for="post in posts" :key="post.id" :post="post" v-on:view-post-images="viewPostImages"/>
+  <post v-for="post in posts" :key="post.pid" :post="post" v-on:view-post-images="viewPostImages"/>
 
   <image-viewer :id="imageViewerElementId" :uid="uid" :username="username" :debug="debug" :images="imagesToView" :imageIndex.sync="imageViewIndex"></image-viewer>
 </div>
@@ -44,6 +44,7 @@ export default {
   computed: postBoard.computed,
   methods: postBoard.methods,
   beforeMount: postBoard.beforeMount,
+  created: postBoard.created,
 }
 </script>
 
