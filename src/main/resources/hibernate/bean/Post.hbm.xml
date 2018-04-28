@@ -12,7 +12,7 @@
     </id>
 
     <property name="uid" column="fuid" type="string" not-null="true" update="false"/>
-    <property name="createTime" column="CreateTime" type="date" not-null="true" update="false"/>
+    <property name="createTime" column="CreateTime" type="timestamp" not-null="true" update="false"/>
     <property name="content" column="Content" type="string"/>
     <property name="pictures" column="Pictures" type="string"/>
   </class>

@@ -7,7 +7,7 @@
       <p class="post-owner">{{post.username}}</p>
       <p class="post-time">{{postCreateDate}}</p>
     </div>
-    <i class="fa fa-ban delete-post-button" />
+    <i v-on:click="deletePost" class="fa fa-ban delete-post-button" />
   </div>
 
   <div class="post-content">

@@ -1,7 +1,7 @@
 import $ from "jquery";
+import b64ToBlob from "b64-to-blob";
 import common from "./common.js";
-import b64ToBlob from "b64-to-blob"
-import popups from "heya/common/js/popups.js"
+import popups from "heya/common/js/popups.js";
 import uuid from "uuid/v1";
 
 function enablePostButtom() {
@@ -106,6 +106,8 @@ function doPost() {
         me.submitting = false;
       }, 300);
     }
+  }).fail(function() {
+    popups.alert("Failed to add post");
   });
 }
 

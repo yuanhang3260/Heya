@@ -174,4 +174,26 @@ public class HeyaPost {
       }
     }
   }
+
+  @RequestMapping(value="/{pid}", method=RequestMethod.DELETE)
+  public void doDeletePost(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      HttpSession session,
+      @PathVariable("username") String username,
+      @PathVariable("pid") String pid)
+      throws IOException, ServletException {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
+    String uid = user.getUid();
+
+    if (this.postDAO.deletePost(uid, pid)) {
+      JsonUtils.WriteJSONResponse(response, true, null);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to delete post");
+    }
+  }
 }

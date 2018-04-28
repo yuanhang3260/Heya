@@ -35,7 +35,6 @@ const monthNames = [
 ];
 
 function formatDate(date) {
-  console.log(date);
   let day = date.getDate();
   let monthIndex = date.getMonth();
   let year = date.getFullYear();

@@ -50,4 +50,12 @@ public class PostDAO {
     getSession().save(post);
     return post.getPid();
   }
+
+  public boolean deletePost(String uid, String pid) {
+    Post post = new Post();
+    post.setUid(uid);
+    post.setPid(pid);
+    getSession().delete(post);
+    return true;
+  }
 }

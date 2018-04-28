@@ -5,13 +5,19 @@ function imageRows() {
 }
 
 function postCreateDate() {
-  return utils.formatDate(new Date(this.post.time));
+  return utils.formatDate(this.post.time);
 }
 
 function viewImage(index) {
   this.$emit("view-post-images", {
     postId: this.post.pid,
     imageIndex: index,
+  });
+}
+
+function deletePost() {
+  this.$emit("delete-post", {
+    postId: this.post.pid,
   });
 }
 
@@ -23,5 +29,6 @@ export default {
 
   methods: {
     viewImage: viewImage,
+    deletePost: deletePost,
   }
 }

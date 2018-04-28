@@ -5,6 +5,7 @@ function postImageURL(uid, pid, imageFile) {
 function generatePost(post, uid, username) {
   post["avatar"] = "profileimage/profile/" + uid;
   post["username"] = username;
+  post["time"] = new Date(post.time);
 
   let images = [];
   for (let pic of post.pictures) {
