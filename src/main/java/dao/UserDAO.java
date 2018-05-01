@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Query;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.DataAccessException;
@@ -32,6 +33,7 @@ import util.UuidUtils;
 
 @Repository("UserDAO")
 public class UserDAO {
+  private static final Logger log = Logger.getLogger(UserDAO.class);
 
   @Autowired
   private SessionFactory sessionFactory;

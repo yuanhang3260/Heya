@@ -76,8 +76,7 @@ function deletePost(payload) {
       }
       resolve();
     }).fail(function(data) {
-      popups.alert("Failed to delete post");
-      reject();
+      reject("Failed to delete post");
     });
   }
 

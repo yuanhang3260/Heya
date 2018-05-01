@@ -5,7 +5,7 @@ import popups from "heya/common/js/popups.js";
 import uuid from "uuid/v1";
 
 function enablePostButtom() {
-  return this.postTextInput || (this.images && this.allImagesLoaded);
+  return this.postTextInput || (this.images.length > 0 && this.allImagesLoaded);
 }
 
 function clickEditButton(item) {
@@ -108,6 +108,7 @@ function doPost() {
     }
   }).fail(function() {
     popups.alert("Failed to add post");
+    me.submitting = false;
   });
 }
 

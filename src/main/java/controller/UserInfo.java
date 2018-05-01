@@ -264,10 +264,10 @@ public class UserInfo {
   }
 
   @RequestMapping(value="/work/{cid}", method=RequestMethod.DELETE)
-  public void deleteUserWorkI(HttpServletResponse response,
-                              HttpSession session,
-                              @PathVariable("username") String username,
-                              @PathVariable("cid") String cid) {
+  public void deleteUserWork(HttpServletResponse response,
+                             HttpSession session,
+                             @PathVariable("username") String username,
+                             @PathVariable("cid") String cid) {
     if (cid == null) {
       JsonUtils.WriteJSONResponse(response, false, "invalid cid " + cid);
       return;

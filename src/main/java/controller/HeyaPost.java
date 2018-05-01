@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.GregorianCalendar;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,16 @@ import util.UuidUtils;
 @Controller
 @RequestMapping("/post/{username}")
 public class HeyaPost {
+  private static final Logger log = Logger.getLogger(HeyaPost.class);
+
+  private static String dataDir = null;
+  static String getDataDir(HttpServletRequest request) {
+    if (dataDir == null) {
+      ServletContext context = request.getServletContext();
+      dataDir = context.getInitParameter("data-storage");
+    }
+    return dataDir;
+  } 
 
   @Autowired
   PostDAO postDAO;
@@ -190,7 +201,18 @@ public class HeyaPost {
     }
     String uid = user.getUid();
 
-    if (this.postDAO.deletePost(uid, pid)) {
+    Post post = this.postDAO.deletePost(uid, pid);
+    if (post != null) {
+      // Delete images.
+      List<String> pictures = post.getPicturesAsList();
+      for (String pic : pictures) {
+        String imageFile = Paths.get(
+            getDataDir(request), "user", uid, "postimages", pic).toString();
+        File file = new File(imageFile);
+        if (file.delete()) {
+          log.error("Delete image file " + imageFile + " failed");
+        }
+      }
       JsonUtils.WriteJSONResponse(response, true, null);
     } else {
       JsonUtils.WriteJSONResponse(response, false, "Failed to delete post");

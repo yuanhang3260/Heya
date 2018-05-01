@@ -4,6 +4,7 @@ release/
 node_modules/
 scss/.sass-cache/
 /target/
+/logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

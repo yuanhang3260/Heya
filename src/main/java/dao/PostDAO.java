@@ -51,11 +51,17 @@ public class PostDAO {
     return post.getPid();
   }
 
-  public boolean deletePost(String uid, String pid) {
-    Post post = new Post();
-    post.setUid(uid);
-    post.setPid(pid);
+  public Post deletePost(String uid, String pid) {
+    Query query =
+        getSession().createQuery(" from Post where uid = ? and pid = ?");
+    query.setString(0, uid);
+    query.setString(1, pid);
+    Post post = (Post)query.uniqueResult();
+    if (post == null) {
+      return null;
+    }
+
     getSession().delete(post);
-    return true;
+    return post;
   }
 }
