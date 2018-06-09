@@ -169,8 +169,13 @@ function friends() {
   ];
 }
 
+function dialogs() {
+  return [];
+}
+
 export default {
   userInfo: userInfo,
   posts: posts,
   friends: friends,
+  dialogs: dialogs,
 }

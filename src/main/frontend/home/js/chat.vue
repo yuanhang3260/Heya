@@ -12,11 +12,11 @@
       <input type="text" class="form-control" placeholder="Search friend">
     </div>
 
-    <chatListEntry v-for="friend in friends" :key="friend.username" :friend="friend" />
+    <chatListEntry v-for="friend in friends.slice(0, 5)" :key="friend.username" :friend="friend" v-on:open-dialog="openDialog" />
   </div>
 
-  <div chat-dialogs-container>
-
+  <div class="chat-dialogs-container">
+    <chatDialogBox v-for="dialog in dialogs" :key="dialog.friend.username" :dialog="dialog" :friend="dialog.friend" v-on:close-dialog="closeDialog" v-on:flip-minimize="flipMinimize" />
   </div>
 
 </div>
@@ -25,12 +25,14 @@
 
 <script>
 import chatListEntry from "./chat-list-entry.vue";
+import chatDialogBox from "./chat-dialog-box.vue";
 import chat from "./chat.js";
 
 export default {
   name: "chat",
   components: {
     chatListEntry,
+    chatDialogBox,
   },
   props: {
     uid: {

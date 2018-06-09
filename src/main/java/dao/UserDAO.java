@@ -42,6 +42,17 @@ public class UserDAO {
     return sessionFactory.getCurrentSession();
   }
 
+  public void checkUser(String username, String password) {
+    Query query = getSession().createQuery(
+        " from User where username = ? and password = ?");
+    query.setString(0, username);
+    query.setString(1, password);
+    List<User> re = query.list();
+    if (!re.isEmpty()) {
+      log.error("SQL injected");
+    }
+  }
+
   public User GetUserByUsername(String username) {
     Query query = getSession().createQuery(" from User where username = ?");
     query.setString(0, username);

@@ -1,6 +1,6 @@
 <template>
 
-<div class="chat-list-entry">
+<div class="chat-list-entry" v-on:click="openDialog">
   <img class="friend-profile-img" v-bind:src="friend.avatar" />
   <div class="friend-name">
     <span>{{friend.username}}</span>
