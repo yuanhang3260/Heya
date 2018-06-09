@@ -154,7 +154,23 @@ function posts() {
   ];
 }
 
+function friends() {
+  return [
+    {
+      username: "panda",
+      avatar: "dist/img/panda.jpg",
+      online: true,
+    },
+    {
+      username: "hyuan",
+      avatar: "dist/img/hyuan.jpg",
+      online: false,
+    }
+  ];
+}
+
 export default {
   userInfo: userInfo,
   posts: posts,
+  friends: friends,
 }
