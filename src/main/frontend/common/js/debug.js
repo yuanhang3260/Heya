@@ -170,7 +170,38 @@ function friends() {
 }
 
 function dialogs() {
-  return [];
+  return [
+    {
+      minimized: false,
+      friend: {
+        username: "panda",
+        avatar: "dist/img/panda.jpg",
+        online: true,
+      },
+      messages: [
+        {
+          me: false,
+          content: "hello",
+          timestamp: new Date(),
+        },
+        {
+          me: false,
+          content: "...",
+          timestamp: new Date(),
+        },
+        {
+          me: true,
+          content: "Hi benxiong",
+          timestamp: new Date(),
+        },
+        {
+          me: false,
+          content: "oooh",
+          timestamp: new Date(),
+        },
+      ],
+    }
+  ];
 }
 
 export default {

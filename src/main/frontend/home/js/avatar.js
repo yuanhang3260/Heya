@@ -1,12 +1,9 @@
 import $ from "jquery";
 import ImageClipper from "heya/common/js/image-clipper.js";
+import common from "./common.js";
 
 function profileImageURL() {
-  if (!this.debug) {
-    return "profileimage/profile/" + this.uid;
-  } else {
-    return "dist/img/profile.jpg";
-  }
+  return common.profileImageURL.apply(this, []);
 }
 
 function coverImageURL() {

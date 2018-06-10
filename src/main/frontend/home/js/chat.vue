@@ -12,11 +12,11 @@
       <input type="text" class="form-control" placeholder="Search friend">
     </div>
 
-    <chatListEntry v-for="friend in friends.slice(0, 5)" :key="friend.username" :friend="friend" v-on:open-dialog="openDialog" />
+    <chatListEntry v-for="friend in friends.slice(0, 5)" :key="friend.username" :friend="friend" v-on:open-dialog="openDialog" :debug="debug" />
   </div>
 
   <div class="chat-dialogs-container">
-    <chatDialogBox v-for="dialog in dialogs" :key="dialog.friend.username" :dialog="dialog" :friend="dialog.friend" v-on:close-dialog="closeDialog" v-on:flip-minimize="flipMinimize" />
+    <chatDialogBox v-for="dialog in dialogs" :key="dialog.friend.username" :dialog="dialog" :friend="dialog.friend" :username="username" :uid="uid" v-on:close-dialog="closeDialog" v-on:flip-minimize="flipMinimize" v-on:send-message="sendMessage" :debug="debug" />
   </div>
 
 </div>
@@ -41,7 +41,7 @@ export default {
     },
     username: {
       type: String,
-      default: "default",
+      default: null,
     },
     debug: {
       type: Boolean,

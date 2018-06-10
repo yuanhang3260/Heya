@@ -177,10 +177,107 @@ div.chat-top-container {
 
         div.messages-box {
           flex-grow: 1;
+          overflow: scroll;
+          overflow-x: hidden;
+          max-height: 220px;
+          padding: 5px 0;
+
+          div.chat-bubble-left {
+            display: flex;
+            align-items: flex-start;
+
+            padding: 10px;
+
+            img.bubble-avatar {
+              height: 27px;
+              width: 27px;
+
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            div.message-box {
+              position: relative;
+              margin-left: 7px;
+              border-radius: 5px;
+              border-top-left-radius: 0;
+              background-color: #fcfcfc;
+              word-wrap: break-word;
+              word-break: break-all;
+
+              p {
+                max-width: 150px;
+                margin: 0;
+                padding: 3px 9px;
+                font-size: 14px;
+                font-family: arial;
+              }
+
+              div.small-triangle {
+                position: absolute;
+                top: 0;
+                left: -5px;
+                width: 0px;
+                height: 0px;
+                border-top: 3px solid #fcfcfc;
+                border-bottom: 3px solid transparent;
+                border-left: 3px solid transparent;
+                border-right: 3px solid #fcfcfc;
+              }
+            }
+          }
+
+          div.chat-bubble-right {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+
+            padding: 10px;
+
+            img.bubble-avatar {
+              height: 27px;
+              width: 27px;
+
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            div.message-box {
+              position: relative;
+              margin-right: 7px;
+              border-radius: 5px;
+              border-top-right-radius: 0;
+              background-color: #fcfcfc;
+              word-wrap: break-word;
+              word-break: break-all;
+
+              p {
+                max-width: 150px;
+                margin: 0;
+                padding: 3px 9px;
+                font-size: 14px;
+                font-family: arial;
+              }
+
+              div.small-triangle {
+                position: absolute;
+                top: 0;
+                right: -5px;
+                width: 0px;
+                height: 0px;
+                border-top: 3px solid #fcfcfc;
+                border-bottom: 3px solid transparent;
+                border-right: 3px solid transparent;
+                border-left: 3px solid #fcfcfc;
+              }
+            }
+          }
         }
 
         div.input-box {
           margin: 2px;
+          height: auto;
+          flex-shrink: 0;  /* Do not shrink */
 
           button.emoji-button {
             width: 28px;

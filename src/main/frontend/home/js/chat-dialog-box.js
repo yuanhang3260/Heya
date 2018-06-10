@@ -1,3 +1,4 @@
+import $ from "jquery";
 
 function adjustTextAreaHeight(event) {
   let target = event.target;
@@ -35,13 +36,29 @@ function maximize() {
   }
 }
 
-function enterPressed() {
-  console.log("send-message");
-  this.$emit("send-message", {
-    username: this.friend.username,
-    message: this.messageInput,
-  });
-  this.messageInput = null;
+function scrollHandler() {
+  console.log("scroll");
+}
+
+function enterPressed(event) {
+  if (this.messageInput) {
+    let scrollDown = function() {
+      // Scroll down to bottom of message box. We pass this function to upper
+      // level because it needs to wait for new message to be added into chat
+      // history and rendered in message box.
+      let target = event.target;
+      let $messageBox =
+        $(target.parentElement.parentElement).find(".messages-box");
+      $messageBox.scrollTop($messageBox.prop("scrollHeight"));
+    }
+
+    this.$emit("send-message", {
+      username: this.friend.username,
+      content: this.messageInput,
+      scrollDown: scrollDown,
+    });
+    this.messageInput = null;
+  }
 }
 
 export default {
@@ -55,6 +72,7 @@ export default {
     flipMinimize: flipMinimize,
     maximize: maximize,
     enterPressed: enterPressed,
+    scrollHandler: scrollHandler,
   },
 
 }

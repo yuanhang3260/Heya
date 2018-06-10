@@ -1,3 +1,11 @@
+function profileImageURL() {
+  if (!this.debug) {
+    return "profileimage/profile/" + this.uid;
+  } else {
+    return "dist/img/profile.jpg";
+  }
+}
+
 function postImageURL(uid, pid, imageFile) {
   return "post/" + uid + "/" + pid + "/image/" + imageFile;
 }
@@ -19,4 +27,5 @@ function generatePost(post, uid, username) {
 
 export default {
   generatePost: generatePost,
+  profileImageURL: profileImageURL,
 }

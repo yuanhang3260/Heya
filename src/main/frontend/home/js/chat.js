@@ -48,9 +48,10 @@ function openDialog(payload) {
   for (let friend of this.friends) {
     if (friend.username === payload.username) {
       this.dialogs = [{
-        friend: friend,
         minimized: false,
         focus: true,
+        friend: friend,
+        messages: [],
       }].concat(this.dialogs);
     }
   }
@@ -76,6 +77,34 @@ function flipMinimize(payload) {
   }
 }
 
+function sendMessage(payload) {
+  let friendName = payload.username;
+  let message = {
+    me: true,
+    content: payload.content,
+    timestamp: new Date(),
+  }
+
+  let dialog = this.findDialogByFriend(friendName);
+  if (dialog) {
+    // TODO: send message to websocket.
+
+    // Add to dialog message history. Note we need to async execute scrollDown
+    // to wait for new message to be rendered.
+    dialog.messages.push(message);
+    setTimeout(payload.scrollDown, 0);
+  }
+}
+
+function findDialogByFriend(username) {
+  for (let dialog of this.dialogs) {
+    if (dialog.friend.username === username) {
+      return dialog;
+    }
+  }
+  return null;
+}
+
 export default {
   computed: {
   },
@@ -85,6 +114,8 @@ export default {
     openDialog: openDialog,
     closeDialog: closeDialog,
     flipMinimize: flipMinimize,
+    sendMessage: sendMessage,
+    findDialogByFriend: findDialogByFriend,
   },
 
   beforeMount: beforeMount,

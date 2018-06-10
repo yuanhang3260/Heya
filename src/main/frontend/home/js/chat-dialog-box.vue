@@ -15,7 +15,12 @@
   </div>
 
   <div v-show="!dialog.minimized" class="dialog-box-body">
-    <div class="messages-box"></div>
+    <div class="messages-box">
+      <div v-for="message in dialog.messages">
+        <chatBubbleLeft v-if="!message.me" :key="message.timestamp.getTime()" :friend="friend" :content="message.content" :debug="debug"/>
+        <chatBubbleRight v-if="message.me" :key="message.timestamp.getTime()" :uid="uid" :username="username" :content="message.content" :debug="debug"/>
+      </div>
+    </div>
 
     <div class="input-group input-box">
       <div class="input-group-prepend">
@@ -32,12 +37,24 @@
 
 <script>
 import chatDialogBox from "./chat-dialog-box.js"
+import chatBubbleLeft from "./chat-bubble-left.vue"
+import chatBubbleRight from "./chat-bubble-right.vue"
 
 export default {
   name: "chat-dialog-box",
   components: {
+    chatBubbleLeft,
+    chatBubbleRight,
   },
   props: {
+    uid: {
+      type: String,
+      default: null,
+    },
+    username: {
+      type: String,
+      default: null,
+    },
     dialog: {
       type: Object,
       default: function() { return null; },
