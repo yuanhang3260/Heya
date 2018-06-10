@@ -160,48 +160,52 @@ function friends() {
       username: "panda",
       avatar: "dist/img/panda.jpg",
       online: true,
+      hasUnread: false,
     },
     {
       username: "hyuan",
       avatar: "dist/img/hyuan.jpg",
       online: false,
+      hasUnread: false,
     }
   ];
 }
 
 function dialogs() {
-  return [
-    {
-      minimized: false,
-      friend: {
-        username: "panda",
-        avatar: "dist/img/panda.jpg",
-        online: true,
-      },
-      messages: [
-        {
-          me: false,
-          content: "hello",
-          timestamp: new Date(),
-        },
-        {
-          me: false,
-          content: "...",
-          timestamp: new Date(),
-        },
-        {
-          me: true,
-          content: "Hi benxiong",
-          timestamp: new Date(),
-        },
-        {
-          me: false,
-          content: "oooh",
-          timestamp: new Date(),
-        },
-      ],
-    }
-  ];
+  // return [
+  //   {
+  //     minimized: false,
+  //     friend: {
+  //       username: "panda",
+  //       avatar: "dist/img/panda.jpg",
+  //       online: true,
+  //       hasUnread: false,
+  //     },
+  //     messages: [
+  //       {
+  //         me: false,
+  //         content: "hello",
+  //         timestamp: new Date(),
+  //       },
+  //       {
+  //         me: false,
+  //         content: "...",
+  //         timestamp: new Date(),
+  //       },
+  //       {
+  //         me: true,
+  //         content: "Hi benxiong",
+  //         timestamp: new Date(),
+  //       },
+  //       {
+  //         me: false,
+  //         content: "oooh",
+  //         timestamp: new Date(),
+  //       },
+  //     ],
+  //   }
+  // ];
+  return [];
 }
 
 export default {

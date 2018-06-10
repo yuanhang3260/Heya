@@ -2,6 +2,7 @@
 
 <div class="chat-list-entry" v-on:click="openDialog">
   <img class="friend-profile-img" v-bind:src="friend.avatar" />
+  <span v-if="friend.hasUnread" class="has-unread-notifier" />
   <div class="friend-name">
     <span>{{friend.username}}</span>
   </div>

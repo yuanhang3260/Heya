@@ -12,11 +12,11 @@
       <input type="text" class="form-control" placeholder="Search friend">
     </div>
 
-    <chatListEntry v-for="friend in friends.slice(0, 5)" :key="friend.username" :friend="friend" v-on:open-dialog="openDialog" :debug="debug" />
+    <chatListEntry v-for="friend in friendsList" :key="friend.username" :friend="friend" v-on:open-dialog="openDialog" :debug="debug" />
   </div>
 
   <div class="chat-dialogs-container">
-    <chatDialogBox v-for="dialog in dialogs" :key="dialog.friend.username" :dialog="dialog" :friend="dialog.friend" :username="username" :uid="uid" v-on:close-dialog="closeDialog" v-on:flip-minimize="flipMinimize" v-on:send-message="sendMessage" :debug="debug" />
+    <chatDialogBox v-for="dialog in dialogs" :key="dialog.friend.username" :dialog="dialog" :friend="dialog.friend" :messages="dialog.messages" :username="username" :uid="uid" v-on:close-dialog="closeDialog" v-on:flip-minimize="flipMinimize" v-on:send-message="sendMessage" v-on:dialog-box-clicked="dialogBoxClickedHandler" :debug="debug" />
   </div>
 
 </div>
@@ -50,8 +50,11 @@ export default {
   },
   data () {
     return {
-      friends: [],
+      friends: {},
+      friendsList: [],
       dialogs: [],
+      inactiveDialogs: {},
+      webSocket: null,
     }
   },
   computed: chat.computed,

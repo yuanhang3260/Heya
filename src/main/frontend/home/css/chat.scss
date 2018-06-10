@@ -67,6 +67,16 @@ div.chat-top-container {
         object-fit: cover;
       }
 
+      span.has-unread-notifier {
+        position: absolute;
+        left: 8px;
+        top: 6px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: red;
+      }
+
       div.friend-name {
         span {
           color: #777;
@@ -160,11 +170,22 @@ div.chat-top-container {
               background-color: #444;
               cursor: pointer;
 
-              &:hover {
-                i {
-                  color: #fff;
-                }
+              i {
+                color: #fff;
               }
+            }
+          }
+        }
+      }
+
+      div.has-unread-header {
+        background-color: green;
+
+        div.button-box {
+          span {
+            &:hover {
+              background-color: darkgreen;
+              border-color: darkgreen;
             }
           }
         }

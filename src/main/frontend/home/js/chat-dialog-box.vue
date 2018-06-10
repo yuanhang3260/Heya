@@ -1,7 +1,7 @@
 <template>
 
 <div class="chat-dialog-box">
-  <div class="dialog-box-header" v-on:click="maximize">
+  <div class="dialog-box-header" v-on:click="maximize" v-bind:class="{'has-unread-header': friend.hasUnread}">
     <i class="fa fa-comments chat-icon"/>
     <span class="title">{{friend.username}}</span>
     <div class="button-box">
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div v-show="!dialog.minimized" class="dialog-box-body">
+  <div v-show="!dialog.minimized" class="dialog-box-body" v-on:click="clickHandler">
     <div class="messages-box">
       <div v-for="message in dialog.messages">
         <chatBubbleLeft v-if="!message.me" :key="message.timestamp.getTime()" :friend="friend" :content="message.content" :debug="debug"/>
@@ -28,7 +28,7 @@
           <i class="fa fa-smile-o emoji-icon" />
         </button>
       </div>
-      <textarea v-model="messageInput" class="dialog-text-area" placeholder="type" v-on:keydown="adjustTextAreaHeight" v-on:keyup="adjustTextAreaHeight" v-on:keydown.enter.prevent="enterPressed" v-focus="dialog.focus"/>
+      <textarea v-model="messageInput" class="dialog-text-area" placeholder="type" v-on:keydown="typeHandler" v-on:keyup="typeHandler" v-on:keydown.enter.prevent="enterPressed" v-focus="dialog.focus"/>
     </div>
   </div>
 </div>
@@ -63,6 +63,10 @@ export default {
       type: Object,
       default: function() { return null; },
     },
+    messages: {
+      type: Array,
+      default: function() { return []; },
+    },
     debug: {
       type: Boolean,
       default: false,
@@ -71,6 +75,7 @@ export default {
   data () {
     return {
       messageInput: null,
+      messagesBox: null,
     }
   },
   computed: chatDialogBox.computed,
@@ -89,6 +94,17 @@ export default {
       }
     }
   },
+  mounted: chatDialogBox.mounted,
+  watch: {
+    messages: function() {
+      // Note we need to async execute scrollDown to wait for new message to
+      // be rendered.
+      let me = this;
+      setTimeout(function() {
+        me.scrollDown();
+      }, 0);
+    },
+  }
 }
 </script>
 

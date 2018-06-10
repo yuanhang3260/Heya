@@ -1,5 +1,12 @@
 import $ from "jquery";
 
+function typeHandler(event) {
+  this.adjustTextAreaHeight(event);
+  this.$emit("dialog-box-clicked", {
+    username: this.friend.username,
+  });
+}
+
 function adjustTextAreaHeight(event) {
   let target = event.target;
   target.style.height = "1px";
@@ -10,6 +17,14 @@ function adjustTextAreaHeight(event) {
     target.style.height = (target.scrollHeight) + "px";
     target.style["overflow-y"] = "hidden";
   }
+}
+
+function created() {
+}
+
+function mounted() {
+  this.messagesBox = $(this.$el).find(".messages-box");
+  this.scrollDown();
 }
 
 function scrollTextArea() {
@@ -40,25 +55,29 @@ function scrollHandler() {
   console.log("scroll");
 }
 
+function scrollDown() {
+  // Scroll down to bottom of message box. We pass this function to upper
+  // level because it needs to wait for new message to be added into chat
+  // history and rendered in message box.
+  if (this.messagesBox) {
+    this.messagesBox.scrollTop(this.messagesBox.prop("scrollHeight"));
+  }
+}
+
 function enterPressed(event) {
   if (this.messageInput) {
-    let scrollDown = function() {
-      // Scroll down to bottom of message box. We pass this function to upper
-      // level because it needs to wait for new message to be added into chat
-      // history and rendered in message box.
-      let target = event.target;
-      let $messageBox =
-        $(target.parentElement.parentElement).find(".messages-box");
-      $messageBox.scrollTop($messageBox.prop("scrollHeight"));
-    }
-
     this.$emit("send-message", {
       username: this.friend.username,
       content: this.messageInput,
-      scrollDown: scrollDown,
     });
     this.messageInput = null;
   }
+}
+
+function clickHandler() {
+  this.$emit("dialog-box-clicked", {
+    username: this.friend.username,
+  });
 }
 
 export default {
@@ -73,6 +92,11 @@ export default {
     maximize: maximize,
     enterPressed: enterPressed,
     scrollHandler: scrollHandler,
+    scrollDown: scrollDown,
+    clickHandler: clickHandler,
+    typeHandler: typeHandler,
   },
 
+  created: created,
+  mounted: mounted,
 }
