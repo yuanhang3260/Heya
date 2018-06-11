@@ -33,6 +33,8 @@
   </div>
 </div>
 
+<chat id="chat" :uid="'<%= uid %>'" :username="'<%= username %>'" :debug=false></chat>
+
 <script type="text/javascript" src="dist/js/home.dist.js"></script></body>
 
 </html>

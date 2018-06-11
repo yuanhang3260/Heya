@@ -172,6 +172,8 @@ function friends() {
 }
 
 function dialogs() {
+  return [];
+
   // return [
   //   {
   //     minimized: false,
@@ -205,7 +207,6 @@ function dialogs() {
   //     ],
   //   }
   // ];
-  return [];
 }
 
 export default {

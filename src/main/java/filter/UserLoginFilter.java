@@ -40,7 +40,6 @@ public class UserLoginFilter implements Filter {
       return;
     }
 
-    // Get User object and forward to home.jsp.
     HttpSession session = ((HttpServletRequest)request).getSession(false);
     if (session == null || session.getAttribute("user") == null) {
       // If no session or session expird, redirect to login page.

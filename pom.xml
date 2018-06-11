@@ -3,10 +3,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>projects</groupId>
-  <artifactId>Heya</artifactId> 
+  <artifactId>Heya</artifactId>
   <version>1.0</version>
   <name>Heya</name>
   <packaging>war</packaging>
+
+  <pluginRepositories>    
+   <pluginRepository>    
+  <id>alfresco-public</id>     
+  <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>    
+   </pluginRepository>     
+   <pluginRepository>    
+  <id>alfresco-public-snapshots</id>     
+  <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>     
+  <snapshots>    
+    <enabled>true</enabled>     
+    <updatePolicy>daily</updatePolicy>    
+  </snapshots>    
+   </pluginRepository>     
+   <pluginRepository>    
+  <id>beardedgeeks-releases</id>     
+  <url>http://beardedgeeks.googlecode.com/svn/repository/releases</url>    
+   </pluginRepository>    
+  </pluginRepositories>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,20 +35,45 @@
 
   <build>
     <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <compilerArgs>
+            <!-- <arg>-Xlint:deprecation</arg>-->
+          </compilerArgs>
+        </configuration>
+      </plugin>
+
+      <plugin> 
+        <groupId>org.apache.tomcat.maven</groupId> 
+        <artifactId>tomcat8-maven-plugin</artifactId> 
+        <version>3.0-r1655215</version>
+        <configuration>  
+          <hostName>localhost</hostName>
+          <port>8081</port>
+          <uriEncoding>UTF-8</uriEncoding>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.1</version>
-        <configuration>   
+        <configuration>  
           <hostName>localhost</hostName>
           <port>8081</port>
           <uriEncoding>UTF-8</uriEncoding>
 
           <url>http://localhost:8080/manager/text</url>
           <server>tomcat</server>
+          <path>/Heya</path>
 
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 
@@ -38,7 +82,7 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.7</version>
-      <!-- <scope>test</scope> -->
+      <!-- <scope>test</scope>-->
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
@@ -236,6 +280,14 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-ehcache</artifactId>
       <version>5.2.16.Final</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+    <dependency>
+      <groupId>javax.websocket</groupId>
+      <artifactId>javax.websocket-api</artifactId>
+      <version>1.1</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>

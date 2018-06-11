@@ -3,7 +3,7 @@ import $ from "jquery";
 import debug from "heya/common/js/debug.js";
 
 function loadFriends() {
-  if (this.debug) {
+  if (!this.debug) {
     this.dialogs = debug.dialogs();
     this.friendsList = debug.friends();
     for (let friend of this.friendsList) {
@@ -15,7 +15,7 @@ function loadFriends() {
 }
 
 function connect() {
-  let serverAddress = "ws://localhost:8080/Heya/chat";
+  let serverAddress = "ws://localhost:8080/Heya/chat/" + this.username;
   if (this.debug) {
     serverAddress = "ws://localhost:8081/chat";
   }
