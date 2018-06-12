@@ -7,11 +7,7 @@ function profileImageURL() {
 }
 
 function coverImageURL() {
-  if (!this.debug) {
-    return "profileimage/cover/" + this.uid;
-  } else {
-    return "dist/img/cover.jpg";
-  }
+  return common.profileCoverImageURL.apply(this, []);
 }
 
 var clipper = null;

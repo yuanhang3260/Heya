@@ -26,5 +26,6 @@
     <mapping resource="hibernate/bean/Place.hbm.xml"/>
     <mapping resource="hibernate/bean/UserPlace.hbm.xml"/>
     <mapping resource="hibernate/bean/Post.hbm.xml"/>
+    <!-- <mapping resource="hibernate/bean/Friends.hbm.xml"/> -->
   </session-factory>
 </hibernate-configuration>

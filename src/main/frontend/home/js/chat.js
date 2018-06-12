@@ -3,15 +3,34 @@ import $ from "jquery";
 import debug from "heya/common/js/debug.js";
 
 function loadFriends() {
-  if (!this.debug) {
+  if (this.debug) {
     this.dialogs = debug.dialogs();
     this.friendsList = debug.friends();
     for (let friend of this.friendsList) {
       this.friends[friend.username] = friend;
     }
   } else {
-    // TODO: load friends list from backend.
+    this.getFriendsFromServer();
   }
+}
+
+function getFriendsFromServer() {
+  var me = this;
+  $.ajax({
+      type: "GET",
+      url: "friends/" + me.uid,
+      dataType: "json",
+      encode: true,
+  }).done(function(data) {
+    // log data to the console so we can see.
+    console.log(data);
+    if (data.success) {
+      me.friendsList = data.result.friends;
+      for (let friend of me.friendsList) {
+        me.friends[friend.username] = friend;
+      }
+    }
+  });
 }
 
 function connect() {
@@ -24,10 +43,6 @@ function connect() {
   let ws = this.webSocket = new WebSocket(serverAddress);
   ws.onopen = function(event) { 
     console.log("Connection open ...");
-    ws.send(JSON.stringify({
-      "setup": true,
-      "username": me.username,
-    }));
   };
 
   ws.onmessage = function(event) {
@@ -223,6 +238,7 @@ export default {
     newMessageReceived: newMessageReceived,
     dialogBoxClickedHandler: dialogBoxClickedHandler,
     addActiveDialog: addActiveDialog,
+    getFriendsFromServer: getFriendsFromServer,
   },
 
   beforeMount: beforeMount,

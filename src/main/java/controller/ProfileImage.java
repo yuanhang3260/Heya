@@ -20,6 +20,14 @@ import util.JsonUtils;
 @RequestMapping("/profileimage/{type}/{uid}")
 public class ProfileImage {
 
+  public static String profileImageURL(String uid) {
+    return "profileimage/profile/" + uid;
+  }
+
+  public static String profileCoverImageURL(String uid) {
+    return "profileimage/cover/" + uid;
+  }
+
   private User getAuthorizedUser(HttpSession session, String username) {
     User user = (User)session.getAttribute("user");
     if (user != null && username != null &&
