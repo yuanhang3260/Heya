@@ -22,15 +22,15 @@ import dao.FriendsDAO;
 import util.JsonUtils;
 
 @Controller
-@RequestMapping("/friends/{uid}")
+@RequestMapping("/friends/{username}")
 public class Friends {
 
   @Autowired
   FriendsDAO friendsDAO;
 
-  private User getAuthorizedUser(HttpSession session, String uid) {
+  private User getAuthorizedUser(HttpSession session, String username) {
     User user = (User)session.getAttribute("user");
-    if (user != null && uid != null && uid.equals(user.getUid())) {
+    if (user != null && username != null && username.equals(user.getUsername())) {
       return user;
     }
     return null;
@@ -39,14 +39,14 @@ public class Friends {
   @RequestMapping(value="", method=RequestMethod.GET)
   public void getFriends(HttpServletResponse response,
                          HttpSession session,
-                         @PathVariable("uid") String uid) {
-    User user = getAuthorizedUser(session, uid);
+                         @PathVariable("username") String username) {
+    User user = getAuthorizedUser(session, username);
     if (user == null) {
       JsonUtils.WriteJSONResponse(response, false, "permission denied");
       return;
     }
 
-    List<User> friends = this.friendsDAO.getFriends(uid);
+    List<User> friends = this.friendsDAO.getFriends(username);
     JSONObject result = new JSONObject();
     try {
       JSONArray array = new JSONArray();

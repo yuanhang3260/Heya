@@ -26,8 +26,8 @@ public class FriendsDAO {
   @Autowired
   private JdbcTemplate jdbcTpl;
 
-  private static class CustomerRowMapperByUser1 implements RowMapper {
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+  private static class CustomerRowMapperByUser1 implements RowMapper<User> {
+    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
       User user = new User();
       user.setUid(rs.getString("uid_2"));
       user.setUsername(rs.getString("username_2"));
@@ -35,8 +35,8 @@ public class FriendsDAO {
     }
   }
 
-  private static class CustomerRowMapperByUser2 implements RowMapper {
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+  private static class CustomerRowMapperByUser2 implements RowMapper<User> {
+    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
       User user = new User();
       user.setUid(rs.getString("uid_1"));
       user.setUsername(rs.getString("username_1"));
@@ -44,14 +44,16 @@ public class FriendsDAO {
     }
   }
 
-  public List<User> getFriends(String uid) {
+  public List<User> getFriends(String username) {
     ArrayList<User> friends;
 
-    String sql = "select uid_2, username_2 from Friends where uid_1 = ?";
-    List<User> result = this.jdbcTpl.query(sql, new CustomerRowMapperByUser1(), new Object[]{uid});
+    String sql = "select uid_2, username_2 from Friends where username_1 = ?";
+    List<User> result = this.jdbcTpl.query(sql, new CustomerRowMapperByUser1(),
+                                           new Object[]{username});
 
-    sql = "select uid_1, username_1 from Friends where uid_2 = ?";
-    List<User> result2 = this.jdbcTpl.query(sql, new CustomerRowMapperByUser2(), new Object[]{uid});
+    sql = "select uid_1, username_1 from Friends where username_2 = ?";
+    List<User> result2 = this.jdbcTpl.query(sql, new CustomerRowMapperByUser2(),
+                                            new Object[]{username});
 
     result.addAll(result2);
     return result;

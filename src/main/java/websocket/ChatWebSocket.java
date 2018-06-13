@@ -20,8 +20,8 @@ import dao.UserDAO;
 import websocket.HttpSessionConfigurator;
 
 @ServerEndpoint(value = "/chat/{username}", configurator = HttpSessionConfigurator.class)
-public class ChatWebSocketServer {
-  private static final Logger log = Logger.getLogger(ChatWebSocketServer.class);
+public class ChatWebSocket {
+  private static final Logger log = Logger.getLogger(ChatWebSocket.class);
 
   private UserDAO userDAO;
   private HttpSession httpSession;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="bean">
+  <class name="ChatDialog" table="ChatDialog" dynamic-update="true">
+    <id name="dialogId" column="dialog_id" type="string">
+      <generator class="assigned"></generator>
+    </id>
+    <property name="username1" column="username_1" type="string" not-null="true" update="false" />
+    <property name="username2" column="username_2" type="string" not-null="true" update="false" />
+    <property name="user1ReadTime" column="user_1_read_time" type="timestamp" not-null="true"/>
+    <property name="user2ReadTime" column="user_1_read_time" type="timestamp" not-null="true"/>
+
+    <set name="messages" cascade="delete" lazy="true">
+      <key column="f_dialog_id" />
+      <one-to-many class="ChatDialog" />
+    </set>
+  </class>
+</hibernate-mapping>

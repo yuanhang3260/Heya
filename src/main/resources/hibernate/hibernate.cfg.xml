@@ -26,6 +26,7 @@
     <mapping resource="hibernate/bean/Place.hbm.xml"/>
     <mapping resource="hibernate/bean/UserPlace.hbm.xml"/>
     <mapping resource="hibernate/bean/Post.hbm.xml"/>
-    <!-- <mapping resource="hibernate/bean/Friends.hbm.xml"/> -->
+    <mapping resource="hibernate/bean/ChatMessage.hbm.xml"/>
+    <mapping resource="hibernate/bean/ChatDialog.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

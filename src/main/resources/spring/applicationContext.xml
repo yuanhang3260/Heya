@@ -56,7 +56,7 @@
   </tx:advice>
 
   <aop:config>
-    <aop:pointcut id="txPointCut" expression="execution(* dao.*.*(..))" />
+    <aop:pointcut id="txPointCut" expression="execution(public dao.*.*(..))" />
     <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut" />
   </aop:config>
 

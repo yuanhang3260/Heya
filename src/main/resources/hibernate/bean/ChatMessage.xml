@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="bean">
+  <class name="ChatMessage" table="ChatMessage" dynamic-update="true">
+    <cache usage="read-write"></cache>
+
+    <id name="messageId" column="message_id" type="string">
+      <generator class="assigned"></generator>
+    </id>
+
+    <property name="dialogId" column="f_dialog_id" type="string" not-null="true" update="false"/>
+    <property name="username" column="username" type="string" not-null="true" update="false"/>
+    <property name="content" column="content" type="string" not-null="true" update="false"/>
+    <property name="createTime" column="create_time" type="timestamp" not-null="true" update="false"/>
+  </class>
+</hibernate-mapping>

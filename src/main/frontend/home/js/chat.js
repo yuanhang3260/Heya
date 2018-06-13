@@ -18,7 +18,7 @@ function getFriendsFromServer() {
   var me = this;
   $.ajax({
       type: "GET",
-      url: "friends/" + me.uid,
+      url: "friends/" + me.username,
       dataType: "json",
       encode: true,
   }).done(function(data) {
