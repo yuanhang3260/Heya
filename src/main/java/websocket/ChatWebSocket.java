@@ -48,19 +48,19 @@ public class ChatWebSocket {
       return;
     }
 
-    dispatcher.addNewSession(username, session);
+    getDispatcher().addNewSession(username, session);
   }
 
   @OnMessage
   public String onMessage(String message, Session session) {
     log.info("Received: " + message);
-    dispatcher.processMessage(this.username, message);
+    getDispatcher().processMessage(this.username, message);
     return message;
   }
 
   @OnClose
   public void onClose(Session session, CloseReason closeReason) {
     log.info(String.format("Session %s closed because of %s", session.getId(), closeReason));
-    dispatcher.removeSession(this.username, session);
+    getDispatcher().removeSession(this.username, session);
   }
 }

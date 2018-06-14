@@ -2,9 +2,6 @@ import $ from "jquery";
 
 function typeHandler(event) {
   this.adjustTextAreaHeight(event);
-  this.$emit("dialog-box-clicked", {
-    username: this.friend.username,
-  });
 }
 
 function adjustTextAreaHeight(event) {
@@ -65,6 +62,10 @@ function scrollDown() {
 }
 
 function enterPressed(event) {
+  this.$emit("dialog-box-clicked", {
+    username: this.friend.username,
+  });
+
   if (this.messageInput) {
     this.$emit("send-message", {
       username: this.friend.username,
@@ -75,9 +76,11 @@ function enterPressed(event) {
 }
 
 function clickHandler() {
-  this.$emit("dialog-box-clicked", {
-    username: this.friend.username,
-  });
+  if (this.friend.hasUnread) {
+    this.$emit("dialog-box-clicked", {
+      username: this.friend.username,
+    });
+  }
 }
 
 export default {

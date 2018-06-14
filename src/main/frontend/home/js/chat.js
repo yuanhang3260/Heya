@@ -25,6 +25,12 @@ function getFriendsFromServer() {
     // log data to the console so we can see.
     console.log(data);
     if (data.success) {
+      // We must set hasUnread here before assigning data.result.friends to
+      // friendsList. Otherwise all bindings to hasUnread will not take effect.
+      for (let friend of data.result.friends) {
+        friend.hasUnread = false;
+      }
+
       me.friendsList = data.result.friends;
       for (let friend of me.friendsList) {
         me.friends[friend.username] = friend;
@@ -47,6 +53,9 @@ function connect() {
 
   ws.onmessage = function(event) {
     let message = JSON.parse(event.data);
+    if (message.client) {
+      return;
+    }
     me.processMessage(message);
   };
 
@@ -60,6 +69,7 @@ function connect() {
 }
 
 function processMessage(message) {
+  console.log(message);
   if (message.type === "NewMessage") {
     this.processNewMessage(message);
   } else if (message.type === "DialogRead") {
@@ -70,9 +80,6 @@ function processMessage(message) {
 function processNewMessage(message) {
   if (message.from && message.to === this.username) {
     // Got new message from friends.
-    if (message.timestamp) {
-      message.timestamp = new Date(message.timestamp);
-    }
 
     // Look up in active dialogs.
     for (let dialog of this.dialogs) {
@@ -164,7 +171,7 @@ function processDialogRead(dialogReadMsg) {
     }
 
     // Look up in inactive dialogs.
-    let dialog = this.inactiveDialogs[message.from];
+    let dialog = this.inactiveDialogs[dialogReadMsg.from];
     if (dialog) {
       checkDialogRead(dialog, dialogReadMsg);
       return;
@@ -255,12 +262,13 @@ function flipMinimize(payload) {
 function sendMessage(payload) {
   let friendName = payload.username;
   let message = {
+    type: "NewMessage",
     from: this.username,
     to: friendName,
     content: payload.content,
     timestamp: (new Date()).getTime(),
   }
-  
+
   // Send message to websocket.
   this.sendMessageToBackend(message);
 }
@@ -268,6 +276,7 @@ function sendMessage(payload) {
 function dialogBoxClickedHandler(payload) {
   let friendName = payload.username;
   let message = {
+    type: "DialogRead",
     from: friendName,
     to: this.username,
     timestamp: (new Date()).getTime(),
@@ -278,6 +287,7 @@ function dialogBoxClickedHandler(payload) {
 }
 
 function sendMessageToBackend(message) {
+  message["client"] = true;
   this.webSocket.send(JSON.stringify(message));
 }
 

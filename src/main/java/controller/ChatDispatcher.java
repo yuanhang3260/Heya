@@ -18,7 +18,7 @@ import dao.ChatDAO;
 import dao.FriendsDAO;
 import util.JsonUtils;
 
-@Controller
+@Controller("ChatDispatcher")
 public class ChatDispatcher {
   private static final Logger log = Logger.getLogger(ChatDispatcher.class);
 
@@ -65,6 +65,12 @@ public class ChatDispatcher {
         log.error("No message type specified.");
         return false;
       }
+
+      // Remove the "client" label in the message so that when this message is broadcasted,
+      // receiver knows it is from server. This is to fix the onmessage double-trigger problem
+      // in javascript websocket. 
+      msg.remove("client");
+
       String type = msg.getString("type");
       if (type.equals("NewMessage")) {
         return processNewChatMessage(username, msg);
@@ -127,6 +133,7 @@ public class ChatDispatcher {
   // - timestamp
   private boolean processMessageRead(String username, JSONObject msg)
       throws JSONException, IOException {
+    String from = msg.getString("from");
     String to = msg.getString("to");
     if (!to.equals(username)) {
       log.error("Unauthorized DialogRead labeled to = " + to +

@@ -95,7 +95,7 @@ public class ChatDAO {
   }
 
   // Get or create a dialog.
-  public ChatDialog getOrCreateDialog(String username1, String username2) {
+  private ChatDialog getOrCreateDialog(String username1, String username2) {
     UserPair pair = new UserPair(username1, username2);
 
     Query query = getSession().createQuery(
@@ -119,7 +119,7 @@ public class ChatDAO {
   }
 
   public boolean AddChatMessage(String from, String to, String content, Date timestamp) {
-    ChatDialog dialog = this.getDialog(from, to);
+    ChatDialog dialog = this.getOrCreateDialog(from, to);
     if (dialog == null) {
       return false;
     }
@@ -135,7 +135,7 @@ public class ChatDAO {
   }
 
   public boolean updateReadTime(String from, String to, Date timestamp) {
-    ChatDialog dialog = this.getDialog(from, to);
+    ChatDialog dialog = this.getOrCreateDialog(from, to);
     if (dialog == null) {
       return false;
     }
