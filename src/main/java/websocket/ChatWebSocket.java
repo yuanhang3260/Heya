@@ -16,21 +16,22 @@ import org.apache.log4j.Logger;
 
 import application.SpringUtils;
 import bean.User;
-import dao.UserDAO;
+import controller.ChatDispatcher;
 import websocket.HttpSessionConfigurator;
 
 @ServerEndpoint(value = "/chat/{username}", configurator = HttpSessionConfigurator.class)
 public class ChatWebSocket {
   private static final Logger log = Logger.getLogger(ChatWebSocket.class);
 
-  private UserDAO userDAO;
+  private ChatDispatcher dispatcher;
   private HttpSession httpSession;
+  private String username;
 
-  private UserDAO getUserDAO() {
-    if (this.userDAO == null) {
-      this.userDAO = (UserDAO)SpringUtils.getBean("UserDAO");
+  private ChatDispatcher getDispatcher() {
+    if (this.dispatcher == null) {
+      this.dispatcher = (ChatDispatcher)SpringUtils.getBean("ChatDispatcher");
     }
-    return this.userDAO;
+    return this.dispatcher;
   }
 
   @OnOpen
@@ -38,23 +39,28 @@ public class ChatWebSocket {
                      EndpointConfig config,
                      @PathParam("username")String username) {
     log.info("Connected ... " + session.getId());
-    log.info("getQueryString " + session.getQueryString());
-    log.info("getRequestURI " + session.getRequestURI());
 
     this.httpSession = (HttpSession)(config.getUserProperties().get(HttpSession.class.getName()));
     User user = (User)(this.httpSession.getAttribute("user"));
-    log.info(user.getUsername());
-    log.info(user.getUid());
+    this.username = user.getUsername();
+    if (!username.equals(this.username)) {
+      log.info("Unauthorized user " + username);
+      return;
+    }
+
+    dispatcher.addNewSession(username, session);
   }
 
   @OnMessage
   public String onMessage(String message, Session session) {
     log.info("Received: " + message);
+    dispatcher.processMessage(this.username, message);
     return message;
   }
 
   @OnClose
   public void onClose(Session session, CloseReason closeReason) {
     log.info(String.format("Session %s closed because of %s", session.getId(), closeReason));
+    dispatcher.removeSession(this.username, session);
   }
 }

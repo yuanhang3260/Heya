@@ -47,7 +47,7 @@ function connect() {
 
   ws.onmessage = function(event) {
     let message = JSON.parse(event.data);
-    me.newMessageReceived(message);
+    me.processMessage(message);
   };
 
   ws.onclose = function(event) {
@@ -59,12 +59,20 @@ function connect() {
   };
 }
 
-function newMessageReceived(message) {
+function processMessage(message) {
+  if (message.type === "NewMessage") {
+    this.processNewMessage(message);
+  } else if (message.type === "DialogRead") {
+    this.processDialogRead(message);
+  }
+}
+
+function processNewMessage(message) {
   if (message.from && message.to === this.username) {
+    // Got new message from friends.
     if (message.timestamp) {
       message.timestamp = new Date(message.timestamp);
     }
-    message.me = false;
 
     // Look up in active dialogs.
     for (let dialog of this.dialogs) {
@@ -90,13 +98,76 @@ function newMessageReceived(message) {
     if (friend) {
       friend.hasUnread = true;
       let dialog = {
-        active: false,
         minimized: false,
         focus: false,
         friend: friend,
         messages: [message],
       }
       this.addActiveDialog(dialog);
+    }
+  } else if (message.to && message.from === this.username) {
+    // This is a self-sync message.
+    if (message.timestamp) {
+      message.timestamp = new Date(message.timestamp);
+    }
+
+    for (let dialog of this.dialogs) {
+      if (dialog.friend.username === message.to) {
+        dialog.messages.push(message);
+        return;
+      }
+    }
+
+    // Look up in inactive dialogs.
+    let dialog = this.inactiveDialogs[message.to];
+    if (dialog) {
+      dialog.messages.push(message);
+      return;
+    }
+
+    // Open new dialog with this friend. This dialog will be added to inactive
+    // dialogs.
+    let friend = this.friends[message.to];
+    if (friend) {
+      let dialog = {
+        minimized: true,
+        focus: false,
+        friend: friend,
+        messages: [message],
+      }
+      this.inactiveDialogs[friend.username] = friend;
+    }
+  }
+}
+
+function processDialogRead(dialogReadMsg) {
+
+  function checkDialogRead(dialog, dialogReadMsg) {
+    for (let i = dialog.messages.length - 1; i >= 0; i--) {
+      let chatMessage = dialog.messages[i];
+      if (chatMessage.from === dialogReadMsg.from) {
+        if (dialogReadMsg.timestamp >= chatMessage.timestamp) {
+          dialog.friend.hasUnread = false;
+        }
+        return;
+      }
+    }
+  }
+
+  if (dialogReadMsg.from && dialogReadMsg.to === this.username) {
+    // Look up in active dialogs.
+    for (let dialog of this.dialogs) {
+      if (dialog.friend.username === dialogReadMsg.from) {
+        checkDialogRead(dialog, dialogReadMsg);
+        return;
+      }
+    }
+
+    // Look up in inactive dialogs.
+    let dialog = this.inactiveDialogs[message.from];
+    if (dialog) {
+      checkDialogRead(dialog, dialogReadMsg);
+      return;
     }
   }
 }
@@ -105,12 +176,10 @@ function addActiveDialog(dialog) {
   if (this.dialogs.length == 5) {
     // Move the last active dialog to inactive list.
     let last = this.dialogs[4];
-    last.active = false;
-    this.inactiveDialogs[last.username] = last;
+    this.inactiveDialogs[last.friend.username] = last;
     this.dialogs.splice(4, 1);
   }
   this.dialogs = [dialog].concat(this.dialogs);
-  dialog.active = true;
 }
 
 function beforeMount() {
@@ -186,19 +255,26 @@ function flipMinimize(payload) {
 function sendMessage(payload) {
   let friendName = payload.username;
   let message = {
-    me: true,
     from: this.username,
     to: friendName,
     content: payload.content,
-    timestamp: new Date(),
+    timestamp: (new Date()).getTime(),
+  }
+  
+  // Send message to websocket.
+  this.sendMessageToBackend(message);
+}
+
+function dialogBoxClickedHandler(payload) {
+  let friendName = payload.username;
+  let message = {
+    from: friendName,
+    to: this.username,
+    timestamp: (new Date()).getTime(),
   }
 
-  let dialog = this.findDialogByFriend(friendName);
-  if (dialog) {
-    // Send message to websocket.
-    this.sendMessageToBackend(message);
-    dialog.messages.push(message);
-  }
+  // Send message to websocket.
+  this.sendMessageToBackend(message);
 }
 
 function sendMessageToBackend(message) {
@@ -214,14 +290,6 @@ function findDialogByFriend(username) {
   return null;
 }
 
-function dialogBoxClickedHandler(payload) {
-  let dialog = this.findDialogByFriend(payload.username);
-  if (dialog) {
-    // Send message to websocket.
-    dialog.friend.hasUnread = false;
-  }
-}
-
 export default {
   computed: {
   },
@@ -235,7 +303,9 @@ export default {
     sendMessage: sendMessage,
     findDialogByFriend: findDialogByFriend,
     sendMessageToBackend: sendMessageToBackend,
-    newMessageReceived: newMessageReceived,
+    processMessage: processMessage,
+    processNewMessage: processNewMessage,
+    processDialogRead: processDialogRead,
     dialogBoxClickedHandler: dialogBoxClickedHandler,
     addActiveDialog: addActiveDialog,
     getFriendsFromServer: getFriendsFromServer,

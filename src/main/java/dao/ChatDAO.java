@@ -133,4 +133,19 @@ public class ChatDAO {
     getSession().saveOrUpdate(message);
     return true;
   }
+
+  public boolean updateReadTime(String from, String to, Date timestamp) {
+    ChatDialog dialog = this.getDialog(from, to);
+    if (dialog == null) {
+      return false;
+    }
+
+    if (to.equals(dialog.getUsername1())) {
+      dialog.setUser1ReadTime(timestamp);
+    } else {
+      dialog.setUser2ReadTime(timestamp);
+    }
+    getSession().saveOrUpdate(dialog);
+    return true;
+  }
 }

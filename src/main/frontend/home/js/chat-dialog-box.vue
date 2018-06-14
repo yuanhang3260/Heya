@@ -17,8 +17,8 @@
   <div v-show="!dialog.minimized" class="dialog-box-body" v-on:click="clickHandler">
     <div class="messages-box">
       <div v-for="message in dialog.messages">
-        <chatBubbleLeft v-if="!message.me" :key="message.timestamp.getTime()" :friend="friend" :content="message.content" :debug="debug"/>
-        <chatBubbleRight v-if="message.me" :key="message.timestamp.getTime()" :uid="uid" :username="username" :content="message.content" :debug="debug"/>
+        <chatBubbleLeft v-if="message.to === username" :key="message.timestamp.getTime()" :friend="friend" :content="message.content" :debug="debug"/>
+        <chatBubbleRight v-if="message.from === username" :key="message.timestamp.getTime()" :uid="uid" :username="username" :content="message.content" :debug="debug"/>
       </div>
     </div>
 
@@ -101,6 +101,7 @@ export default {
       // be rendered.
       let me = this;
       setTimeout(function() {
+        // TODO: Check if current position is at the bottom of message box.
         me.scrollDown();
       }, 0);
     },
