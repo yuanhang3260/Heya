@@ -10,8 +10,8 @@
     </id>
     <property name="username1" column="username_1" type="string" not-null="true" update="false" />
     <property name="username2" column="username_2" type="string" not-null="true" update="false" />
-    <property name="user1ReadTime" column="user_1_read_time" type="timestamp" not-null="true"/>
-    <property name="user2ReadTime" column="user_2_read_time" type="timestamp" not-null="true"/>
+    <property name="user1ReadTime" column="user_1_read_time" type="long" not-null="true"/>
+    <property name="user2ReadTime" column="user_2_read_time" type="long" not-null="true"/>
 
     <set name="messages" cascade="delete" lazy="true">
       <key column="f_dialog_id" />

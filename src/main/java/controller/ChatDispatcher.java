@@ -73,6 +73,10 @@ public class ChatDispatcher {
     synchronized public boolean isOnline() {
       return !this.sessions.isEmpty();
     }
+
+    synchronized public int sessionsNum() {
+      return this.sessions.size();
+    }
   }
 
   synchronized private ChatUser getOrCreateChatUser(String username) {
@@ -143,8 +147,7 @@ public class ChatDispatcher {
 
     String to = msg.getString("to");
     String content = msg.getString("content");
-    Date timestamp = new Date();
-    timestamp.setTime(msg.getLong("timestamp"));
+    Long timestamp = msg.getLong("timestamp");
 
     // Write the new message to DB and send it to receiver. Note this is done in the receiver's
     // thread executor.
@@ -185,9 +188,7 @@ public class ChatDispatcher {
                 ", the actual user is " + username);
       return false;
     }
-
-    Date timestamp = new Date();
-    timestamp.setTime(msg.getLong("timestamp"));
+    Long timestamp = msg.getLong("timestamp");
 
     // Broadcast this message to all connections of the user "to".
     //
@@ -202,7 +203,6 @@ public class ChatDispatcher {
     receiver.queueTask(() -> {
       // Update dialog in DB.
       if (!chatDao.updateReadTime(from, to, timestamp)) {
-        log.error("Failed to update dialog read time");
         return;
       }
       // Sync.
@@ -255,8 +255,25 @@ public class ChatDispatcher {
         e.printStackTrace();
       }
 
-      // TODO:
       // If this session if first session of this user, we should broadcast online to all friends.
+      if (user.sessionsNum() == 1) {
+        for (User friend : friends) {
+          ChatUser chatFriend = getChatUser(friend.getUsername());
+          if (chatFriend != null) {
+            JSONObject msg = new JSONObject();
+            try {
+              msg.put("type", "FriendOnline");
+              msg.put("username", username);
+            } catch (JSONException e) {
+              e.printStackTrace();
+              continue;
+            }
+            chatFriend.queueTask(() -> {
+              chatFriend.pushMessage(msg);
+            });
+          }
+        }
+      }
     });
   }
 
@@ -270,8 +287,26 @@ public class ChatDispatcher {
     user.queueTask(() -> {
       user.removeSession(session);
 
-      // TODO:
       // If this is the last session, remove this ChatUser and notify all friends offline message.
+      if (!user.isOnline()) {
+        List<User> friends = friendsDao.getFriends(username);
+        for (User friend : friends) {
+          ChatUser chatFriend = getChatUser(friend.getUsername());
+          if (chatFriend != null) {
+            JSONObject msg = new JSONObject();
+            try {
+              msg.put("type", "FriendOffline");
+              msg.put("username", username);
+            } catch (JSONException e) {
+              e.printStackTrace();
+              continue;
+            }
+            chatFriend.queueTask(() -> {
+              chatFriend.pushMessage(msg);
+            });
+          }
+        }
+      }
     });
   }
 }

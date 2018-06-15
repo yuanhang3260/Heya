@@ -109,16 +109,16 @@ public class ChatDAO {
       dialog.setDialogId(UuidUtils.compressedUuid());
       dialog.setUsername1(pair.username1);
       dialog.setUsername2(pair.username2);
-      Date date = new Date();
-      dialog.setUser1ReadTime(date);
-      dialog.setUser2ReadTime(date);
+      Long timestamp = new Date().getTime();
+      dialog.setUser1ReadTime(timestamp);
+      dialog.setUser2ReadTime(timestamp);
       getSession().saveOrUpdate(dialog);
     }
 
     return dialog;
   }
 
-  public boolean addChatMessage(String from, String to, String content, Date timestamp) {
+  public boolean addChatMessage(String from, String to, String content, Long timestamp) {
     ChatDialog dialog = this.getOrCreateDialog(from, to);
     if (dialog == null) {
       return false;
@@ -129,13 +129,13 @@ public class ChatDAO {
     message.setMessageId(UuidUtils.compressedUuid());
     message.setUsername(from);
     message.setContent(content);
-    message.setCreateTime(new Date());  // use the passed in timestamp arg?
+    message.setCreateTime((new Date()).getTime());  // use the passed in timestamp arg?
     getSession().saveOrUpdate(message);
     return true;
   }
 
-  public boolean updateReadTime(String from, String to, Date timestamp) {
-    ChatDialog dialog = this.getOrCreateDialog(from, to);
+  public boolean updateReadTime(String from, String to, Long timestamp) {
+    ChatDialog dialog = this.getDialog(from, to);
     if (dialog == null) {
       return false;
     }
@@ -152,17 +152,17 @@ public class ChatDAO {
   public List<ChatMessage> getUnreadMessages(String from, String to) {
     ChatDialog dialog = this.getDialog(from, to);
     if (dialog == null) {
-      return null;
+      return new ArrayList<ChatMessage>();
     }
 
     Query query = getSession().createQuery(
         " from ChatMessage where dialogId = ? and username = ? and createTime > ?");
     query.setString(0, dialog.getDialogId());
     query.setString(1, from);
-    if (to == dialog.getUsername1()) {
-      query.setDate(2, dialog.getUser1ReadTime());
+    if (to.equals(dialog.getUsername1())) {
+      query.setLong(2, dialog.getUser1ReadTime());
     } else {
-      query.setDate(2, dialog.getUser2ReadTime());
+      query.setLong(2, dialog.getUser2ReadTime());
     }
 
     return query.list();

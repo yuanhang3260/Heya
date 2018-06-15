@@ -12,8 +12,8 @@ public class ChatDialog {
   private String dialogId;
   private String username1;
   private String username2;
-  private Date user1ReadTime;
-  private Date user2ReadTime;
+  private Long user1ReadTime;
+  private Long user2ReadTime;
   private Set<ChatMessage> messages;
 
   // Constructors.
@@ -48,17 +48,17 @@ public class ChatDialog {
     this.username2 = username2;
   }
 
-  public Date getUser1ReadTime() {
+  public Long getUser1ReadTime() {
     return this.user1ReadTime;
   }
-  public void setUser1ReadTime(Date time) {
+  public void setUser1ReadTime(Long time) {
     this.user1ReadTime = time;
   }
 
-  public Date getUser2ReadTime() {
+  public Long getUser2ReadTime() {
     return this.user2ReadTime;
   }
-  public void setUser2ReadTime(Date time) {
+  public void setUser2ReadTime(Long time) {
     this.user2ReadTime = time;
   }
 

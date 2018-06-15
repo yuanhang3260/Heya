@@ -9,6 +9,7 @@ function loadFriends() {
     for (let friend of this.friendsList) {
       this.friends[friend.username] = friend;
     }
+    this.connect();
   } else {
     this.getFriendsFromServer();
   }
@@ -36,6 +37,8 @@ function getFriendsFromServer() {
       for (let friend of me.friendsList) {
         me.friends[friend.username] = friend;
       }
+
+      me.connect();
     }
   });
 }
@@ -77,6 +80,34 @@ function processMessage(message) {
     this.processDialogRead(message);
   } else if (message.type === "ChatFriends") {
     this.processChatFriends(message);
+  } else if (message.type === "FriendOnline") {
+    this.processFriendOnline(message);
+  } else if (message.type === "FriendOffline") {
+    this.processFriendOffline(message);
+  }
+}
+
+function processFriendOnline(message) {
+  let friendName = message.username;
+  if (!friendName) {
+    return;
+  }
+
+  let friend = this.friends[friendName];
+  if (friend) {
+    friend.online = true;
+  }
+}
+
+function processFriendOffline(message) {
+  let friendName = message.username;
+  if (!friendName) {
+    return;
+  }
+
+  let friend = this.friends[friendName];
+  if (friend) {
+    friend.online = false;
   }
 }
 
@@ -96,6 +127,10 @@ function processChatFriends(message) {
     // If there is no dialog open with this friend, create one load all unread
     // message into it. This dialog will be added to inactive dialogs map. 
     if (!this.hasDialogWith(friendName) && chatFriend.unread.length > 0) {
+      for (let message of chatFriend.unread) {
+        message.to = this.username;
+      }
+
       friend.hasUnread = true;
       let dialog = {
         minimized: true,
@@ -222,7 +257,6 @@ function addActiveDialog(dialog) {
 
 function beforeMount() {
   this.loadFriends();
-  this.connect();
 }
 
 function openDialog(payload) {
@@ -284,7 +318,7 @@ function hasDialogWith(friendName) {
   if (this.inactiveDialogs.friendName) {
     return true;
   }
-  for (let dialog : this.dialogs) {
+  for (let dialog of this.dialogs) {
     if (dialog.friend.username === friendName) {
       return true;
     }
@@ -360,6 +394,8 @@ export default {
     processNewMessage: processNewMessage,
     processDialogRead: processDialogRead,
     processChatFriends: processChatFriends,
+    processFriendOnline: processFriendOnline,
+    processFriendOffline: processFriendOffline,
     dialogBoxClickedHandler: dialogBoxClickedHandler,
     addActiveDialog: addActiveDialog,
     getFriendsFromServer: getFriendsFromServer,

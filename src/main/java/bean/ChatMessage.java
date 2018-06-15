@@ -11,7 +11,7 @@ public class ChatMessage {
   private String messageId;
   private String username;
   private String content;
-  private Date createTime;
+  private Long createTime;
 
   // Constructors.
   public ChatMessage() {}
@@ -26,9 +26,9 @@ public class ChatMessage {
   public JSONObject toJSONObject() {
     JSONObject json_obj = new JSONObject();
     try {
-      json_obj.put("username", this.username);
+      json_obj.put("from", this.username);
       json_obj.put("content", this.content);
-      json_obj.put("createTime", this.createTime);
+      json_obj.put("timestamp", this.createTime);
     } catch (JSONException e) {
       e.printStackTrace();
     }
@@ -71,10 +71,10 @@ public class ChatMessage {
     this.content = content;
   }
 
-  public Date getCreateTime() {
+  public Long getCreateTime() {
     return this.createTime;
   }
-  public void setCreateTime(Date createTime) {
+  public void setCreateTime(Long createTime) {
     this.createTime = createTime;
   }
 }

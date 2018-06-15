@@ -14,6 +14,6 @@
     <property name="dialogId" column="f_dialog_id" type="string" not-null="true" update="false"/>
     <property name="username" column="username" type="string" not-null="true" update="false"/>
     <property name="content" column="content" type="string" not-null="true" update="false"/>
-    <property name="createTime" column="create_time" type="timestamp" not-null="true" update="false"/>
+    <property name="createTime" column="create_time" type="long" not-null="true" update="false"/>
   </class>
 </hibernate-mapping>
