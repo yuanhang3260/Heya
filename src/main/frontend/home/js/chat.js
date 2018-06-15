@@ -26,9 +26,10 @@ function getFriendsFromServer() {
     console.log(data);
     if (data.success) {
       // We must set hasUnread here before assigning data.result.friends to
-      // friendsList. Otherwise all bindings to hasUnread will not take effect.
+      // friendsList. Otherwise all bindings will not take effect.
       for (let friend of data.result.friends) {
         friend.hasUnread = false;
+        friend.online = false;
       }
 
       me.friendsList = data.result.friends;
@@ -74,6 +75,36 @@ function processMessage(message) {
     this.processNewMessage(message);
   } else if (message.type === "DialogRead") {
     this.processDialogRead(message);
+  } else if (message.type === "ChatFriends") {
+    this.processChatFriends(message);
+  }
+}
+
+function processChatFriends(message) {
+  if (!message.friends) {
+    return;
+  }
+
+  for (let chatFriend of message.friends) {
+    let friendName = chatFriend.username;
+    let friend = this.friends[friendName];
+    if (!friend) {
+      continue;
+    }
+
+    friend.online = chatFriend.online;
+    // If there is no dialog open with this friend, create one load all unread
+    // message into it. This dialog will be added to inactive dialogs map. 
+    if (!this.hasDialogWith(friendName) && chatFriend.unread.length > 0) {
+      friend.hasUnread = true;
+      let dialog = {
+        minimized: true,
+        focus: false,
+        friend: friend,
+        messages: chatFriend.unread,
+      }
+      this.inactiveDialogs[friendName] = dialog;
+    }
   }
 }
 
@@ -249,6 +280,18 @@ function closeDialog(payload) {
   }
 }
 
+function hasDialogWith(friendName) {
+  if (this.inactiveDialogs.friendName) {
+    return true;
+  }
+  for (let dialog : this.dialogs) {
+    if (dialog.friend.username === friendName) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function flipMinimize(payload) {
   for (let i = 0; i < this.dialogs.length; i++) {
     let dialog = this.dialogs[i];
@@ -316,9 +359,11 @@ export default {
     processMessage: processMessage,
     processNewMessage: processNewMessage,
     processDialogRead: processDialogRead,
+    processChatFriends: processChatFriends,
     dialogBoxClickedHandler: dialogBoxClickedHandler,
     addActiveDialog: addActiveDialog,
     getFriendsFromServer: getFriendsFromServer,
+    hasDialogWith: hasDialogWith,
   },
 
   beforeMount: beforeMount,

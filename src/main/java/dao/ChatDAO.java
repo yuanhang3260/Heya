@@ -118,7 +118,7 @@ public class ChatDAO {
     return dialog;
   }
 
-  public boolean AddChatMessage(String from, String to, String content, Date timestamp) {
+  public boolean addChatMessage(String from, String to, String content, Date timestamp) {
     ChatDialog dialog = this.getOrCreateDialog(from, to);
     if (dialog == null) {
       return false;
@@ -147,5 +147,24 @@ public class ChatDAO {
     }
     getSession().saveOrUpdate(dialog);
     return true;
+  }
+
+  public List<ChatMessage> getUnreadMessages(String from, String to) {
+    ChatDialog dialog = this.getDialog(from, to);
+    if (dialog == null) {
+      return null;
+    }
+
+    Query query = getSession().createQuery(
+        " from ChatMessage where dialogId = ? and username = ? and createTime > ?");
+    query.setString(0, dialog.getDialogId());
+    query.setString(1, from);
+    if (to == dialog.getUsername1()) {
+      query.setDate(2, dialog.getUser1ReadTime());
+    } else {
+      query.setDate(2, dialog.getUser2ReadTime());
+    }
+
+    return query.list();
   }
 }
