@@ -1,9 +1,9 @@
 <template>
 
 <div class="subpanel profile-education-panel">
-  <profile-education-box v-for="education in sortedSchools" :key="education.sid" :uid="uid" :username="username" :initData="education" :debug="debug" v-on:delete-school="handleDeleteSchool"></profile-education-box>
+  <profile-education-box v-for="education in sortedSchools" :key="education.sid" :uid="uid" :username="username" :initData="education" :editable="editable" :debug="debug" v-on:delete-school="handleDeleteSchool"></profile-education-box>
 
-  <div v-show="!addingNew" class="add-new-item">
+  <div v-if="editable" v-show="!addingNew" class="add-new-item">
     <div v-on:click="addingNew=true" class="add-item-button">
       <i class="fa fa-plus-square add-item-icon"></i>
       <span class="add-item-text">Add a school</span>
@@ -34,6 +34,10 @@ export default {
     username: {
       type: String,
       default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     educationInfo: {
       type: Array,

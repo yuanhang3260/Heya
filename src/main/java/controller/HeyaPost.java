@@ -23,6 +23,7 @@ import application.SpringUtils;
 import bean.Post;
 import bean.User;
 import dao.PostDAO;
+import dao.UserDAO;
 import util.JsonUtils;
 import util.UuidUtils;
 
@@ -31,6 +32,12 @@ import util.UuidUtils;
 public class HeyaPost {
   private static final Logger log = Logger.getLogger(HeyaPost.class);
 
+  @Autowired
+  PostDAO postDAO;
+
+  @Autowired
+  UserDAO userDAO;
+
   private static String dataDir = null;
   static String getDataDir(HttpServletRequest request) {
     if (dataDir == null) {
@@ -38,10 +45,7 @@ public class HeyaPost {
       dataDir = context.getInitParameter("data-storage");
     }
     return dataDir;
-  } 
-
-  @Autowired
-  PostDAO postDAO;
+  }
 
   private User getAuthorizedUser(HttpSession session, String username) {
     User user = (User)session.getAttribute("user");
@@ -58,11 +62,14 @@ public class HeyaPost {
       HttpServletResponse response,
       HttpSession session,
       @PathVariable("username") String username) {
-    User user = getAuthorizedUser(session, username);
-    if (user == null) {
-      JsonUtils.WriteJSONResponse(response, false, "permission denied");
-      return;
+    User user;  // owner
+    User viewer = (User)session.getAttribute("user");
+    if (username.equals(viewer.getUsername())) {
+      user = viewer;
+    } else {
+      user = this.userDAO.GetUserByUsername(username);
     }
+
     String uid = user.getUid();
 
     // Query db to get posts of this user.

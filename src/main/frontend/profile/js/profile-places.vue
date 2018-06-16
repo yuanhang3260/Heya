@@ -1,8 +1,8 @@
 <template>
 
 <div class="subpanel profile-places-panel">
-  <profile-place-box :uid="uid" :username="username" :type="'current'" :initData="current" :debug="debug"></profile-place-box>
-  <profile-place-box :uid="uid" :username="username" :type="'hometown'" :initData="hometown" :debug="debug"></profile-place-box>
+  <profile-place-box :uid="uid" :username="username" :type="'current'" :editable="editable" :initData="current" :debug="debug"></profile-place-box>
+  <profile-place-box :uid="uid" :username="username" :type="'hometown'" :editable="editable" :initData="hometown" :debug="debug"></profile-place-box>
 </div>
 
 </template>
@@ -24,6 +24,10 @@ export default {
     username: {
       type: String,
       default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     placesInfo: {
       type: Array,

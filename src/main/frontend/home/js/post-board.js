@@ -36,23 +36,6 @@ function loadPosts() {
   });
 }
 
-const imageViewerElementId = "post-image-viewer";
-
-function viewPostImages(payload) {
-  for (let post of this.posts) {
-    if (post.pid === payload.postId) {
-      this.imagesToView = post.images;
-      this.imageViewIndex = payload.imageIndex;
-
-      // Unforturnately, we have to use jquery to modal the image viewer,
-      // and give focus to dialog body.
-      $("#" + imageViewerElementId).modal("show");
-      $("#" + imageViewerElementId).find(".modal-body").focus();
-      break;
-    }
-  }
-}
-
 function deletePost(payload) {
   let me = this;
   let pid = payload.postId;
@@ -108,11 +91,9 @@ export default {
   methods: {
     getPosts: getPosts,
     loadPosts: loadPosts,
-    viewPostImages: viewPostImages,
     deletePost: deletePost,
   },
 
   beforeMount: beforeMount,
   created: created,
-  imageViewerElementId: imageViewerElementId,
 }

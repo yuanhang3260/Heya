@@ -1,6 +1,6 @@
 <template>
 
-<div class="profile-info-box" v-bind:class="{'hometown': type==='hometown', 'current-live': type==='current'}">
+<div v-if="editable || initData" class="profile-info-box" v-bind:class="{'hometown': type==='hometown', 'current-live': type==='current'}">
   <div v-show="!name && mode==='display'" v-on:click="clickEdit" class="add-item-button">
     <i class="fa fa-plus-square add-item-icon"></i>
     <span v-if="type==='current'" class="add-item-text">Add current live</span>
@@ -27,7 +27,7 @@
     </div>
     <i v-if="type==='current'" class="fa fa-map-marker profile-icon"></i>
     <i v-if="type==='hometown'" class="fa fa-home profile-icon"></i>
-    <div class="corner-buttons">
+    <div v-if="editable" class="corner-buttons">
       <i v-on:click="clickEdit" class="fa fa-edit profile-edit-button"></i>
       <i v-on:click="clickDelete" class="fa fa-ban profile-delete-button"></i>
     </div>
@@ -51,6 +51,10 @@ export default {
     username: {
       type: String,
       default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     initData: {
       type: Object,

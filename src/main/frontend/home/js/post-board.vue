@@ -1,23 +1,19 @@
 <template>
 
 <div class="heya-post-board">
-  <post v-for="post in posts" :key="post.pid" :post="post" v-on:view-post-images="viewPostImages" v-on:delete-post="deletePost"/>
-
-  <image-viewer :id="imageViewerElementId" :uid="uid" :username="username" :debug="debug" :images="imagesToView" :imageIndex.sync="imageViewIndex"></image-viewer>
+  <post v-for="post in posts" :key="post.pid" :post="post" :editable="editable" v-on:delete-post="deletePost"/>
 </div>
 
 </template>
 
 <script>
 import post from "./post.vue"
-import imageViewer from "./image-viewer.vue"
 import postBoard from "./post-board.js"
 
 export default {
   name: "post-board",
   components: {
     post,
-    imageViewer,
   },
   props: {
     uid: {
@@ -28,6 +24,10 @@ export default {
       type: String,
       default: null,
     },
+    editable: {
+      type: Boolean,
+      default: false,
+    },
     debug: {
       type: Boolean,
       default: false,
@@ -36,9 +36,6 @@ export default {
   data () {
     return {
       posts: [],
-      imageViewerElementId: postBoard.imageViewerElementId,
-      imagesToView: [],
-      imageViewIndex: 0,
     }
   },
   computed: postBoard.computed,

@@ -11,6 +11,7 @@ import Poster from "heya/home/js/poster.vue";
 import PostBoard from "heya/home/js/post-board.vue";
 import UserInfo from "heya/home/js/userinfo.vue";
 import Chat from "heya/home/js/chat.vue";
+import ImageViewer from "./image-viewer.vue"
 
 Vue.config.productionTip = false
 Vue.use(VueBus);
@@ -54,6 +55,13 @@ new Vue({
   el: "#chat",
   components: {
     Chat,
+  }
+});
+
+new Vue({
+  el: "#image-viewer",
+  components: {
+    ImageViewer,
   }
 });
 

@@ -39,9 +39,9 @@ public class Signup {
     // TODO: Encrypt password!
     String uid = this.userDAO.addNewUser(user.getUsername(),
                                          user.getEmail(), user.getPassword());
-    System.out.println("UID = " + uid);
     if (uid != null) {
       createUserDataDirectory(request, uid);
+      user.setUid(uid);
       request.getSession().setAttribute("user", user);
       success = true;
     } else {

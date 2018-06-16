@@ -18,7 +18,7 @@
       <i class="basic-info-icon icon-birth fa fa-birthday-cake"></i>
       <span>{{birth}}</span>
     </li>
-    <div class="edit-button" v-on:click="clickEdit">
+    <div v-if="editable" class="edit-button" v-on:click="clickEdit">
       <i class="fa fa-edit"></i>
       <span>Edit profile basic info</span>
     </div>
@@ -78,6 +78,10 @@ export default {
     username: {
       type: String,
       default: "default",
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     basicInfo: {
       type: Object,

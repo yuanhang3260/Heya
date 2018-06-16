@@ -1,6 +1,7 @@
 import $ from "jquery";
 import utils from "heya/common/js/utils.js"
 import debug from "heya/common/js/debug.js"
+import common from "./common.js"
 
 function loadUserInfo() {
   // Process the form.
@@ -65,7 +66,8 @@ function beforeMount() {
 }
 
 export default {
-  computed: {},
+  computed: {
+  },
   methods: {
     loadUserInfo: loadUserInfo,
     refreshUserInfo: refreshUserInfo,

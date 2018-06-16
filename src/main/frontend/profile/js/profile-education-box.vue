@@ -14,7 +14,7 @@
       </p>
     </div>
     <i class="fa fa-graduation-cap profile-icon"></i>
-    <div class="corner-buttons">
+    <div v-if="editable" class="corner-buttons">
       <i v-on:click="mode='edit'" class="fa fa-edit profile-edit-button"></i>
       <i v-on:click="deleteSchool" class="fa fa-ban profile-delete-button"></i>
     </div>
@@ -40,6 +40,10 @@ export default {
     username: {
       type: String,
       default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     initData: {
       type: Object,

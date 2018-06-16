@@ -16,7 +16,7 @@
       </p>
     </div>
     <i class="fa fa-laptop profile-icon"></i>
-    <div class="corner-buttons">
+    <div v-if="editable" class="corner-buttons">
       <i v-on:click="mode='edit'" class="fa fa-edit profile-edit-button"></i>
       <i v-on:click="deleteCompany" class="fa fa-ban profile-delete-button"></i>
     </div>
@@ -42,6 +42,10 @@ export default {
     username: {
       type: String,
       default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     initData: {
       type: Object,

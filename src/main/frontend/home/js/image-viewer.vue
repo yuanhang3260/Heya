@@ -28,33 +28,20 @@ export default {
   components: {
   },
   props: {
-    uid: {
-      type: String,
-      default: null,
-    },
-    username: {
-      type: String,
-      default: null,
-    },
     debug: {
       type: Boolean,
       default: false,
     },
-    images: {
-      type: Array,
-      default: function() { return []; },
-    },
-    imageIndex: {
-      type: Number,
-      default: 0,
-    }
   },
   data () {
     return {
+      images: [],
+      imageIndex: 0,
     }
   },
   computed: imageViewer.computed,
   methods: imageViewer.methods,
+  created: imageViewer.created,
 }
 </script>
 

@@ -2,26 +2,29 @@ import $ from "jquery";
 import ImageClipper from "heya/common/js/image-clipper.js";
 import common from "./common.js";
 
-function profileImageURL() {
-  return common.profileImageURL.apply(this, []);
-}
-
-function coverImageURL() {
-  return common.profileCoverImageURL.apply(this, []);
-}
-
 var clipper = null;
 
 function clickProfileImage() {
-  if (!clipper) {
-    clipper = new ImageClipper({
-      title: "Update Profile Image",
-      callback: this.updateProfileImage,
-      outputFormat: "jpeg",
+  if (this.editable) {
+    if (!clipper) {
+      clipper = new ImageClipper({
+        title: "Update Profile Image",
+        callback: this.updateProfileImage,
+        outputFormat: "jpeg",
+      });
+    }
+
+    clipper.open();
+  } else {
+    this.$bus.$emit("view-images", {
+      images: [
+        {
+          url: this.profileImageURL,
+        }
+      ],
+      imageIndex: 0,
     });
   }
-
-  clipper.open();
 }
 
 function updateProfileImage(filename, blob) {
@@ -61,8 +64,8 @@ function followingDisplay() {
 
 export default {
   computed: {
-    profileImageURL: profileImageURL,
-    coverImageURL: coverImageURL,
+    profileImageURL: common.profileImageURL,
+    coverImageURL: common.profileCoverImageURL,
     followingDisplay,
     followersDisplay,
   },

@@ -7,7 +7,7 @@
       <p class="post-owner">{{post.username}}</p>
       <p class="post-time">{{postCreateDate}}</p>
     </div>
-    <i v-on:click="deletePost" class="fa fa-ban delete-post-button" />
+    <i v-if="editable" v-on:click="deletePost" class="fa fa-ban delete-post-button" />
   </div>
 
   <div class="post-content">
@@ -38,6 +38,10 @@ export default {
     post: {
       type: Object,  // Date object
       default: function() { return null; },
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     }
   },
   data () {

@@ -10,6 +10,8 @@
 
   String viewerUid = (String)request.getAttribute("viewerUid");
   String viewerUsername = (String)request.getAttribute("viewerUsername");
+
+  boolean editable = uid.equals(viewerUid) && username.equals(viewerUsername);
 %>
 
 <html lang="en">
@@ -23,17 +25,19 @@
 
 <div class="home-main-container">
   <div class="home-left-bar">
-    <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'"></avatar>
-    <user-info id="userinfo" :uid="'<%= uid %>'" :username="'<%= username %>'"></user-info>
+    <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>"></avatar>
+    <user-info id="userinfo" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>"></user-info>
   </div>
 
   <div class="post-main-container">
-    <poster id="poster" :uid="'<%= uid %>'" :username="'<%= username %>'" :debug=false></poster>
-    <post-board id="post-board" :uid="'<%= uid %>'" :username="'<%= username %>'" :debug=false></post-board>
+    <poster id="poster" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>" :debug=false></poster>
+    <post-board id="post-board" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>" :debug=false></post-board>
   </div>
 </div>
 
-<chat id="chat" :uid="'<%= uid %>'" :username="'<%= username %>'" :debug=false></chat>
+<chat id="chat" :uid="'<%= viewerUid %>'" :username="'<%= viewerUsername %>'" :debug=false></chat>
+
+<image-viewer id="image-viewer" :debug=false></image-viewer>
 
 <script type="text/javascript" src="dist/js/home.dist.js"></script></body>
 

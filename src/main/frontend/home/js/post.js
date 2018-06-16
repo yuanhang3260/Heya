@@ -9,8 +9,8 @@ function postCreateDate() {
 }
 
 function viewImage(index) {
-  this.$emit("view-post-images", {
-    postId: this.post.pid,
+  this.$bus.$emit("view-images", {
+    images: this.post.images,
     imageIndex: index,
   });
 }

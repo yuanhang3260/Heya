@@ -10,6 +10,8 @@
 
   String viewerUid = (String)request.getAttribute("viewerUid");
   String viewerUsername = (String)request.getAttribute("viewerUsername");
+
+  boolean editable = uid.equals(viewerUid) && username.equals(viewerUsername);
 %>
 
 <html lang="en">
@@ -26,7 +28,7 @@
     <div class="overall-title">
       <i class="fa fa-user profile-icon"></i><span> About</span>
     </div>
-    <profile id="profile" :uid="'<%= uid %>'" :username="'<%= username %>'"></profile>
+    <profile id="profile" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>"></profile>
   </div>
 </div>
 

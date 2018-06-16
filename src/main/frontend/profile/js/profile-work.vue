@@ -1,9 +1,9 @@
 <template>
 
 <div class="subpanel profile-work-panel">
-  <profile-work-box v-for="work in sortedCompanies" :key="work.cid" :uid="uid" :username="username" :initData="work" :debug="debug" v-on:delete-company="handleDeleteCompany"></profile-work-box>
+  <profile-work-box v-for="work in sortedCompanies" :key="work.cid" :uid="uid" :username="username" :editable="editable" :initData="work" :debug="debug" v-on:delete-company="handleDeleteCompany"></profile-work-box>
 
-  <div v-show="!addingNew" class="add-new-item">
+  <div v-if="editable" v-show="!addingNew" class="add-new-item">
     <div v-on:click="addingNew=true" class="add-item-button">
       <i class="fa fa-plus-square add-item-icon"></i>
       <span class="add-item-text">Add a work</span>
@@ -34,6 +34,10 @@ export default {
     username: {
       type: String,
       default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     workInfo: {
       type: Array,

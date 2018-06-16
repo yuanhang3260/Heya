@@ -1,6 +1,6 @@
 <template>
 
-<div class="card poster-container">
+<div v-if="editable" class="card poster-container">
   <div class="poster-header">
     <i class="fa fa-edit" />
     <span>Make Post</span>
@@ -56,6 +56,10 @@ export default {
     username: {
       type: String,
       default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     debug: {
       type: Boolean,

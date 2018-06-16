@@ -1,8 +1,14 @@
 <template>
 
 <div class="card home-profile-detail-container">
-  <h6 class="profile-card-title">About <small>-</small> 
-  <a href="profile?uid=0&username=snoopy" class="profile-edit-button" >Edit</a></h6>
+  <h6 class="profile-card-title">
+    <span>About</span>
+    <small>-</small> 
+    <a v-bind:href="'profile?username=' + username" class="profile-edit-button" >
+      <span v-if="editable">Edit</span>
+      <span v-else>View</span>
+    </a>
+  </h6>
   <load-animation v-if="loading" :width=220 :height=200 style="margin-top: -15px"></load-animation>
 
   <div v-for="job of work" class="user-profile-item">
@@ -56,7 +62,11 @@ export default {
     },
     username: {
       type: String,
-      default: "default",
+      default: null,
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     debug: {
       type: Boolean,
@@ -79,6 +89,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "~heya/home/css/userinfo.scss"
 </style>

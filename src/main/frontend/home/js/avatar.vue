@@ -28,6 +28,8 @@ import avatar from "./avatar.js"
 
 export default {
   name: "avatar",
+  components: {
+  },
   props: {
     uid: {
       type: String,
@@ -36,6 +38,10 @@ export default {
     username: {
       type: String,
       default: "default",
+    },
+    editable: {
+      type: Boolean,
+      default: false,
     },
     debug: {
       type: Boolean,
@@ -53,6 +59,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "~heya/home/css/avatar.scss"
 </style>
