@@ -15,23 +15,48 @@
         </div>
       </div>
     </form>
+
+    <div class="navbar-right-box" v-if="notification">
+      <accountMangement :uid="uid" :username="username" :debug="debug"/>
+    </div>
   </div>
 </nav>
 
 </template>
 
 <script>
+import accountMangement from "./account-management.vue" 
+
 export default {
+  components: {
+    accountMangement,
+  },
   name: "navbar",
   props: {
     "searchBox": {
       type: Boolean,
       default: true,
     },
+    "notification": {
+      type: Boolean,
+      default: true,
+    },
+    uid: {
+      type: String,
+      default: null,
+    },
+    username: {
+      type: String,
+      default: null,
+    },
     "width": {
       type: Number,
       default: 960,
-    }
+    },
+    "debug": {
+      type: Boolean,
+      default: false,
+    },
   },
   data () {
     return {}
@@ -47,6 +72,6 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "~heya/common/css/navbar.scss";
 </style>

@@ -64,4 +64,3 @@ new Vue({
     ImageViewer,
   }
 });
-

@@ -6,7 +6,7 @@
 </head>
 
 <body uid=0 user="snoopy" viewer_id=0 viewer="snoopy" >
-<nav-bar id="navbar" :search-box=true :width=1250></nav-bar>
+<nav-bar id="navbar" :search-box=true :notification=true :uid="'0'" :username="'snoopy'" :width=1250 :debug=true></nav-bar>
 
 <div class="home-main-container">
   <div class="home-left-bar">
@@ -21,6 +21,8 @@
 </div>
 
 <chat id="chat" :uid="'0'" :username="'snoopy'" :debug=true></chat>
+
+<image-viewer id="image-viewer" :debug=true></image-viewer>
 
 <script type="text/javascript" src="dist/js/home.dist.js"></script></body>
 

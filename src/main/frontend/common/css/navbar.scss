@@ -36,6 +36,72 @@ $navbar-bgcolor: #227535;
 .heya-navbar-container {
   margin: 0 auto;
   padding: 7px;
+
+  div.navbar-right-box {
+    float: right;
+    margin-right: 105px;
+
+    div.account-mangement-box {
+      position: relative;
+      height: $navbar-height;
+
+      div.account-box-avatar {
+        padding-top: 5px;
+
+        img.avatar-image {
+          height: $navbar-height - 8px;
+          width: $navbar-height - 8px;
+          border-radius: 50%;
+          &:hover{
+            cursor: pointer;
+          };
+        }
+      }
+
+      div.account-box-menu {
+        position: absolute;
+        top: 42px;
+        left: -60px;
+        padding: 5px 0 5px 0;
+        border: 1px solid #ddd;
+        width: 100px;
+
+        font-size: 13px;
+        background-color: white;
+
+        div.account-box-menu-item {
+          a {
+            text-decoration: none;
+            color: inherit;
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: #5e955e;
+            color: white;
+          }
+
+          span {
+            height: 30px;
+            line-height: 30px;
+            padding: 15px;
+          }
+        }
+      }
+
+      div.account-box-menu-arrow {
+        position: absolute;
+        top: 27px;
+        left: 5px;
+        width: 0px;
+        height: 0px;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid #fcfcfc;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+      }
+    }
+  }
 }
 
 .heya-navbar-btn {

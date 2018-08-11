@@ -9,7 +9,7 @@ function loadFriends() {
     for (let friend of this.friendsList) {
       this.friends[friend.username] = friend;
     }
-    this.connect();
+    // this.connect();
   } else {
     this.getFriendsFromServer();
   }
