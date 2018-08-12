@@ -37,7 +37,7 @@ public class WebViewFilter implements Filter {
 
     String ownerUsername = request.getParameter("username");
     if (ownerUsername != null && !ownerUsername.equals(viewerUsername)) {
-      User owner = this.userDAO.GetUserByUsername(ownerUsername);
+      User owner = this.userDAO.getUserByUsername(ownerUsername);
       if (owner != null) {
         uid = owner.getUid();
         username = owner.getUsername();

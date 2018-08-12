@@ -8,16 +8,32 @@
     <img class="profile-img" v-bind:src="profileImageURL" v-on:click="clickProfileImage">
   </div>
   <div class="card-body username-container">{{username}}</div>
-  <div class="card-body follower-container">
-    <div class="follower">
-      <div class="follower-title">Followers</div>
-      <div class="follower-num">{{followersDisplay}}</div>
+  <div class="card-body social-container">
+    <div class="social">
+      <div class="social-title">Friends</div>
+      <div class="social-num">{{friendsCountDisplay}}</div>
     </div>
-    <div class="follower-split-line"></div>
-    <div class="follower">
-      <div class="follower-title">Following</div>
-      <div class="follower-num">{{followingDisplay}}</div>
+    <div class="social-split-line"></div>
+    <div class="social">
+      <div class="social-title">Posts</div>
+      <div class="social-num">{{postsCountDisplay}}</div>
     </div>
+  </div>
+  <div v-if="editable" class="add-friend-container">
+    <button v-if="friendRelationShip=='NOT_FRIENDS'" v-on:click="addfriend" class="btn btn-outline-primary add-friend-btn" type="submit">
+      <i class="fa fa-user-plus"></i>
+      <span>Add Friend</span>
+    </button>
+    <button v-if="friendRelationShip=='FRIENDS'" v-on:click="unfriend" class="btn are-friends-btn" type="submit">
+      <i class="fa fa-check"></i>
+      <span>Friends</span>
+    </button>
+    <button v-if="friendRelationShip=='FRIEND_REQUEST_SENT'" class="btn friend-request-sent-btn" type="submit">
+      <i class="fa fa-user-plus"></i>
+      <span>Friend Request Sent</span>
+    </button>
+  </div>
+    
   </div>
 </div>
 
@@ -37,7 +53,15 @@ export default {
     },
     username: {
       type: String,
-      default: "default",
+      default: null,
+    },
+    viewerId: {
+      type: String,
+      default: null,
+    },
+    viewerUsername: {
+      type: String,
+      default: null,
     },
     editable: {
       type: Boolean,
@@ -50,12 +74,14 @@ export default {
   },
   data () {
     return {
-      followers: 12000000,
-      following: 235,
+      friendscount: 0,
+      postscount: 0,
+      friendRelationShip: "NOT_FRIENDS",
     }
   },
   computed: avatar.computed,
   methods: avatar.methods,
+  mounted: avatar.mounted,
 }
 </script>
 

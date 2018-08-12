@@ -31,7 +31,7 @@ public class Login {
 
     // this.userDAO.checkUser(username, password);
 
-    User user = this.userDAO.GetUserByUsername(username);
+    User user = this.userDAO.getUserByUsername(username);
     if (user == null) {
       err = "user cannot be found";
     } else {

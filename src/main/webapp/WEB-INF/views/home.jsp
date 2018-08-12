@@ -25,7 +25,7 @@
 
 <div class="home-main-container">
   <div class="home-left-bar">
-    <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>"></avatar>
+    <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'" :viewerUid="'<%= viewerUid %>'" :viewerUsername="'<%= viewerUsername %>'" :editable="<%= editable %>"></avatar>
     <user-info id="userinfo" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>"></user-info>
   </div>
 

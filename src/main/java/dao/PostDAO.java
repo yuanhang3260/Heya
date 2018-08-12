@@ -41,6 +41,12 @@ public class PostDAO {
     return query.list();
   }
 
+  public Long getPostsCount(String uid) {
+    Query query = getSession().createQuery("select count(*) from Post where uid = ?");
+    query.setString(0, uid);
+    return (Long)query.uniqueResult();
+  }
+
   public String addNewPost(String uid, Post post) {
     // Generate complete Post object.
     post.setPid(UuidUtils.compressedUuid());

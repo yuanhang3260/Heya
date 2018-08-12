@@ -1,3 +1,4 @@
+import $ from "jquery";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "heya/common/css/font-awesome.min.css";
 import "heya/home/css/home.scss";
@@ -15,6 +16,13 @@ import ImageViewer from "./image-viewer.vue"
 
 Vue.config.productionTip = false
 Vue.use(VueBus);
+
+// propgate mouse-click event.
+$(document).mouseup(function(e) {
+  Vue.bus.emit("mouse-click", {
+    event: e,
+  });
+});
 
 new Vue({
   el: "#navbar",

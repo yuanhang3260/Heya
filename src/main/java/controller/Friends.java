@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import bean.User;
+import dao.UserDAO;
 import dao.FriendsDAO;
 import util.JsonUtils;
 
@@ -27,6 +28,9 @@ public class Friends {
 
   @Autowired
   FriendsDAO friendsDAO;
+
+  @Autowired
+  UserDAO userDAO;
 
   private User getAuthorizedUser(HttpSession session, String username) {
     User user = (User)session.getAttribute("user");
@@ -61,5 +65,97 @@ public class Friends {
     }
 
     JsonUtils.WriteJSONResponse(response, result);
+  }
+
+  @RequestMapping(value="friendscount", method=RequestMethod.GET)
+  public void getFriendsCount(HttpServletResponse response,
+                              HttpSession session,
+                              @PathVariable("username") String username,
+                              @RequestParam("viewerUsername") String viewerUsername) {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
+
+    List<User> friends = this.friendsDAO.getFriends(username);
+    JSONObject result = new JSONObject();
+    result.put("friendscount", friends.size());
+
+    if (!username.equals(viewerUsername)) {
+      for (User friend : friends) {
+        if (friend.getUsername().equals(viewerUsername)) {
+          result.put("areFriends", true);
+          break;
+        }
+      }
+    }
+    JsonUtils.WriteJSONResponse(response, result);
+  }
+
+  @RequestMapping(value="addfriend/{friendUsername}", method=RequestMethod.POST)
+  public void addfriend(HttpServletResponse response,
+                        HttpSession session,
+                        @PathVariable("username") String username,
+                        @PathVariable("friendUsername") String friendUsername) {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
+
+    User friend = userDAO.getUserByUsername(friendUsername);
+    if (friend == null) {
+      JsonUtils.WriteJSONResponse(response, false, "No user " + friendUsername);
+      return;
+    }
+
+    if (friendsDAO.requestAddFriend(username, friendUsername)) {
+      JsonUtils.WriteJSONResponse(response, new JSONObject());
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to sent friend request");
+    }
+  }
+
+  @RequestMapping(value="acceptfriend/{friendUsername}", method=RequestMethod.POST)
+  public void acceptFriend(HttpServletResponse response,
+                           HttpSession session,
+                           @PathVariable("username") String username,
+                           @PathVariable("friendUsername") String friendUsername) {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
+
+    User friend = userDAO.getUserByUsername(friendUsername);
+    if (friend == null) {
+      JsonUtils.WriteJSONResponse(response, false, "No user " + friendUsername);
+      return;
+    }
+
+    if (friendsDAO.acceptFriend(user.getUid(), username, friend.getUid(), friendUsername)) {
+      JsonUtils.WriteJSONResponse(response, new JSONObject());
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to accept add friend");
+    }
+  }
+
+  @RequestMapping(value="unfriend/{friendUsername}", method=RequestMethod.POST)
+  public void unfriend(HttpServletResponse response,
+                        HttpSession session,
+                        @PathVariable("username") String username,
+                        @PathVariable("friendUsername") String friendUsername) {
+    User user = getAuthorizedUser(session, username);
+    if (user == null) {
+      JsonUtils.WriteJSONResponse(response, false, "permission denied");
+      return;
+    }
+
+    if (friendsDAO.unFriend(username, friendUsername)) {
+      JsonUtils.WriteJSONResponse(response, new JSONObject());
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to unfriend");
+    }
   }
 }

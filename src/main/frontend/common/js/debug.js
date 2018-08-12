@@ -73,6 +73,15 @@ function userInfo() {
 function posts() {
   return [
     {
+      pid: "hijk",
+      username: "snoopy",
+      time: new Date("Aug 11, 2018 15:36:00"),
+      avatar: "dist/img/profile.jpg",
+      content: "Will be back.",
+      images: [],
+    },
+
+    {
       pid: "abc123",
       username: "snoopy",
       time: new Date("April 21, 2018 15:45:00"),
@@ -209,9 +218,34 @@ function dialogs() {
   // ];
 }
 
+function friendRequests() {
+  return [
+    {
+      friendName: "panda",
+      avatar: "dist/img/panda.jpg",
+    },
+    {
+      friendName: "hyuan",
+      avatar: "dist/img/hyuan.jpg",
+    }
+  ]; 
+}
+
+function requestReplies() {
+  return [
+    {
+      friendName: "panda",
+      avatar: "dist/img/panda.jpg",
+      status: "ACCEPTED",
+    },
+  ]; 
+}
+
 export default {
   userInfo: userInfo,
   posts: posts,
   friends: friends,
   dialogs: dialogs,
+  friendRequests: friendRequests,
+  requestReplies: requestReplies,
 }

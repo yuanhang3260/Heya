@@ -17,7 +17,8 @@
     </form>
 
     <div class="navbar-right-box" v-if="notification">
-      <accountMangement :uid="uid" :username="username" :debug="debug"/>
+      <friendNotification :uid="uid" :username="username" :showMenu="rightMenu=='friends'" v-on:click-right-menu="showRightMenu" :debug="debug"/>
+      <accountMangement :uid="uid" :username="username" :showMenu="rightMenu=='account'" v-on:click-right-menu="showRightMenu" :debug="debug"/>
     </div>
   </div>
 </nav>
@@ -25,19 +26,22 @@
 </template>
 
 <script>
-import accountMangement from "./account-management.vue" 
+import $ from "jquery"
+import accountMangement from "./account-management.vue"
+import friendNotification from "./friend-notification.vue"
 
 export default {
   components: {
     accountMangement,
+    friendNotification,
   },
   name: "navbar",
   props: {
-    "searchBox": {
+    searchBox: {
       type: Boolean,
       default: true,
     },
-    "notification": {
+    notification: {
       type: Boolean,
       default: true,
     },
@@ -49,26 +53,47 @@ export default {
       type: String,
       default: null,
     },
-    "width": {
+    width: {
       type: Number,
       default: 960,
     },
-    "debug": {
+    debug: {
       type: Boolean,
       default: false,
     },
   },
   data () {
-    return {}
+    return {
+      rightMenu: null,
+      rightBox: null,
+    }
   },
   computed: {
     mainWidth: function() {
       return {
-        "width": this.width + "px",
+        width: this.width + "px",
       }
     }
   },
-  methods: {},
+  methods: {
+    showRightMenu: function(payload) {
+      if (this.rightMenu === payload.rightMenu) {
+        this.rightMenu = null;
+      } else {
+        this.rightMenu = payload.rightMenu;
+      }
+    },
+  },
+
+  mounted: function() {
+    this.rightBox = $(this.$el).find(".navbar-right-box");
+    let me = this;
+    this.$bus.on("mouse-click", function(payload) {
+      if (!$.contains(me.rightBox.get(0), payload.event.target)) {
+        me.rightMenu = null;
+      }
+    });
+  }
 };
 </script>
 

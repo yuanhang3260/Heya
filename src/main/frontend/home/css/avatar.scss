@@ -2,9 +2,9 @@
 
 div.home-profile-container {
   width: $home-profile-container-width;
-  height: $home-profile-container-height;
   margin: 5px;
   background-color: #f9f9f9;
+  padding-bottom: 10px;
 
   div.cover-img-container {
     height: $cover-img-height;
@@ -33,31 +33,28 @@ div.home-profile-container {
       height: 100%;
       width: 100%;
       border-radius: 50%;
+      object-fit: cover;
     }
   }
 
   div.username-container {
-    position: absolute;
-    top: $cover-img-height + $profile-img-size / 2;
+    margin: $profile-img-size / 2 0 0 0;
     width: $home-profile-container-width;
     height: 30px;
     line-height: 30px;
     text-align: center;
     font-weight: 550;
     color: #333;
-    margin: 0;
     padding: 0;
   }
 
-  div.follower-container {
-    position: absolute;
-    top: $cover-img-height + $profile-img-size / 2 + 35px;
+  div.social-container {
     width: $home-profile-container-width;
-    height: 60px;
+    height: 50px;
     color: #555;
     padding: 0 40px;
 
-    .follower {
+    .social {
       display: inline-block;
       vertical-align: middle;
       width: $home-profile-container-width / 2 - 45px;
@@ -65,19 +62,19 @@ div.home-profile-container {
       font-size: 13px;
       padding-left: 2px;
 
-      .follower-title {
+      .social-title {
         text-align: center;
         color: #666;
       }
 
-      .follower-num {
+      .social-num {
         text-align: center;
         color: #222;
         font-weight: 520;
       }
     }
 
-    .follower-split-line {
+    .social-split-line {
       display: inline-block;
       vertical-align: middle;
       width: 1px;
@@ -86,6 +83,47 @@ div.home-profile-container {
       padding: 0;
       margin-top: 5px;
       background-color: #ccc;
+    }
+  }
+
+  div.add-friend-container {
+    position: relative;
+    button.add-friend-btn {
+      position: relative;
+      left: 71px;
+      padding: 4px 7px;
+      background-color: #1ca21c;
+      color: white;
+      font-size: 11px;
+      border: 0 solid transparent;
+      border-radius: 0;
+
+      &:hover {
+        background-color: green;
+      };
+    }
+
+    button.are-friends-btn {
+      position: relative;
+      left: 79px;
+      padding: 3px 7px;
+      background-color: white;
+      color: black;
+      font-size: 11px;
+      border: 1px solid #ddd;
+      border-radius: 0;
+    }
+
+    button.friend-request-sent-btn {
+      position: relative;
+      left: 49px;
+      padding: 3px 7px;
+      background-color: #dedede;
+      color: black;
+      font-size: 11px;
+      border: 1px solid #dedede;
+      border-radius: 0;
+      cursor: default;
     }
   }
 }

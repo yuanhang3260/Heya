@@ -21,15 +21,17 @@ function logout() {
   });
 }
 
-function flipMenu() {
-  this.showMenu = !this.showMenu
+function clickMenu() {
+  this.$emit("click-right-menu", {
+    rightMenu: "account",
+  });
 }
 
 export default {
   methods:{
     profileImageURL: common.profileImageURL,
     logout: logout,
-    flipMenu: flipMenu,
+    clickMenu: clickMenu,
   }
 
 }

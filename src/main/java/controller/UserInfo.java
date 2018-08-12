@@ -48,7 +48,7 @@ public class UserInfo {
     if (username.equals(viewer.getUsername())) {
       user = viewer;
     } else {
-      user = this.userDAO.GetUserByUsername(username);
+      user = this.userDAO.getUserByUsername(username);
     }
 
     if (user != null) {

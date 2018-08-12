@@ -67,7 +67,7 @@ public class HeyaPost {
     if (username.equals(viewer.getUsername())) {
       user = viewer;
     } else {
-      user = this.userDAO.GetUserByUsername(username);
+      user = this.userDAO.getUserByUsername(username);
     }
 
     String uid = user.getUid();
@@ -78,6 +78,33 @@ public class HeyaPost {
     Map<String, Object> result = new HashMap<String, Object>();
     result.put("posts", Post.toJSONOArray(posts));
     JsonUtils.WriteJSONResponse(response, result);
+  }
+
+  @RequestMapping(value="/postscount", method=RequestMethod.GET)
+  public void getPostsCount(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      HttpSession session,
+      @PathVariable("username") String username) {
+    User user;  // owner
+    User viewer = (User)session.getAttribute("user");
+    if (username.equals(viewer.getUsername())) {
+      user = viewer;
+    } else {
+      user = this.userDAO.getUserByUsername(username);
+    }
+
+    String uid = user.getUid();
+
+    // Query db to get posts of this user.
+    JSONObject result = new JSONObject();
+    Long count = this.postDAO.getPostsCount(uid);
+    if (count != null) {
+      result.put("postscount", count);
+      JsonUtils.WriteJSONResponse(response, result);
+    } else {
+      JsonUtils.WriteJSONResponse(response, false, "Failed to get post count for user " + username);
+    }
   }
 
   @RequestMapping(value="", method=RequestMethod.POST)

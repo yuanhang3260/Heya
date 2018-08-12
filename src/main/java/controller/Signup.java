@@ -30,7 +30,7 @@ public class Signup {
     boolean success = false;
     String err = null;
 
-    if (this.userDAO.GetUserByUsername(user.getUsername()) != null) {
+    if (this.userDAO.getUserByUsername(user.getUsername()) != null) {
       err = "Username already used";
       JsonUtils.WriteJSONResponse(response, success, err);
       return;

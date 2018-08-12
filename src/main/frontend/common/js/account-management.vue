@@ -1,7 +1,7 @@
 <template>
 
 <div class="account-mangement-box">
-  <div v-on:click="flipMenu" class="account-box-avatar">
+  <div v-on:click.stop="clickMenu" class="account-box-avatar">
     <img class="avatar-image" v-bind:src="profileImageURL()">
   </div>
   <div v-show="showMenu" class="account-box-menu">
@@ -31,6 +31,10 @@ export default {
       type: String,
       default: null,
     },
+    showMenu: {
+      type: Boolean,
+      default: false,
+    },
     debug: {
       type: Boolean,
       default: false,
@@ -38,7 +42,6 @@ export default {
   },
   data () {
     return {
-      showMenu: false,
     }
   },
   methods: accountMangement.methods,

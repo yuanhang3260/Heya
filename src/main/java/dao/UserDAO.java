@@ -53,7 +53,7 @@ public class UserDAO {
     }
   }
 
-  public User GetUserByUsername(String username) {
+  public User getUserByUsername(String username) {
     Query query = getSession().createQuery(" from User where username = ?");
     query.setString(0, username);
     // query.setCacheable(true);

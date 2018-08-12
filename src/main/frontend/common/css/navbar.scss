@@ -40,6 +40,7 @@ $navbar-bgcolor: #227535;
   div.navbar-right-box {
     float: right;
     margin-right: 105px;
+    display: flex;
 
     div.account-mangement-box {
       position: relative;
@@ -52,6 +53,7 @@ $navbar-bgcolor: #227535;
           height: $navbar-height - 8px;
           width: $navbar-height - 8px;
           border-radius: 50%;
+          object-fit: cover;
           &:hover{
             cursor: pointer;
           };
@@ -93,6 +95,166 @@ $navbar-bgcolor: #227535;
         position: absolute;
         top: 27px;
         left: 5px;
+        width: 0px;
+        height: 0px;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid #fcfcfc;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+      }
+    }
+
+    div.friend-notification-box {
+      position: relative;
+      div.friend-notification-icon {
+        margin: 6px 15px 0 0;
+        font-size: 18px;
+        i {
+          color: #eee;
+        };
+        cursor: pointer;
+      }
+
+      div.friend-notification-icon {
+        position: relative;
+
+        div.notifications-red-dot {
+          position: absolute;
+          top: 18px;
+          left: 15px;
+          border-radius: 50%;
+          width: 7px;
+          height: 7px;
+          background-color: red;
+        }
+      }
+
+      div.friend-notification-menu {
+        position: absolute;
+        top: 42px;
+        left: -260px;
+        background-color: white;
+        border: 1px solid #ddd;
+        width: 300px;
+
+        span.empty-notification {
+          padding-left: 100px;
+          color: #555;
+          cursor: default;
+          font-size: 14px;
+        }
+
+        div.friend-menu-header {
+          border-top: 1px solid #ddd;
+          span {
+            display: block;
+            padding: 5px 10px;
+            font-size: 13px;
+            font-weight: 550;
+          }
+        }
+
+        div.friend-menu-item {
+          height: 60px;
+          padding: 10px 10px;
+          position: relative;
+          border-top: 1px solid #ddd;
+          background-color: #fcfcfc;
+
+          img.menu-item-avatar {
+            position: absolute;
+            top: 7px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          div.menu-item-text {
+            padding-left: 55px;
+            padding-top: 6px;
+            a {
+              color: #292988;
+            }
+          }
+        }
+
+        div.friend-request-item {
+
+          div.friend-request-button-box {
+            position: absolute;
+            top: 17px;
+            left: 164px;
+
+            button {
+              width: 55px;
+              height: 24px;
+              padding: 1px 2px;
+              font-size: 13px;
+            }
+
+            button.accept-friend-btn {
+              background-color: #16a016;
+              color: white;
+              border: 0px solid transparent;
+              &:hover {
+                background-color: green;
+              }
+            }
+
+            button.ignore-friend-btn {
+              border: 1px solid #ccc;
+              &:hover {
+                color: #333;
+                background-color: #eee;
+              }
+            }
+          }
+        }
+
+        div.new-friend-item {
+
+          div.menu-item-text {
+            position: relative;
+            padding-top: 0px;
+            span {
+              display: block;
+              position: relative;
+              top: -3px;
+              padding: 0;
+              margin: 0;
+              font-size: 13px;
+              color: #777;
+
+              i {
+                font-size: 10px;
+                color: #499649;
+                position: relative;
+                top: -1px;
+                left: 3px;
+              }
+            }
+          }
+        }
+      }
+
+      div.empty-menu {
+        position: absolute;
+        top: 42px;
+        left: -120px;
+        padding: 5px 0 5px 0;
+        background-color: white;
+        border: 1px solid #ddd;
+        width: 160px;
+
+        span.empty-notification {
+          padding-left: 30px;
+        }
+      }
+
+      div.friend-notification-menu-arrow {
+        position: absolute;
+        top: 27px;
         width: 0px;
         height: 0px;
         border-top: 10px solid transparent;

@@ -1,14 +1,14 @@
-function profileImageURL() {
+function profileImageURL(uid) {
   if (!this.debug) {
-    return "profileimage/profile/" + this.uid;
+    return "profileimage/profile/" + (uid || this.uid);
   } else {
     return "dist/img/profile.jpg";
   }
 }
 
-function profileCoverImageURL() {
+function profileCoverImageURL(uid) {
   if (!this.debug) {
-    return "profileimage/cover/" + this.uid;
+    return "profileimage/cover/" + (uid || this.uid);
   } else {
     return "dist/img/cover.jpg";
   }
