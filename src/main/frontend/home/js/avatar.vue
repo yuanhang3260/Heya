@@ -2,10 +2,10 @@
 
 <div class="card home-profile-container">
   <div class="card-img-top cover-img-container">
-    <img class="cover-img" v-bind:src="coverImageURL">
+    <img class="cover-img" v-bind:src="coverImageURL()">
   </div>
   <div class="profile-img-container">
-    <img class="profile-img" v-bind:src="profileImageURL" v-on:click="clickProfileImage">
+    <img class="profile-img" v-bind:src="profileImageURL()" v-on:click="clickProfileImage">
   </div>
   <div class="card-body username-container">{{username}}</div>
   <div class="card-body social-container">
@@ -19,21 +19,21 @@
       <div class="social-num">{{postsCountDisplay}}</div>
     </div>
   </div>
-  <div v-if="editable" class="add-friend-container">
-    <button v-if="friendRelationShip=='NOT_FRIENDS'" v-on:click="addfriend" class="btn btn-outline-primary add-friend-btn" type="submit">
+  <div v-if="!editable" class="add-friend-container">
+    <button v-show="friendRelationship=='NOT_FRIENDS'" v-on:click="addfriend" class="btn btn-outline-primary add-friend-btn" type="submit">
       <i class="fa fa-user-plus"></i>
       <span>Add Friend</span>
     </button>
-    <button v-if="friendRelationShip=='FRIENDS'" v-on:click="unfriend" class="btn are-friends-btn" type="submit">
+    <button v-show="friendRelationship=='FRIENDS'" v-on:click="unfriend" class="btn are-friends-btn" type="submit">
       <i class="fa fa-check"></i>
       <span>Friends</span>
     </button>
-    <button v-if="friendRelationShip=='FRIEND_REQUEST_SENT'" class="btn friend-request-sent-btn" type="submit">
+    <button v-show="friendRelationship=='FRIEND_REQUEST_SENT'" class="btn friend-request-sent-btn" type="submit">
       <i class="fa fa-user-plus"></i>
       <span>Friend Request Sent</span>
     </button>
   </div>
-    
+
   </div>
 </div>
 
@@ -76,7 +76,7 @@ export default {
     return {
       friendscount: 0,
       postscount: 0,
-      friendRelationShip: "NOT_FRIENDS",
+      friendRelationship: "NOT_FRIENDS",
     }
   },
   computed: avatar.computed,

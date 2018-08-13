@@ -165,7 +165,7 @@ function startRedirecting() {
 
   var timer = window.setTimeout(function() {
     window.clearInterval(remain_time_reader);
-    window.location.assign("/Heya/home");
+    window.location.assign("home");
   }, count_sec * 1000);
 };
 

@@ -21,7 +21,7 @@
 </head>
 
 <body uid="<%= uid %>" user="<%= username %>" viewer_id="<%= viewerUid %>" viewer="<%= viewerUsername %>" >
-<nav-bar id="navbar" :search-box=true :notification=true :uid="'<%= uid %>'" :username="'<%= username %>'"></nav-bar>
+<nav-bar id="navbar" :search-box=true :notification=true :uid="'<%= viewerUid %>'" :username="'<%= viewerUsername %>'"></nav-bar>
 
 <div class="profile-page-main-container">
   <div class="profile-container">

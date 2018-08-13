@@ -17,15 +17,15 @@ import bean.User;
 import util.JsonUtils;
 
 @Controller
-@RequestMapping("/profileimage/{type}/{uid}")
+@RequestMapping("/profileimage/{type}/{username}")
 public class ProfileImage {
 
-  public static String profileImageURL(String uid) {
-    return "profileimage/profile/" + uid;
+  public static String profileImageURL(String username) {
+    return "profileimage/profile/" + username;
   }
 
-  public static String profileCoverImageURL(String uid) {
-    return "profileimage/cover/" + uid;
+  public static String profileCoverImageURL(String username) {
+    return "profileimage/cover/" + username;
   }
 
   private User getAuthorizedUser(HttpSession session, String username) {
@@ -40,10 +40,10 @@ public class ProfileImage {
   @RequestMapping(value="", method=RequestMethod.GET)
   public void getProfileImage(HttpServletRequest request,
                               HttpServletResponse response,
-                              @PathVariable("uid") String uid,
+                              @PathVariable("username") String username,
                               @PathVariable("type") String type)
       throws IOException, ServletException {
-    if (uid == null || type == null) {
+    if (username == null || type == null) {
       JsonUtils.WriteJSONResponse(response, false, "Invalid request");
       return;
     }
@@ -52,29 +52,29 @@ public class ProfileImage {
     String baseDir = context.getInitParameter("data-storage");
     if (type.equals("profile")) {
       String path =
-        Paths.get(baseDir, "user/", uid, "/profile.jpg").toString();
+        Paths.get(baseDir, "user/", username, "/profile.jpg").toString();
       File file = new File(path);
       String imgLocation;
       if (file.exists()) {
         imgLocation =
-          Paths.get("/data", "user", uid, "profile.jpg").toString();
+          Paths.get("/data", "user", username, "profile.jpg").toString();
       } else {
         imgLocation = Paths.get(
-            "/data", "user", "default", "profile.jpg").toString();
+            "/data", "user", "__default__", "profile.jpg").toString();
       }
       // Forward to FileSevlet for /data/* requests.
       request.getRequestDispatcher(imgLocation).forward(request, response);
     } else if (type.equals("cover")) {
       String path = Paths.get(
-          baseDir, "user/", uid, "/cover.jpg").toString();
+          baseDir, "user/", username, "/cover.jpg").toString();
       File file = new File(path);
       String imgLocation;
       if (file.exists()) {
         imgLocation =
-            Paths.get("/data", "user", uid, "cover.jpg").toString();
+            Paths.get("/data", "user", username, "cover.jpg").toString();
       } else {
         imgLocation = Paths.get(
-            "/data", "user", "default", "cover.jpg").toString();
+            "/data", "user", "__default__", "cover.jpg").toString();
       }
       // Forward to FileSevlet for /data/* requests.
       request.getRequestDispatcher(imgLocation).forward(request, response);
@@ -87,11 +87,11 @@ public class ProfileImage {
   public void updateProfileImage(
       HttpServletRequest request,
       HttpServletResponse response,
-      @PathVariable("uid") String uid,
+      @PathVariable("username") String username,
       @PathVariable("type") String type,
       @RequestHeader("Content-Type") String contentType)
       throws IOException, ServletException {
-    if (uid == null || type == null) {
+    if (username == null || type == null) {
       JsonUtils.WriteJSONResponse(response, false, "Invalid request");
       return;
     }
@@ -110,7 +110,7 @@ public class ProfileImage {
     boolean success = false;
     for (Part part : parts) {
       if (part.getName().equals("imagedata")){
-        if (UpdateProfileImageFile(uid, part, baseDir)) {
+        if (UpdateProfileImageFile(username, part, baseDir)) {
           success = true;
           break;
         }
@@ -121,7 +121,7 @@ public class ProfileImage {
                                 success ? null : "Update profile image failed");
   }
 
-  private boolean UpdateProfileImageFile(String uid, Part part, String baseDir)
+  private boolean UpdateProfileImageFile(String username, Part part, String baseDir)
       throws IOException {
     String type = part.getHeader("Content-Type");
     String[] re = type.split("/");
@@ -140,7 +140,7 @@ public class ProfileImage {
     FileOutputStream fos = null;
     try {
       String imageFile = Paths.get(
-          baseDir, "user", uid, "profile.jpg").toString();
+          baseDir, "user", username, "profile.jpg").toString();
       fos = new FileOutputStream(imageFile);
       int b = 0;
       while((b = is.read()) != -1) {

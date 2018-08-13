@@ -14,7 +14,6 @@ function logout() {
     dataType: "json",
     encode: true,
   }).done(function(data) {
-    console.log(data);
     if (data.success) {
       window.location.assign("/Heya");
     }

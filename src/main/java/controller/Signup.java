@@ -40,7 +40,7 @@ public class Signup {
     String uid = this.userDAO.addNewUser(user.getUsername(),
                                          user.getEmail(), user.getPassword());
     if (uid != null) {
-      createUserDataDirectory(request, uid);
+      createUserDataDirectory(request, user.getUsername());
       user.setUid(uid);
       request.getSession().setAttribute("user", user);
       success = true;
@@ -54,10 +54,10 @@ public class Signup {
   }
 
   private boolean createUserDataDirectory(HttpServletRequest request,
-                                          String uid) {
+                                          String username) {
     ServletContext context = request.getServletContext();
     String baseDir = context.getInitParameter("data-storage");
-    File theDir = new File(baseDir + "user/" + uid);
+    File theDir = new File(baseDir + "user/" + username);
     if (!theDir.exists()) {
       try{
         if (!theDir.mkdirs()) {

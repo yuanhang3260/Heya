@@ -12,6 +12,7 @@
   String viewerUsername = (String)request.getAttribute("viewerUsername");
 
   boolean editable = uid.equals(viewerUid) && username.equals(viewerUsername);
+  System.out.println("viewerUsername " + viewerUsername);
 %>
 
 <html lang="en">
@@ -21,11 +22,11 @@
 </head>
 
 <body uid="<%= uid %>" user="<%= username %>" viewer_id="<%= viewerUid %>" viewer="<%= viewerUsername %>" >
-<nav-bar id="navbar" :search-box=true :notification=true :uid="'<%= uid %>'" :username="'<%= username %>'" :width=1250></nav-bar>
+<nav-bar id="navbar" :search-box=true :notification=true :uid="'<%= viewerUid %>'" :username="'<%= viewerUsername %>'" :width=1250></nav-bar>
 
 <div class="home-main-container">
   <div class="home-left-bar">
-    <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'" :viewerUid="'<%= viewerUid %>'" :viewerUsername="'<%= viewerUsername %>'" :editable="<%= editable %>"></avatar>
+    <avatar id="avatar" :uid="'<%= uid %>'" :username="'<%= username %>'" :viewer-uid="'<%= viewerUid %>'" :viewer-username="'<%= viewerUsername %>'" :editable="<%= editable %>"></avatar>
     <user-info id="userinfo" :uid="'<%= uid %>'" :username="'<%= username %>'" :editable="<%= editable %>"></user-info>
   </div>
 

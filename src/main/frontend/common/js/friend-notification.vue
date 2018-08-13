@@ -15,11 +15,11 @@
       <span>Friend Requests</span>
     </div>
     <div v-for="(request, index) in notifications.friendRequests" :key="'friendRequest' + index" class="friend-menu-item friend-request-item">
-      <a :href="'Heya/home?username='+request.friendName" target="_blank">
-        <img class="menu-item-avatar" :src="request.avatar"/>
+      <a :href="'home?username='+request.friendUsername" target="_blank" class="avatar-link">
+        <img class="menu-item-avatar" :src="request.avatar || profileImageURL(request.friendUsername)">
       </a>
       <div class="menu-item-text">
-        <span><a :href="'Heya/home?username='+request.friendName" target="_blank">{{request.friendName}}</a></span>
+        <span><a :href="'home?username='+request.friendUsername" target="_blank">{{request.friendUsername}}</a></span>
       </div>
       <div class="friend-request-button-box">
         <button v-on:click="acceptFriendRequest(request, index)" class="btn btn-outline-primary accept-friend-btn" type="button">
@@ -35,15 +35,14 @@
       <span>New Friends</span>
     </div>
     <div v-for="(newFriend, index) in notifications.requestReplies" :key="'newFriend' + index" class="friend-menu-item new-friend-item">
-      <a :href="'Heya/home?username='+newFriend.friendName" target="_blank">
-        <img class="menu-item-avatar" :src="newFriend.avatar"/>
+      <a :href="'home?username='+newFriend.friendUsername" target="_blank" class="avatar-link">
+        <img class="menu-item-avatar" :src="newFriend.avatar || profileImageURL(newFriend.friendUsername)">
       </a>
       <div class="menu-item-text">
-        <a :href="'Heya/home?username='+newFriend.friendName" target="_blank">{{newFriend.friendName}}</a>
-        <span v-if="newFriend.status=='ACCEPTED'">accepted your friend request <i class="fa fa-check"></i></span>
+        <a :href="'home?username='+newFriend.friendUsername" target="_blank">{{newFriend.friendUsername}}</a>
+        <span v-if="newFriend.status=='ACCEPTED' || newFriend.status=='CONFIRMED'">accepted your friend request <i class="fa fa-check"></i></span>
         <span v-else>you added this new friend <i class="fa fa-handshake-o"></i></span>
-      </div>
-      <div class="new-friend-button-box">
+        <span class="notification-timestamp">{{formTimeStamp(new Date(newFriend.lastupdate))}}</span>
       </div>
     </div>
   </div>
@@ -88,8 +87,9 @@ export default {
 
   watch: {
     showMenu: function(newValue) {
-      if (newValue) {
+      if (newValue && !this.hasRead) {
         this.hasRead = true;
+        this.markNotificationsRead();
       }
     }
   },

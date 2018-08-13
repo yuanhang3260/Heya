@@ -221,11 +221,11 @@ function dialogs() {
 function friendRequests() {
   return [
     {
-      friendName: "panda",
+      friendUsername: "panda",
       avatar: "dist/img/panda.jpg",
     },
     {
-      friendName: "hyuan",
+      friendUsername: "hyuan",
       avatar: "dist/img/hyuan.jpg",
     }
   ]; 
@@ -234,9 +234,10 @@ function friendRequests() {
 function requestReplies() {
   return [
     {
-      friendName: "panda",
+      friendUsername: "panda",
       avatar: "dist/img/panda.jpg",
       status: "ACCEPTED",
+      lastupdate: 1534062049798,
     },
   ]; 
 }

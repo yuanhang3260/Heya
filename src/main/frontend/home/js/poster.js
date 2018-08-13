@@ -93,7 +93,7 @@ function doPost() {
     console.log(data);
     if (data.success) {
       let post = data.result.post;
-      common.generatePost(post, me.uid, me.username);
+      common.generatePost(post, me.username);
       me.$bus.emit("add-new-post", {
         post: post,
       });

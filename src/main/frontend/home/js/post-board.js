@@ -26,7 +26,7 @@ function loadPosts() {
     console.log(data);
     if (data.success) {
       for (let post of data.result.posts) {
-        common.generatePost(post, me.uid, me.username);
+        common.generatePost(post, me.username);
       }
       // Sort desc by time.
       me.posts = data.result.posts.sort(function(x, y) {

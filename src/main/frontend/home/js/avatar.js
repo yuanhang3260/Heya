@@ -36,20 +36,25 @@ function clickProfileImage() {
 function addfriend() {
   let me = this;
   if (me.debug) {
-    me.friendRelationShip = "FRIEND_REQUEST_SENT";
+    me.friendRelationship = "FRIEND_REQUEST_SENT";
     return;
   }
 
+  let formData = {
+    friendUsername: me.username,
+  };
+
   $.ajax({
     type: "POST",
-    url: "friends/" + me.viewerUsername + "/addfriend/" + me.username,
+    url: "friends/" + me.viewerUsername + "/addfriend",
+    data: formData,
     dataType: "json",
     encode: true,
   }).done(function(data) {
     if (data.success) {
-      me.friendRelationShip = "FRIEND_REQUEST_SENT";
+      me.friendRelationship = "FRIEND_REQUEST_SENT";
     } else {
-      popups.alarm(data.error);
+      popups.alert(data.error);
     }
   });
 }
@@ -58,23 +63,30 @@ function unfriend() {
   let me = this;
   function _unfriend(resolve, reject) {
     if (me.debug) {
-      me.friendRelationShip = "NOT_FRIENDS";
+      me.friendRelationship = "NOT_FRIENDS";
       resolve();
       return;
     }
 
+    let formData = {
+      friendUsername: me.username,
+    };
+
     $.ajax({
       type: "POST",
-      url: "friends/" + me.viewerUsername + "/unfriend/" + me.username,
+      url: "friends/" + me.viewerUsername + "/unfriend",
+      data: formData,
       dataType: "json",
       encode: true,
     }).done(function(data) {
       if (data.success) {
-        me.friendRelationShip = "NOT_FRIENDS";
+        me.friendRelationship = "NOT_FRIENDS";
         resolve();
       } else {
         reject(data.error);
       }
+    }).fail(function(data) {
+      reject("Failed to unfriend " + me.username);
     });
   }
 
@@ -92,7 +104,7 @@ function updateProfileImage(filename, blob) {
 
   $.ajax({
     type: "POST",
-    url: "profileimage/profile/" + this.uid,
+    url: "profileimage/profile/" + this.username,
     data: formData,
     processData: false,
     contentType: false,
@@ -125,8 +137,8 @@ function getFriendsCount() {
     console.log(data);
     if (data.success) {
       me.friendscount = data.result.friendscount;
-      if (data.result.areFriends) {
-        me.friendRelationShip = "FRIENDS";
+      if (data.result.friendRelationship) {
+        me.friendRelationship = data.result.friendRelationship;
       }
     }
   });
@@ -173,8 +185,6 @@ function postsCountDisplay() {
 
 export default {
   computed: {
-    profileImageURL: common.profileImageURL,
-    coverImageURL: common.profileCoverImageURL,
     friendsCountDisplay,
     postsCountDisplay,
   },
@@ -182,6 +192,8 @@ export default {
   methods: {
     clickProfileImage: clickProfileImage,
     updateProfileImage: updateProfileImage,
+    profileImageURL: common.profileImageURL,
+    coverImageURL: common.profileCoverImageURL,
     getFriendsCount: getFriendsCount,
     getPostsCount: getPostsCount,
     addfriend: addfriend,
