@@ -44,7 +44,7 @@
 
     <div v-show="!signupMode" class="success-info-container">
       <p class="success-title">New user is successfully created <i class="fa fa-smile-o new-user-smile"></i></p>
-      <p>Redirecting to <a href="home" class="home-link">Home</a> page in<span class="remain-time"> {{countDown}} </span>s</p>
+      <p>Redirecting to <a :href="'home'" class="home-link">Home</a> page in<span class="remain-time"> {{countDown}} </span>s</p>
     </div>
   </form>
 </div>
