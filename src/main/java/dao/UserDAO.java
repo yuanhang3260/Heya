@@ -60,6 +60,16 @@ public class UserDAO {
     return (User)query.uniqueResult();
   }
 
+  public List<User> searchUser(String keyword) {
+    if (keyword == null || keyword.isEmpty()) {
+      return new ArrayList<User>();
+    }
+
+    Query query = getSession().createQuery(" from User where username like '%?%'");
+    query.setString(0, keyword);
+    return (List<User>)query.list();
+  }
+
   public String addNewUser(String username,
                            String email,
                            String password) {

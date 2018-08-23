@@ -129,6 +129,14 @@ public class User {
     return json_obj;
   }
 
+  public static JSONArray toJSONOArray(List<User> users) {
+    JSONArray array = new JSONArray();
+    for (User user : users) {
+      array.put(user.toJSONObject());
+    }
+    return array;
+  }
+
   // Getters and setters.
   public String getUid() {
     return this.uid;
