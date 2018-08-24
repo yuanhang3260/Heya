@@ -94,6 +94,11 @@ function ignoreFriendRequest(request, index) {
 
 function markNotificationsRead() {
   if (this.debug) {
+    for (let reply of this.notifications.requestReplies) {
+      if (reply.status === "ACCEPTED") {
+        reply.status = "CONFIRMED";
+      }
+    }
     return;
   }
 
@@ -122,7 +127,9 @@ function markNotificationsRead() {
     encode: true,
   }).done(function(data) {
     for (let reply of me.notifications.requestReplies) {
-      reply.status = "CONFIRMED";
+      if (reply.status === "ACCEPTED") {
+        reply.status = "CONFIRMED";
+      }
     }
   });
 }
@@ -133,7 +140,6 @@ function hasPendingNotification() {
   }
 
   for (let reply of this.notifications.requestReplies) {
-    console.log(reply);
     if (reply.status === "ACCEPTED") {
       return true;
     }

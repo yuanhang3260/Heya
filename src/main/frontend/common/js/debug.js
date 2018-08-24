@@ -37,7 +37,7 @@ function userInfo() {
       {
         "major": "Electrical Engineering",
         "school": "Shanghai Jiao Tong University",
-        "sid": 2,
+        "sid": "2",
         "year": {
           "end": 2013,
           "start": 2009
@@ -46,7 +46,7 @@ function userInfo() {
       {
         "major": "Computer Engineering",
         "school": "Carnegie Mellon University",
-        "sid": 3,
+        "sid": "3",
         "year": {
           "end": 2015,
           "start": 2013
@@ -57,13 +57,13 @@ function userInfo() {
       {
         "current": false,
         "hometown": true,
-        "pid": 3,
+        "pid": "3",
         "name": "Haimen, Jiangsu Province, China"
       },
       {
         "current": true,
         "hometown": false,
-        "pid": 4,
+        "pid": "4",
         "name": "Sunnyvale, CA"
       }
     ]
@@ -228,14 +228,14 @@ function friendRequests() {
       friendUsername: "hyuan",
       avatar: "dist/img/hyuan.jpg",
     }
-  ]; 
+  ];
 }
 
 function requestReplies() {
   return [
     {
-      friendUsername: "panda",
-      avatar: "dist/img/panda.jpg",
+      friendUsername: "dev1",
+      avatar: "dist/img/dev1.png",
       status: "ACCEPTED",
       lastupdate: 1534062049798,
     },

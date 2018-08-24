@@ -65,8 +65,7 @@ public class UserDAO {
       return new ArrayList<User>();
     }
 
-    Query query = getSession().createQuery(" from User where username like '%?%'");
-    query.setString(0, keyword);
+    Query query = getSession().createQuery(" from User where username like '%" + keyword + "%'");
     return (List<User>)query.list();
   }
 

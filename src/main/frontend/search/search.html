@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Heya Search</title>
+</head>
+
+<body uid="0" user="snoopy" viewer_id="0" viewer="snoopy" >
+<nav-bar id="navbar" :search-box=true :notification=true :uid="'0'" :username="'snoopy'" :width="1250" :debug=true></nav-bar>
+
+<div class="search-main-container">
+  <div class="search-left-container"></div>
+
+  <div class="search-middle-container">
+    <div class="search-result-container">
+      <div class="search-result-header">
+        <i class="fa fa-user-circle"></i>
+        <span> Users</span>
+      </div>
+
+      <div class="search-result-item">
+        <a class="avatar-link" href="home?username=panda" target="_blank">
+          <img class="search-result-avatar" src="dist/img/panda.jpg" />
+        </a>
+        <div class="search-result-text">
+          <a href="home?username=panda" target="_blank">panda</a>
+        </div>
+      </div>
+      <div class="search-result-item">
+        <a class="avatar-link" href="home?username=hyuan" target="_blank">
+          <img class="search-result-avatar" src="dist/img/hyuan.jpg" />
+        </a>
+        <div class="search-result-text">
+          <a href="home?username=hyuan" target="_blank">hyuan</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="search-right-container"></div>
+</div>
+
+</body>
+
+<script type="text/javascript" src="dist/js/search.dist.js"></script>
+</html>

@@ -1,0 +1,85 @@
+@import "~heya/search/css/common.scss";
+
+body {
+  background-color: #f9fffa;
+}
+
+.search-main-container {
+  position: relative;
+  width: $main-width;
+  top: 55px;
+  height: 600px;
+  margin: 0 auto;
+
+  display: flex;
+
+  div.search-left-container {
+    width: 115px;
+  }
+
+  div.search-middle-container {
+    width: 500px;
+
+    div.search-result-container {
+      border: 1px solid #ddd;
+      border-radius: 1px;
+      background-color: #f7f7f7;
+
+      div.search-result-header {
+        padding: 9px 10px;
+        position: relative;
+
+        i {
+          position: absolute;
+          top: 11px;
+          left: 11px;
+          color: #212392;
+          font-size: 21px;
+        }
+
+        span {
+          position: relative;
+          top: 1px;
+          padding-left: 27px;
+          font-size: 14px;
+        }
+      }
+
+      div.search-result-item {
+        position: relative;
+        height: 90px;
+        padding: 15px 0;
+        border-top: 1px solid #ddd;
+
+        a.avatar-link {
+          position: absolute;
+          top: 15px;
+          left: 10px;
+          z-index: 1;
+
+          img.search-result-avatar {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+
+        div.search-result-text {
+          position: relative;
+          padding-top: 5px;
+          padding-left: 80px;
+
+          a {
+            color: #0d3765;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  div.search-right-container {
+    flex-grow: 1;
+  }
+}

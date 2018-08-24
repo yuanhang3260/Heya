@@ -33,6 +33,7 @@
     <filter-name>WebViewFilter</filter-name>
     <url-pattern>/home</url-pattern>
     <url-pattern>/profile</url-pattern>
+    <url-pattern>/search</url-pattern>
   </filter-mapping>
 
   <filter-mapping>
